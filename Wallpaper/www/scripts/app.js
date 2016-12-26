@@ -350,7 +350,7 @@ var nav = function () {
                                         var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
                                         fileTransfer.download(
                                            url, fileURL, function (entry) {
-                                               window.plugins.wallpaper.setImageHttp(fileURL);
+                                               window.plugins.wallpaper.setImageHttp(url);
                                                firebase.database().ref('wallpaperDB/' + data.key).child('walls').set(data.val().walls + 1);
                                                firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
                                                firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
@@ -761,7 +761,7 @@ var nav = function () {
                                         var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
                                         fileTransfer.download(
                                            url, fileURL, function (entry) {
-                                               window.plugins.wallpaper.setImageHttp(fileURL);
+                                               window.plugins.wallpaper.setImageHttp(url);
                                                ons.notification.confirm("Wallpaper set");
                                            },
 
