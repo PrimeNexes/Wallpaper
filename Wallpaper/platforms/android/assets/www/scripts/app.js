@@ -126,9 +126,13 @@ var nav = function () {
                         //create userDB 
                         var userId = firebase.auth().currentUser;
                         firebase.database().ref('userDB/' + userId.uid).set({ followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0 });
-                        firebase.storage().ref('profilePicture/icon-user-default.png').getDownloadURL().then(function (url) {
-                            userId.updateProfile({ photoURL: url });
+                        //TODO
+                        firebase.storage().ref('profilePicture/' + userId.uid + '/dp.jpeg').put('/images/icon-user-default.png');
+                        firebase.storage().ref('profilePicture/' + userId.uid + '/dp.jpeg').getDownloadURL().then(function (url) {
+                                    userId.updateProfile({ photoURL: url }).then(function () { console.log(userId.photoURL); });
+                                    page.querySelector('#profile-image-DP').setAttribute("src", url);
                         });
+                        //TODO
                         ons.notification.alert('Account created !');
                     }, function (error) {
                         ons.notification.alert("Can't send Email for verification ! Re-try sending the mail underprofile page");

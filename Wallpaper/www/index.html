@@ -243,7 +243,7 @@
             <br>
             <section style="padding: 8px">
                 <ons-button modifier="large" id="updateDP">
-                    <input type="file" name="profileDPUpload" id="profileDPUpload" accept="image/*"
+                    <input type="file" name="profileDPUpload" id="profileDPUpload" accept="image/*"  capture="camera"
                            style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
                     <label for="profileDPUpload">Upload Profile Image</label>
                 </ons-button>
@@ -373,8 +373,9 @@
                 </table>
             </ons-toolbar>
             <section style="padding: 8px">
+
                 <ons-button modifier="large">
-                    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*"  style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
+                    <input type="file" name="fileToUpload" id="fileToUpload" capture="camera" accept="image/*"  style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
                     <label for="fileToUpload">Upload Wallpaper</label>
                 </ons-button>
             </section>
