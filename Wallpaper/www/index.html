@@ -289,10 +289,11 @@
                 Pull to refresh
             </ons-pull-hook>
             <img src="images/loading.gif" style="height:auto;width:100%;position:absolute;" id="pageLoaging" />
-            <ons-list id="myUpdWall" style="border-radius:1px;border:solid;border-color:#e2e2e2;">
-
-                <ons-list>
-        </ons-page>
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list id="myUpdWall">   
+                    </ons-list>
+             </section>
+</ons-page>
     </ons-template>
     <!--My Upload page end-->
     <!-- Categorie page-->
@@ -343,6 +344,7 @@
             <ons-toolbar>
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
             </ons-toolbar>
+            <img src="images/loading.gif" style="height:auto;width:100%;position:absolute;" id="pageLoaging"  />
             <section style="padding: 8px;background-color:#e2e2e2;">
                 <ons-list id="cwall">
                 </ons-list>
@@ -381,12 +383,44 @@
                     </tbody>
                 </table>
             </ons-toolbar>
-            <section style="padding: 8px">
-
-                <ons-button modifier="large">
-                    <input type="file" name="fileToUpload" id="fileToUpload" capture="camera" accept="image/*"  style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
-                    <label for="fileToUpload">Upload Wallpaper</label>
-                </ons-button>
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list style="display:block;">
+                    <ons-list-item>
+                        <ons-button modifier="large">
+                            <input type="file" name="fileToUpload" id="fileToUpload" capture="camera" accept="image/*" style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
+                            <label for="fileToUpload">Select Wallpaper to upload</label>
+                        </ons-button>
+                    </ons-list-item>
+                        <img style="width:100%;height:auto;" id="showWallImg" />
+                        <ons-list-header>Select a category</ons-list-header>
+                        <ons-list-item tappable>
+                            <label class="left">
+                                <ons-input name="catsel" type="radio" input-id="radio-1" value="animals"></ons-input>
+                            </label>
+                            <label for="radio-1" class="center">
+                                Animals
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item tappable>
+                            <label class="left">
+                                <ons-input name="catsel" type="radio" input-id="radio-2" value="cartoons"></ons-input>
+                            </label>
+                            <label for="radio-2" class="center">
+                                Cartoons
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item tappable>
+                            <label class="left">
+                                <ons-input name="catsel" type="radio" input-id="radio-3" value="quotes"></ons-input>
+                            </label>
+                            <label for="radio-3" class="center">
+                                Quotes
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item tappable>
+                            <ons-button modifier="large" id="uploadWallpaperBtn">Upload this Wallpaper</ons-button>
+                        </ons-list-item>
+</ons-list>
             </section>
             <br>
         </ons-page>
