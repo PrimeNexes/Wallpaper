@@ -538,9 +538,16 @@ else if (page.id === 'uploading') {
     if (userId.emailVerified) {
         uploadBtn.setAttribute('disabled', '');
         uploadBtn.removeAttribute('disabled');
+        page.querySelector('#fileToUploadBtn').setAttribute('disabled');
+        page.querySelector('#fileToUploadBtn').removeAttribute('disabled');
+        page.querySelector('#uploadWallpaperBtn').setAttribute('disabled');
+        page.querySelector('#uploadWallpaperBtn').removeAttribute('disabled');
     }
     else {
         uploadBtn.setAttribute('disabled', '');
+        page.querySelector('#fileToUploadBtn').setAttribute('disabled', 'false');
+        page.querySelector('#uploadWallpaperBtn').setAttribute('disabled', 'false');
+    
         console.log('Email is not verified at upload');
     }
 

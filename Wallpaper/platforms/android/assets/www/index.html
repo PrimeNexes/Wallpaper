@@ -122,7 +122,6 @@
         </ons-page>
     </ons-template>
 
-
     <!--Home-->
     <ons-template id="home.html">
         <ons-page id="home">
@@ -140,6 +139,7 @@
                                 <ons-toolbar-button id="catBtn" style="height:auto;width:auto"><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
+
                                 <ons-toolbar-button id="homeBtn" style="height:auto;width:auto"><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
@@ -152,15 +152,16 @@
                     </tbody>
                 </table>
             </ons-toolbar>
-
             <ons-pull-hook id="pull-hook-mainwall">
                 Pull to refresh
             </ons-pull-hook>
             <img src="images/loading.gif" style="height:auto;width:100%;position:absolute;" id="pageLoaging" />
-            <ons-list id="mainwall" style="border-radius:1px;border:solid;border-color:#e2e2e2;">
-                <ons-list>
-
-        </ons-page>
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list id="mainwall">
+                    
+                </ons-list>
+            </section>
+            </ons-page>
     </ons-template>
     <!--Home end-->
     <!--Profile page-->
@@ -185,12 +186,11 @@
 
             </section>
         </ons-page>
-    </ons-template>
+</ons-template>
     <!--Profile page end-->
     <!-- My Account page-->
     <ons-template id="myAcc.html">
         <ons-page id="myAcc">
-
             <ons-toolbar>
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
@@ -218,7 +218,6 @@
                     </tbody>
                 </table>
             </ons-toolbar>
-
             <div class="profile-card">
                 <img src="images/icon-user-default.png" class="profile-image" id="profile-image-DP">
                 <div class="profile-name" id="my-username">Dave Graham</div>
@@ -239,30 +238,24 @@
                         </ons-col>
                     </ons-row>
                 </ons-list-item>
+                <ons-list-item>
+                    <ons-button modifier="large--quiet" id="updateDP">
+                        <input type="file" name="profileDPUpload" id="profileDPUpload" accept="image/*" capture="camera"
+                               style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
+                        <label for="profileDPUpload">Upload Profile Image</label>
+                    </ons-button>
+                </ons-list-item>
+                <ons-list-item>
+                    <ons-button modifier="large--quiet" id="logoutBtn" style="background-color:#C62828; color:white;">Log-out</ons-button>
+                </ons-list-item>
             </ons-list>
             <br>
-            <section style="padding: 8px">
-                <ons-button modifier="large" id="updateDP">
-                    <input type="file" name="profileDPUpload" id="profileDPUpload" accept="image/*"
-                           style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
-                    <label for="profileDPUpload">Upload Profile Image</label>
-                </ons-button>
-            </section>
-            <br>
-            <section style="padding: 8px">
-                <ons-button modifier="large" id="logoutBtn">Log-out</ons-button>
-            </section>
-            <br>
-
         </ons-page>
     </ons-template>
     <!--My Account page end-->
     <!-- My Uploads page-->
     <ons-template id="myUpd.html">
         <ons-page id="myUpd">
-            <ons-pull-hook id="pull-hook-uwall">
-                Pull to refresh
-            </ons-pull-hook>
             <ons-toolbar>
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
@@ -290,15 +283,20 @@
                     </tbody>
                 </table>
             </ons-toolbar>
+            <ons-pull-hook id="pull-hook-uwall">
+                Pull to refresh
+            </ons-pull-hook>
             <img src="images/loading.gif" style="height:auto;width:100%;position:absolute;" id="pageLoaging" />
-            <ons-list id="myUpdWall" style="border-radius:1px;border:solid;border-color:#e2e2e2;">
-
-                <ons-list>
-        </ons-page>
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list id="myUpdWall">   
+                    </ons-list>
+             </section>
+</ons-page>
     </ons-template>
     <!--My Upload page end-->
     <!-- Categorie page-->
     <ons-template id="cat.html">
+
         <ons-page id="cat">
             <ons-toolbar>
                 <div class="center" style="height:0%;width:0%;"></div>
@@ -327,20 +325,31 @@
                     </tbody>
                 </table>
             </ons-toolbar>
-            <section style="padding: 8px">
-                <ons-list modifier="inset">
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list modifier="inset" id="cat_list">
                     <ons-list-header>Categories</ons-list-header>
                     <ons-list-item modifier="chevron" tappable id="cat_animals">Animals</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_cartoons">Cartoons</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_quotes">Quotes</ons-list-item>
                 </ons-list>
-                <ons-list id="catwall">
-
-                </ons-list>
             </section>
         </ons-page>
     </ons-template>
     <!--Categorie page end-->
+    <!-- OnCategorie page-->
+    <ons-template id="oncat.html">
+        <ons-page id="oncat">
+            <ons-toolbar>
+                <div class="left"><ons-back-button>Back</ons-back-button></div>
+            </ons-toolbar>
+            <img src="images/loading.gif" style="height:auto;width:100%;position:absolute;" id="pageLoaging"  />
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list id="cwall">
+                </ons-list>
+            </section>
+        </ons-page>
+    </ons-template>
+    <!--OnCategorie page end-->
     <!-- Uploading page-->
     <ons-template id="uploading.html">
         <ons-page id="uploading">
@@ -372,11 +381,44 @@
                     </tbody>
                 </table>
             </ons-toolbar>
-            <section style="padding: 8px">
-                <ons-button modifier="large">
-                    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*"  style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
-                    <label for="fileToUpload">Upload Wallpaper</label>
-                </ons-button>
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list style="display:block;">
+                    <ons-list-item>
+                        <ons-button modifier="large--quiet" id="fileToUploadBtn">
+                            <input type="file" name="fileToUpload" id="fileToUpload" capture="camera" accept="image/*" style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
+                            <label for="fileToUpload">Select Wallpaper to upload</label>
+                        </ons-button>
+                    </ons-list-item>
+                        <img style="width:100%;height:auto;" id="showWallImg" />
+                        <ons-list-header>Select a category</ons-list-header>
+                        <ons-list-item tappable>
+                            <label class="left">
+                                <ons-input name="catsel" type="radio" input-id="radio-1" value="animals"></ons-input>
+                            </label>
+                            <label for="radio-1" class="center">
+                                Animals
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item tappable>
+                            <label class="left">
+                                <ons-input name="catsel" type="radio" input-id="radio-2" value="cartoons"></ons-input>
+                            </label>
+                            <label for="radio-2" class="center">
+                                Cartoons
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item tappable>
+                            <label class="left">
+                                <ons-input name="catsel" type="radio" input-id="radio-3" value="quotes"></ons-input>
+                            </label>
+                            <label for="radio-3" class="center">
+                                Quotes
+                            </label>
+                        </ons-list-item>
+                        <ons-list-item tappable>
+                            <ons-button modifier="large--quiet" id="uploadWallpaperBtn">Upload this Wallpaper</ons-button>
+                        </ons-list-item>
+</ons-list>
             </section>
             <br>
         </ons-page>

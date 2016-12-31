@@ -158,7 +158,8 @@
             <img src="images/loading.gif" style="height:auto;width:100%;position:absolute;" id="pageLoaging" />
             <section style="padding: 8px;background-color:#e2e2e2;">
                 <ons-list id="mainwall">
-                    </ons-list>
+                    
+                </ons-list>
             </section>
             </ons-page>
     </ons-template>
@@ -237,21 +238,18 @@
                         </ons-col>
                     </ons-row>
                 </ons-list-item>
+                <ons-list-item>
+                    <ons-button modifier="large--quiet" id="updateDP">
+                        <input type="file" name="profileDPUpload" id="profileDPUpload" accept="image/*" capture="camera"
+                               style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
+                        <label for="profileDPUpload">Upload Profile Image</label>
+                    </ons-button>
+                </ons-list-item>
+                <ons-list-item>
+                    <ons-button modifier="large--quiet" id="logoutBtn" style="background-color:#C62828; color:white;">Log-out</ons-button>
+                </ons-list-item>
             </ons-list>
             <br>
-            <section style="padding: 8px">
-                <ons-button modifier="large" id="updateDP">
-                    <input type="file" name="profileDPUpload" id="profileDPUpload" accept="image/*"  capture="camera"
-                           style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
-                    <label for="profileDPUpload">Upload Profile Image</label>
-                </ons-button>
-            </section>
-            <br>
-            <section style="padding: 8px">
-                <ons-button modifier="large" id="logoutBtn">Log-out</ons-button>
-            </section>
-            <br>
-
         </ons-page>
     </ons-template>
     <!--My Account page end-->
@@ -386,7 +384,7 @@
             <section style="padding: 8px;background-color:#e2e2e2;">
                 <ons-list style="display:block;">
                     <ons-list-item>
-                        <ons-button modifier="large">
+                        <ons-button modifier="large--quiet" id="fileToUploadBtn">
                             <input type="file" name="fileToUpload" id="fileToUpload" capture="camera" accept="image/*" style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
                             <label for="fileToUpload">Select Wallpaper to upload</label>
                         </ons-button>
@@ -418,7 +416,7 @@
                             </label>
                         </ons-list-item>
                         <ons-list-item tappable>
-                            <ons-button modifier="large" id="uploadWallpaperBtn">Upload this Wallpaper</ons-button>
+                            <ons-button modifier="large--quiet" id="uploadWallpaperBtn">Upload this Wallpaper</ons-button>
                         </ons-list-item>
 </ons-list>
             </section>
