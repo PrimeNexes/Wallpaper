@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" xmlns="http://www.w3.org/ns/widgets" id="io.onsen.sampleapp" version="1.0.0">
-  <name>Wallpaper</name>
-  <description>Wallpaper project to create fancy user interfaces for hybrid mobile applications. It uses uses Apache Cordova to help you build an app that targets multiple mobile platforms: Android, iOS, Windows, and Windows Phone.</description>
-  <author href="http://onsen.io" email="dev@onsen.io">Onsen UI Team </author>
+<widget xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" xmlns="http://www.w3.org/ns/widgets" id="com.wallche.wallpaper" version="1.0.0">
+  <name>Wallche</name>
+  <description>Share and Find new wallpaper everyday from Wallche</description>
+  <author href="http://onsen.io" email="dev@onsen.io">Pranay Desai </author>
   <content src="index.html" />
   <access origin="*" />
   <allow-navigation href="*" />
@@ -47,4 +47,5 @@
   <plugin name="cordova-plugin-file-transfer" version="1.6.1" />
   <plugin name="cordova-plugin-network-information" version="1.3.1" />
   <plugin name="cordova-plugin-wallpaper" version="0.1.1" src="https://github.com/fbsanches/cordova-plugin-wallpaper.git" />
+  <plugin name="cordova-plugin-compat" version="1.1.0" />
 </widget>
