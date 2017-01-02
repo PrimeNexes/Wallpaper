@@ -593,9 +593,9 @@ var myNavigator = document.getElementById('mainNavigator');
             if (userId.emailVerified) {
                 uploadBtn.setAttribute('disabled', '');
                 uploadBtn.removeAttribute('disabled');
-                page.querySelector('#fileToUploadBtn').setAttribute('disabled');
+                page.querySelector('#fileToUploadBtn').setAttribute('disabled','');
                 page.querySelector('#fileToUploadBtn').removeAttribute('disabled');
-                page.querySelector('#uploadWallpaperBtn').setAttribute('disabled');
+                page.querySelector('#uploadWallpaperBtn').setAttribute('disabled','');
                 page.querySelector('#uploadWallpaperBtn').removeAttribute('disabled');
             }
             else {
