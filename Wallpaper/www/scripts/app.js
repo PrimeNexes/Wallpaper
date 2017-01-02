@@ -796,19 +796,27 @@ var myNavigator = document.getElementById('mainNavigator');
                                     };
                                     // onReport Click
                                     page.querySelector('#' + data.key + 'OnReport').onclick = function () {
-                                        ons.createDialog('report.html')
-                                        .then(function (dialog) {
-                                            dialog.show();
+                                        document.getElementById('popoverReport').show(page.querySelector('#' + data.key + 'OnReport'));
+                                        document.querySelector('#reportBtn').onclick = function () {
 
-                                            page.querySelector('#reportBtn').onclick = function () {
-                                                dialog.hide();
-                                                var copyvio = page.querySelector('#radio-1').value;
-                                                var spam = page.querySelector('#radio-2').value;
-                                                var offence = page.querySelector('#radio-3').value;
+                                            if (document.getElementById('radio-1-r').checked === true) {
+                                                firebase.database().ref('Report/' + data.key).set('Copyright Violation');
+                                            }
+                                            else if (document.getElementById('radio-2-r').checked === true) {
+                                                firebase.database().ref('Report/' + data.key).set('Spam');
+                                            }
+                                            else if (document.getElementById('radio-3-r').checked === true) {
+                                                firebase.database().ref('Report/' + data.key).set('Offensive Material');
+                                            }
+                                            ons.notification.alert("Reported Successfully");
+                                            console.log("reported " + data.key);
+                                            document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
+                                        };
+                                        document.querySelector('#reportCancelBtn').onclick = function () {
+                                            document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
+                                        };
 
-                                            };
-                                        });
-                                    }
+                                    };
 
 
                                 }
@@ -1010,19 +1018,27 @@ var myNavigator = document.getElementById('mainNavigator');
                                         };
                                         // onReport Click
                                         page.querySelector('#' + data.key + 'OnReport').onclick = function () {
-                                            ons.createDialog('report.html')
-                                            .then(function (dialog) {
-                                                dialog.show();
-                                                page.querySelector('#reportBtn').onclick = function () {
-                                                    dialog.hide();
-                                                    var copyvio = page.querySelector('#radio-1').value;
-                                                    var spam = page.querySelector('#radio-2').value;
-                                                    var offence = page.querySelector('#radio-3').value;
+                                            document.getElementById('popoverReport').show(page.querySelector('#' + data.key + 'OnReport'));
+                                            document.querySelector('#reportBtn').onclick = function () {
 
-                                                };
-                                            });
-                                        }              
+                                                if (document.getElementById('radio-1-r').checked === true) {
+                                                    firebase.database().ref('Report/' + data.key).set('Copyright Violation');
+                                                }
+                                                else if (document.getElementById('radio-2-r').checked === true) {
+                                                    firebase.database().ref('Report/' + data.key).set('Spam');
+                                                }
+                                                else if (document.getElementById('radio-3-r').checked === true) {
+                                                    firebase.database().ref('Report/' + data.key).set('Offensive Material');
+                                                }
+                                                ons.notification.alert("Reported Successfully");
+                                                console.log("reported " + data.key);
+                                                document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
+                                            };
+                                            document.querySelector('#reportCancelBtn').onclick = function () {
+                                                document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
+                                            };
 
+                                        };
                                     }
 
 

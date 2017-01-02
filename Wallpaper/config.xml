@@ -8,7 +8,7 @@
   <allow-navigation href="*" />
   <allow-intent href="itms:*" />
   <allow-intent href="itms-apps:*" />
-  <icon src="www/images/logo.png" />
+  <icon src="www/images/Logo1.png" />
   <vs:features />
   <preference name="windows-target-version" value="8.1" />
   <preference name="windows-phone-target-version" value="8.1" />
