@@ -224,7 +224,6 @@ var myNavigator = document.getElementById('mainNavigator');
 
     });
 
-
     document.addEventListener('show', function (event)
     {
         var page = event.target;
@@ -626,7 +625,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                 else if (document.getElementById('radio-3').checked === true) {
                                     catval = 'quotes';
                                 }
-                                else { ons.notification.alert('Select a catagory'); }
 
                                 if (catval !== null) {
                                     document.getElementById('uploadingDialog').show();
@@ -650,6 +648,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                         firebase.database().ref('userDB/' + userId.uid + '/wallpaperLiked/' + newPostKey).set(true);
                                         document.getElementById('uploadingDialog').hide();
                                         ons.notification.confirm("Uploaded Successfully");
+                                        document.querySelector('#mainNavigator').pushPage('home.html');
                                     });
                                 }
                                 else { ons.notification.alert('Select a catagory'); }
@@ -662,6 +661,7 @@ var myNavigator = document.getElementById('mainNavigator');
                     }
                 }
                 else {
+                    console.log("error");
                     ons.notification.alert("Oh No an error ! Try again");
                     document.getElementById('uploadingDialog').hide();
                 }

@@ -17,7 +17,7 @@
        under the License.
  */
 
-package io.onsen.sampleapp;
+package com.wallche.wallpaper;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

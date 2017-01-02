@@ -44,15 +44,10 @@
     <ons-navigator id="mainNavigator" page="sp.html" animation="none"></ons-navigator>
     <ons-template id="sp.html">
         <ons-page id="sp">
-            <section style="padding: 8px">
-                <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #000;">
-                    Wall-Play
-                </div>
-                <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #000;">
-                    Connecting....
-                    <ons-progress-circular value="0" id="progessBar"></ons-progress-circular>
-                </div>
-            </section>
+            <div style="position:relative;height:100%;width:100%;background-color:#Eceff1;">
+                <img src="images/logo.png" style="width:50%;position:absolute;top:0;left:0;right:0;bottom:100px;margin:auto;" />
+                <ons-progress-circular indeterminate style="position:absolute;top:500px;left:0;right:0;bottom:0;margin:auto;color:#3dbbf4;"></ons-progress-circular>
+            </div>
         </ons-page>
     </ons-template>
     <ons-template id="login.html">
@@ -415,8 +410,8 @@
                 </table>
             </ons-toolbar>
             <section style="padding: 8px;background-color:#e2e2e2;">
-                <ons-list style="display:block;">
-                    <ons-list-item>
+                <ons-list>
+                    <ons-list-item modifier="longdivider">
                         <ons-button modifier="large--quiet" id="fileToUploadBtn">
                             <input type="file" name="fileToUpload" id="fileToUpload" capture="camera" accept="image/*" style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
                             <label for="fileToUpload">Select Wallpaper to upload</label>
@@ -424,15 +419,15 @@
                     </ons-list-item>
                         <img style="width:100%;height:auto;" id="showWallImg" />
                         <ons-list-header>Select a category</ons-list-header>
-                        <ons-list-item tappable>
+                        <ons-list-item tappable modifier="nodivider">
                             <label class="left">
-                                <ons-input name="catsel" type="radio" input-id="radio-1" value="animals"></ons-input>
+                                <ons-input name="catsel" type="radio" input-id="radio-1" value="animals" checked></ons-input>
                             </label>
                             <label for="radio-1" class="center">
                                 Animals
                             </label>
                         </ons-list-item>
-                        <ons-list-item tappable>
+                        <ons-list-item tappable modifier="nodivider">
                             <label class="left">
                                 <ons-input name="catsel" type="radio" input-id="radio-2" value="cartoons"></ons-input>
                             </label>
@@ -440,7 +435,7 @@
                                 Cartoons
                             </label>
                         </ons-list-item>
-                        <ons-list-item tappable>
+                        <ons-list-item tappable modifier="longdivider">
                             <label class="left">
                                 <ons-input name="catsel" type="radio" input-id="radio-3" value="quotes"></ons-input>
                             </label>
@@ -448,10 +443,10 @@
                                 Quotes
                             </label>
                         </ons-list-item>
-                        <ons-list-item tappable>
+                        <ons-list-item tappable >
                             <ons-button modifier="large--quiet" id="uploadWallpaperBtn">Upload this Wallpaper</ons-button>
                         </ons-list-item>
-</ons-list>
+                    </ons-list>
             </section>
             <br>
         </ons-page>
