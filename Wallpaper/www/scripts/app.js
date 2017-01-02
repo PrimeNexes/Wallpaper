@@ -113,8 +113,16 @@ var myNavigator = document.getElementById('mainNavigator');
 
         if (page.id === 'login')
         {
-            //If Already Logged in
-            myNavigator.onDeviceBackButton.disable();
+            //=Nav
+
+            myNavigator.onDeviceBackButton = (function (event) {
+                ons.notification.confirm('Do you want to close the app?') // Ask for confirmation
+                  .then(function (index) {
+                      if (index === 1) { // OK button
+                          navigator.app.exitApp(); // Close the app
+                      }
+                  });
+            });
             //If Already Logged in End
             page.querySelector('#loginBtn').onclick = function ()
             {
@@ -509,8 +517,10 @@ var myNavigator = document.getElementById('mainNavigator');
         }
 
         else if (page.id === 'myAcc') {
-            myNavigator.onDeviceBackButton.disable();
             //Navigator
+            myNavigator.onDeviceBackButton = (function (event) {
+                document.querySelector('#mainNavigator').pushPage('home.html');
+            });
             nav();
 
             var userId = firebase.auth().currentUser;
@@ -585,7 +595,9 @@ var myNavigator = document.getElementById('mainNavigator');
         else if (page.id === 'uploading') {
             //Navigator
             nav();
-            myNavigator.onDeviceBackButton.disable();
+            myNavigator.onDeviceBackButton = (function (event) {
+                document.querySelector('#mainNavigator').pushPage('home.html');
+            });
             //Check Email verification
             var userId = firebase.auth().currentUser;
             var uploadBtn = page.querySelector('#fileToUpload');
@@ -673,7 +685,9 @@ var myNavigator = document.getElementById('mainNavigator');
         else if (page.id === 'myUpd') {         
             //Navigator
             nav();
-            myNavigator.onDeviceBackButton.disable();
+            myNavigator.onDeviceBackButton = (function (event) {
+                document.querySelector('#mainNavigator').pushPage('home.html');
+            });
             var uwall = page.querySelector('#myUpdWall');
             // Feed Engine
             function uwallEngine() {
@@ -862,6 +876,9 @@ var myNavigator = document.getElementById('mainNavigator');
         else if (page.id === 'cat') {
             //Navigator
             nav();
+            myNavigator.onDeviceBackButton = (function (event) {
+                document.querySelector('#mainNavigator').pushPage('home.html');
+            });
             myNavigator.onDeviceBackButton.disable();
 
             page.querySelector('#cat_animals').onclick = function () {
@@ -882,7 +899,6 @@ var myNavigator = document.getElementById('mainNavigator');
 
         else if (page.id === 'oncat') {
             myNavigator.onDeviceBackButton.enable();
-
             page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
             function cwallEngine() {
                 var cwall = page.querySelector('#cwall');
