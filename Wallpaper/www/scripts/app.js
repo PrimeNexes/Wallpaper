@@ -600,10 +600,41 @@ var myNavigator = document.getElementById('mainNavigator');
             });
             //Check Email verification
             var userId = firebase.auth().currentUser;
-            var uploadBtn = page.querySelector('#fileToUpload');
+            function fileUploadEngine() {
+            page.querySelector('#uploadList').appendChild(ons._util.createElement('<div><ons-list-item modifier="longdivider">'
+                        +'<ons-button modifier="large--quiet" id="fileToUploadBtn">'
+                            +'<input type="file" name="fileToUpload" id="fileToUpload" multiple capture="camera" accept="image/*" style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />'
+                            +'<label for="fileToUpload">Select Wallpaper to upload</label></ons-button></ons-list-item>'
+                        +'<img style="width:100%;height:auto;" id="showWallImg" />'
+                        +'<ons-list-header>Select a category</ons-list-header>'
+                        +'<ons-list-item tappable modifier="nodivider">'
+                            +'<label class="left">'
+                                +'<ons-input name="catsel" type="radio" input-id="radio-1" value="animals" checked></ons-input>'
+                           + '</label>'
+                            +'<label for="radio-1" class="center">Animals</label>'
+                        +'</ons-list-item>'
+                        +'<ons-list-item tappable modifier="nodivider">'
+                            +'<label class="left">'
+                                +'<ons-input name="catsel" type="radio" input-id="radio-2" value="cartoons"></ons-input>'
+                            +'</label>'
+                            +'<label for="radio-2" class="center">'
+                                +'Cartoons'
+                           +' </label>'
+                        +'</ons-list-item>'
+                        +'<ons-list-item tappable modifier="longdivider">'
+                           +' <label class="left">'
+                                +'<ons-input name="catsel" type="radio" input-id="radio-3" value="quotes"></ons-input>'
+                            +'</label>'
+                            +'<label for="radio-3" class="center">'
+                                +'Quotes'
+                            +'</label>'
+                        +'</ons-list-item>'
+                        +'<ons-list-item tappable >'
+                            +'<ons-button modifier="large--quiet" id="uploadWallpaperBtn">Upload this Wallpaper</ons-button>'
+                        +'</ons-list-item></div>'));
             if (userId.emailVerified) {
-                uploadBtn.setAttribute('disabled', '');
-                uploadBtn.removeAttribute('disabled');
+                page.querySelector('#fileToUpload').setAttribute('disabled', '');
+                page.querySelector('#fileToUpload').removeAttribute('disabled');
                 page.querySelector('#fileToUploadBtn').setAttribute('disabled','');
                 page.querySelector('#fileToUploadBtn').removeAttribute('disabled');
                 page.querySelector('#uploadWallpaperBtn').setAttribute('disabled','');
@@ -615,70 +646,76 @@ var myNavigator = document.getElementById('mainNavigator');
                 page.querySelector('#uploadWallpaperBtn').setAttribute('disabled', 'false');  
             }
 
-            //Upload Wallpaper Engine
-            page.querySelector('#fileToUpload').onchange = function () {
+                page.querySelector('#fileToUpload').onchange = function () {
 
-                var fileTBU = page.querySelector('#fileToUpload').files[0];
-                if (fileTBU) {
-                    var img = page.querySelector('#showWallImg');
-                    var checkimg = new Image();
-                    checkimg.src = window.URL.createObjectURL(fileTBU);
-                    checkimg.onload = function () {
-                        if (checkimg.width === 1080 && checkimg.height === 1920) {
-                            img.src = window.URL.createObjectURL(fileTBU);
-                            page.querySelector('#uploadWallpaperBtn').onclick = function () {
-                                var catval;
-                                if (document.getElementById('radio-1').checked === true) {
-                                    catval = 'animals';
-                                }
-                                else if (document.getElementById('radio-2').checked === true) {
-                                    catval = 'cartoons';
-                                }
-                                else if (document.getElementById('radio-3').checked === true) {
-                                    catval = 'quotes';
-                                }
+                    var fileTBU = page.querySelector('#fileToUpload').files[0];
+                    if (fileTBU) {
+                        var img = page.querySelector('#showWallImg');
+                        var checkimg = new Image();
+                        checkimg.src = window.URL.createObjectURL(fileTBU);
+                        checkimg.onload = function () {
+                            if (checkimg.width === 1080 && checkimg.height === 1920) {
+                                img.src = window.URL.createObjectURL(fileTBU);
+                                page.querySelector('#uploadWallpaperBtn').onclick = function () {
+                                    var catval;
+                                    if (document.getElementById('radio-1').checked === true) {
+                                        catval = 'animals';
+                                    }
+                                    else if (document.getElementById('radio-2').checked === true) {
+                                        catval = 'cartoons';
+                                    }
+                                    else if (document.getElementById('radio-3').checked === true) {
+                                        catval = 'quotes';
+                                    }
 
-                                if (catval !== null) {
-                                    document.getElementById('uploadingDialog').show();
-                                    var progressBar = page.querySelector('#progessBar');
-                                    var newPostKey = firebase.database().ref().child('wallpaperDB').push().key;
-                                    var stroageRef = firebase.storage().ref('wid/' + newPostKey + '.jpeg');
-                                    var task = stroageRef.put(fileTBU);
-                                    task.on('state_changed', function (snapshot) {
-                                        var per = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                                        progessBar.value = per;
-                                    }, function (error) {
-                                        document.getElementById('uploadingDialog').hide();
-                                        ons.notification.alert("An error has occurred!</br>" + error);
-                                    }, function () {
-                                        //get current user
-                                        var userId = firebase.auth().currentUser;
-                                        //set wallpaper on db    
-                                        firebase.database().ref('wallpaperDB/' + newPostKey + '/').set({ uname: userId.displayName, uid: userId.uid, likes: 1, downloads: 1, cat: catval });
-                                        //set wallpaper on userdb
-                                        firebase.database().ref('userDB/' + userId.uid + '/uploads/' + newPostKey).set(true);
-                                        firebase.database().ref('userDB/' + userId.uid + '/wallpaperLiked/' + newPostKey).set(true);
-                                        document.getElementById('uploadingDialog').hide();
-                                        ons.notification.confirm("Uploaded Successfully");
-                                        document.querySelector('#mainNavigator').pushPage('home.html');
-                                    });
+                                    if (catval !== null) {
+                                        document.getElementById('uploadingDialog').show();
+                                        var progressBar = page.querySelector('#progessBar');
+                                        var newPostKey = firebase.database().ref().child('wallpaperDB').push().key;
+                                        var stroageRef = firebase.storage().ref('wid/' + newPostKey + '.jpeg');
+                                        var task = stroageRef.put(fileTBU);
+                                        task.on('state_changed', function (snapshot) {
+                                            var per = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                            progessBar.value = per;
+                                        }, function (error) {
+                                            document.getElementById('uploadingDialog').hide();
+                                            ons.notification.alert("An error has occurred!</br>" + error);
+                                        }, function () {
+                                            //get current user
+                                            var userId = firebase.auth().currentUser;
+                                            //set wallpaper on db    
+                                            firebase.database().ref('wallpaperDB/' + newPostKey + '/').set({ uname: userId.displayName, uid: userId.uid, likes: 1, downloads: 1, cat: catval });
+                                            //set wallpaper on userdb
+                                            firebase.database().ref('userDB/' + userId.uid + '/uploads/' + newPostKey).set(true);
+                                            firebase.database().ref('userDB/' + userId.uid + '/wallpaperLiked/' + newPostKey).set(true);
+                                            page.querySelector('#uploadList').innerHTML = "";
+                                            document.getElementById('uploadingDialog').hide();
+                                            ons.notification.confirm("Uploaded Successfully");
+                                            document.querySelector('#mainNavigator').pushPage('home.html');
+                                        });
+                                    }
+                                    else { ons.notification.alert('Select a catagory'); }
                                 }
-                                else { ons.notification.alert('Select a catagory'); }
+                            }
+                            else {
+                                ons.notification.confirm("You can't upload Low Quality Wallpapers ! Wallpaper must have Heigh 1920 and Width 1080");
+                                document.getElementById('uploadingDialog').hide();
                             }
                         }
-                        else {
-                            ons.notification.confirm("You can't upload Low Quality Wallpapers ! Wallpaper must have Heigh 1920 and Width 1080");
-                            document.getElementById('uploadingDialog').hide();
-                        }
                     }
-                }
-                else {
-                    console.log("error");
-                    ons.notification.alert("Oh No an error ! Try again");
-                    document.getElementById('uploadingDialog').hide();
-                }
+                    else {
+                        console.log("error");
+                        ons.notification.alert("Oh No an error ! Try again");
+                        page.querySelector('#fileToUpload').type = '';
+                        page.querySelector('#fileToUpload').type = 'file';
+                        document.getElementById('uploadingDialog').hide();
+                    }
+                };
             };
             //Uploading Wallpaper End
+           //Initiate engine
+            fileUploadEngine();
+               
 
         }
 
