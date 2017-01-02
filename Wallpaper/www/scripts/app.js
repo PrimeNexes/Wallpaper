@@ -788,7 +788,14 @@ var myNavigator = document.getElementById('mainNavigator');
                                     for (var i = 0; i < profileClassId.length; i++) {
                                         profileClassId[i].onclick = function () {
                                             onClickData(data);
-                                            document.querySelector('#mainNavigator').pushPage('profile.html');
+                                            if (userId.uid === data.val().uid)
+                                            {
+                                                document.querySelector('#mainNavigator').pushPage('myAcc.html');
+                                            }
+                                            else
+                                            {
+                                                document.querySelector('#mainNavigator').pushPage('profile.html');
+                                            }
                                         }
                                     };
                                     document.addEventListener("show", function (event) {
