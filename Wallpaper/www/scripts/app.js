@@ -1116,4 +1116,14 @@ var myNavigator = document.getElementById('mainNavigator');
         }
 
     });
+
+    document.addEventListener("offline", function () {
+        ons.notification.confirm('No Internet conenction found.') // Ask for confirmation
+        .then(function (index) {
+            if (index === 1 || index === 0) { // OK button
+                navigator.app.exitApp(); // Close the app
+            };
+  });
+
+    }, false);
     //Main End
