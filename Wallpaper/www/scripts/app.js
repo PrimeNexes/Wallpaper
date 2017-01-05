@@ -377,7 +377,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                             });
                                             console.log('Liked');
                                         };
-
                                         // onDownload Click
                                         page.querySelector('#' + data.key + 'OnDownload').onclick = function ()
                                         {
@@ -441,6 +440,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 else if (document.getElementById('radio-3-r').checked === true) {
                                                     firebase.database().ref('Report/' + data.key).set('Offensive Material');
                                                 }
+                                                page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "");
                                                 ons.notification.alert("Reported Successfully");
                                                 console.log("reported " +data.key);
                                                 document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
@@ -482,7 +482,7 @@ var myNavigator = document.getElementById('mainNavigator');
                     });
                 }
                 // SET On Refresh--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                //setInterval(statsUpdate, 5000);
+                setInterval(statsUpdate, 5000);
           
             } 
             //Pull to refresh
@@ -866,6 +866,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                             else if (document.getElementById('radio-3-r').checked === true) {
                                                 firebase.database().ref('Report/' + data.key).set('Offensive Material');
                                             }
+                                            page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "");
                                             ons.notification.alert("Reported Successfully");
                                             console.log("reported " + data.key);
                                             document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
@@ -1090,6 +1091,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 else if (document.getElementById('radio-3-r').checked === true) {
                                                     firebase.database().ref('Report/' + data.key).set('Offensive Material');
                                                 }
+                                                page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "");
                                                 ons.notification.alert("Reported Successfully");
                                                 console.log("reported " + data.key);
                                                 document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
