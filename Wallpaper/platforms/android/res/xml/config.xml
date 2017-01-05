@@ -19,8 +19,8 @@
         <param name="android-package" value="fc.fcstudio.wallpaper" />
     </feature>
     <name>Wallche</name>
-    <description>Share and Find new wallpaper everyday from Wallche</description>
-    <author email="dev@onsen.io" href="http://onsen.io">Pranay Desai </author>
+    <description>Share and find new wallpapers everyday with Wallche</description>
+    <author email="pranayxdesai@gmail.com" href="">Pranay Desai </author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="*" />

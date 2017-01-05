@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" xmlns="http://www.w3.org/ns/widgets" id="com.wallche.wallpaper" version="1.0.0">
-  <name>Wallche</name>
-  <description>Share and Find new wallpaper everyday from Wallche</description>
-  <author href="http://onsen.io" email="dev@onsen.io">Pranay Desai </author>
+<widget xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" xmlns="http://www.w3.org/ns/widgets" id="com.wallchae.wallpaper" version="1.0.0">
+  <name>Wallchae</name>
+  <description>Share and find new wallpapers everyday with Wallchae</description>
+  <author href="" email="pranayxdesai@gmail.com">Pranay Desai </author>
   <content src="index.html" />
   <access origin="*" />
   <allow-navigation href="*" />

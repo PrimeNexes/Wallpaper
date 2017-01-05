@@ -590,6 +590,11 @@ var myNavigator = document.getElementById('mainNavigator');
             };
 
             //Logout End
+
+            //About Click
+            page.querySelector('#aboutBtn').onclick = function () {
+                    document.querySelector('#mainNavigator').pushPage('about.html');
+            };
         }
  
         else if (page.id === 'uploading') {
@@ -641,7 +646,7 @@ var myNavigator = document.getElementById('mainNavigator');
                 page.querySelector('#uploadWallpaperBtn').removeAttribute('disabled');
             }
             else {
-                uploadBtn.setAttribute('disabled', '');
+                page.querySelector('#fileToUpload').setAttribute('disabled', '');
                 page.querySelector('#fileToUploadBtn').setAttribute('disabled', 'false');
                 page.querySelector('#uploadWallpaperBtn').setAttribute('disabled', 'false');  
             }
@@ -734,7 +739,7 @@ var myNavigator = document.getElementById('mainNavigator');
                     console.log('Email is verified at Home Wall');
                 }
                 else {
-                    page.querySelector('#pageLoaging').innerHTML = '<ons-list-item ><div class="center">Verify your account to populate this feed.</div></ons-list-item >';
+                    page.querySelector('#pageLoaging').innerHTML = '<ons-list-item ><div class="center">Verify your account to populate this feed</div></ons-list-item >';
                     console.log('Email is not verified at Home Wall');
 
                 }
@@ -939,6 +944,175 @@ var myNavigator = document.getElementById('mainNavigator');
                 onCatClick('quotes');
                 document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Quotes' } });
             };
+
+            function crEngine() {
+                var crwall = page.querySelector('#random_list');
+                var userId = firebase.auth().currentUser;
+                firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(20).on("child_added", function (data) {
+                    firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
+                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
+                            firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
+                                if (userWallLoop.val() === true) {
+                                    //Not printing liked contents
+                                }
+                                else {
+                                        //display wallpaper 
+                                        page.querySelector('#pageLoaging').style.display = "none";
+                                        crwall.appendChild(ons._util.createElement(
+                                        '<div><ons-list-item tappable ripple modifier="nodivider" id="' + data.val().uid + 'User">'
+                                        + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
+                                        + '<div class="center" style="padding:0px 0px 0px 0px;">'
+                                        + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                        + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
+                                        + '</div></ons-list-item>'
+                                        + '<ons-list-item ripple style="padding:0px 0px 0px 0px;" modifier="nodivider">'
+                                        + '<div class="center" style="padding:0px 0px 0px 0px;">'
+                                        + '<img style="max-width:100%; width:100%;" src="' + url + '" alt="Loading....." /> '
+                                        + '<table style="font-size:10px;opacity:0.87;padding-left:10px;">'
+                                        + '<tr><td id="' + data.key + 'Likes">' + data.val().likes + '</td><td>Likes</td><td></td>'
+                                        + '<td id="' + data.key + 'Downloads">' + data.val().downloads + '</td><td>Downloads</td><td></td>'
+                                        + '</tr></table></div></ons-list-item>'
+                                        + '<ons-list-item style="padding:0px 0px 0px 0px;border-bottom:8px solid #e2e2e2;" modifier="nodivider">'
+                                        + '<div class="center" style="padding:0px 0px 0px 0px;">'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;">Like</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;">Report</ons-button>'
+                                        + '</div></ons-list-item></div>'));
+
+                                        //Cheack Email Verification
+                                        if (userId.emailVerified) {
+                                            console.log('Email is verified at Cat Wall');
+                                        }
+                                        else {
+                                            page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "true");
+                                            page.querySelector('#' + data.key + 'OnDownload').setAttribute("disabled", "true");
+                                            page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "true");
+                                            console.log('Email is not verified at Cat Wall');
+
+                                        }
+
+                                        //onDPLoad
+                                        firebase.storage().ref('profilePicture/' + data.val().uid + '/dp.jpeg').getDownloadURL().then(function (urlDP) {
+                                            var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
+                                            for (var i = 0; i < DPClassId.length; i++) {
+                                                DPClassId[i].setAttribute('src', urlDP);
+
+                                            }
+                                        }).catch(function (error) { });
+
+
+                                        //onProfile Click                                                                                  
+                                        var profileClassId = document.querySelectorAll('#' + data.val().uid + "User");
+
+                                        for (var i = 0; i < profileClassId.length; i++) {
+
+                                            profileClassId[i].onclick = function () {
+                                                onClickData(data);
+                                                document.querySelector('#mainNavigator').pushPage('profile.html');
+                                            }
+                                        };
+                                        document.addEventListener("show", function (event) {
+                                            if (event.target.id === 'profile') {
+                                                profileEngine();
+                                            }
+                                        });
+
+                                        // onLike Click
+                                        page.querySelector('#' + data.key + 'OnLike').onclick = function () {
+                                            console.log('Liked');
+                                            firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
+                                            firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
+                                            this.setAttribute("disabled", "true");
+                                            firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
+                                                if (page.querySelector('#' + data.key + 'Likes')) {
+                                                    //console.log("Updating Likes .....");
+                                                    page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
+                                                }
+
+                                            });
+                                            console.log('Liked');
+                                        };
+
+                                        // onDownload Click
+                                        page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
+                                            firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
+                                            firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
+                                                if (page.querySelector('#' + data.key + 'Downloads')) {
+                                                    //console.log("Updating Downloads .....");
+                                                    page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
+                                                }
+
+                                            });
+                                            var dialog = page.querySelector('#downloadingid');
+                                            if (dialog) {
+                                                dialog.show();
+                                                dialog.hide();
+                                            }
+                                            else {
+                                                ons.createDialog('downloading.html')
+                                                .then(function (dialog) {
+                                                    dialog.show();
+                                                    dialog.hide();
+                                                });
+                                            }
+                                            var fileTransfer = new FileTransfer();
+                                            var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
+                                            fileTransfer.download(
+                                               url, fileURL, function (entry) {
+                                                   ons.notification.confirm("Download completed");
+                                               },
+
+                                               function (error) {
+                                                   ons.notification.confirm("Download error source :" + error.source);
+                                                   ons.notification.confirm("Download error target :" + error.target);
+                                                   ons.notification.confirm("Download error code :" + error.code);
+                                               },
+                                               false, {
+                                                   headers:
+                                                   {
+                                                       "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+                                                   }
+                                               }
+                                            );
+                                        };
+                                        // onReport Click
+                                        page.querySelector('#' + data.key + 'OnReport').onclick = function () {
+                                            document.getElementById('popoverReport').show(page.querySelector('#' + data.key + 'OnReport'));
+                                            document.querySelector('#reportBtn').onclick = function () {
+
+                                                if (document.getElementById('radio-1-r').checked === true) {
+                                                    firebase.database().ref('Report/' + data.key).set('Copyright Violation');
+                                                }
+                                                else if (document.getElementById('radio-2-r').checked === true) {
+                                                    firebase.database().ref('Report/' + data.key).set('Spam');
+                                                }
+                                                else if (document.getElementById('radio-3-r').checked === true) {
+                                                    firebase.database().ref('Report/' + data.key).set('Offensive Material');
+                                                }
+                                                page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "");
+                                                ons.notification.alert("Reported Successfully");
+                                                console.log("reported " + data.key);
+                                                document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
+                                            };
+                                            document.querySelector('#reportCancelBtn').onclick = function () {
+                                                document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
+                                            };
+
+                                        };
+
+                                }
+
+                            });
+                        }).catch(function (error) {
+                            console.log("Fetch Validating Error:" + error);
+                        });
+                    }).catch(function (error) { console.log("Stroage Fetching error :" + error); });
+                });
+            }
+            crEngine();
+
+
 
         }
 

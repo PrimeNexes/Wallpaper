@@ -238,7 +238,7 @@
     </ons-if>
 
 
-     <title>Onsen UI</title>
+     <title>Wallchae</title>
 
         <!-- App init -->
 
@@ -300,7 +300,9 @@
                     <p>
                         <ons-input id="signinPass" modifier="underbar" type="password" placeholder="Password" float></ons-input>
                     </p>
+                    <p style="font-size:8px">By creating an account you accept all the terms and conditions of using this beta.</p>
                     <p style="margin-top: 30px;">
+                        
                         <ons-button modifier="large--quiet" id="makeaccBtn">Create Account</ons-button>
                     </p>
                 </div>
@@ -469,7 +471,8 @@
                 </ons-list-item>
             </ons-list>
             <br>
-        </ons-page>
+                <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top: auto;bottom: 20px;right: 20px;left: auto;position: fixed;">About us with ToC</ons-button>
+            </ons-page>
     </ons-template>
     <!--My Account page end-->
     <!-- My Uploads page-->
@@ -559,6 +562,19 @@
                     <ons-list-item modifier="chevron" tappable id="cat_quotes">Quotes</ons-list-item>
                 </ons-list>
             </section>
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list-header>Hot</ons-list-header>
+                <ons-list id="random_list">
+                    <ons-list id="pageLoaging">
+                        <ons-list-item>
+                            <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                            <div class="center" style="font-size:12px;">
+                                There might be nothing to show if you have liked everything
+                            </div>
+                        </ons-list-item>
+                    </ons-list>
+                </ons-list>
+            </section>
         </ons-page>
     </ons-template>
     <!--Categorie page end-->
@@ -617,12 +633,54 @@
             </ons-toolbar>
             <section style="padding: 8px;background-color:#e2e2e2;">
                 <ons-list id="uploadList">
-                 </ons-list>
+                </ons-list>
             </section>
             <br>
         </ons-page>
     </ons-template>
     <!--Uploading page end-->
+    <!-- About page-->
+    <ons-template id="about.html">
+        <ons-page id="about">
+            <ons-toolbar>
+                <div class="left"><ons-back-button>Back</ons-back-button></div>
+                <div class="center">About us with Terms and Conditions</div>
+            </ons-toolbar>
+            <ons-list>
+                <ons-list-item>
+                    <section style="padding: 8px;background-color:#e2e2e2;">
+                        Terms and Conditions
+                        <br />
+                        Please note that this is a beta version of this app which is
+                        still undergoing final testing before its official release. The
+                        app, its software and all content found on it are provided on an
+                        “as is” and “as available” basis. This app does not give any warranties,
+                        whether express or implied, as to the suitability or usability of the
+                        website, its software or any of its content.
+                        This app will not be liable for any loss, whether such loss is direct,
+                        indirect, special or consequential, suffered by any party as a result
+                        of their use of the this app, its software or content. Any
+                        downloading or uploading of material to the wapp is done at the
+                        user’s own risk and the user will be solely responsible for any
+                        damage to any computer system or loss of data or any reliability that results from such
+                        activities.
+                        Should you encounter any bugs, glitches, lack of functionality or
+                        other problems on the website, please let us know immediately so we
+                        can rectify these accordingly. Your help in this regard is greatly
+                        appreciated.
+                    </section>
+                        </ons-list-item>
+                        <ons-list-item>
+                            <section style="padding: 8px;background-color:#e2e2e2;">
+                                This app is developed by Pranay Desai (pranayxdesai@gmail.com) using open-source software and services of Google FireBase and Onsen UI
+                            </section>
+                            </ons-list-item>
+                        </ons-list>
+                </ons-page>
+    </ons-template>
+    <!--About page end-->
+
+
     <!--downloading info  temp-->
     <ons-template id="downloading.html">
         <ons-dialog id="downloadingid">
