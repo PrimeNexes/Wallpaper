@@ -248,8 +248,8 @@
         </ons-page>
     </ons-template>
     <ons-template id="login.html">
-        <ons-page id="login">
-            <ons-toolbar>
+        <ons-page id="login" >
+            <ons-toolbar  style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="center">Login</div>
             </ons-toolbar>
             <section style="padding: 8px">
@@ -275,7 +275,7 @@
     </ons-template>
     <ons-template id="signup.html">
         <ons-page id="signup">
-            <ons-toolbar>
+            <ons-toolbar  style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center">Sign-up</div>
             </ons-toolbar>
@@ -301,7 +301,7 @@
     </ons-template>
     <ons-template id="fpass.html">
         <ons-page id="fpass">
-            <ons-toolbar>
+            <ons-toolbar  style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center">Forgot Password</div>
             </ons-toolbar>
@@ -321,56 +321,59 @@
     <!--Home-->
     <ons-template id="home.html">
         <ons-page id="home">
-            <ons-toolbar>
-                <div class="center" style="height:0%;width:0%;"></div>
-                <div class="left" style="height:0%;width:0%;"></div>
-                <div class="right" style="height:0%;width:0%;"></div>
-                <table style="height:inherit;width:inherit;text-align:center;">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto"><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
-                            </td>
-                            <td>
-                                <ons-toolbar-button id="catBtn" style="height:auto;width:auto"><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
-                            </td>
-                            <td>
+ 
+                <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+                    <div class="center" style="height:0%;width:0%;"></div>
+                    <div class="left" style="height:0%;width:0%;"></div>
+                    <div class="right" style="height:0%;width:0%;"></div>
+                    <table style="height:inherit;width:inherit;text-align:center;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto"><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
+                                </td>
+                                <td>
+                                    <ons-toolbar-button id="catBtn" style="height:auto;width:auto"><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
+                                </td>
+                                <td>
 
-                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto"><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
-                            </td>
-                            <td>
-                                <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto"><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
-                            </td>
-                            <td>
-                                <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto"><ons-icon icon="md-plus"></ons-toolbar-button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </ons-toolbar>
+                                    <ons-toolbar-button id="homeBtn" style="height:auto;width:auto"><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
+                                </td>
+                                <td>
+                                    <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto"><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
+                                </td>
+                                <td>
+                                    <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto"><ons-icon icon="md-plus"></ons-toolbar-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ons-toolbar>
+
             <ons-pull-hook id="pull-hook-mainwall">
                 Pull to refresh
             </ons-pull-hook>
-            <section style="padding: 8px;background-color:#e2e2e2;">
-                <ons-list id="pageLoaging">
-                    <ons-list-item >
-                        <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
-                        <div class="center">
-                            Follow more to populate your feed.
-                            </div>
-                     </ons-list-item>
-                </ons-list>
-                <ons-list id="mainwall">
+                    <section style="padding: 8px;background-color:#e2e2e2;">
+                        <ons-list id="pageLoaging">
+                            <ons-list-item>
+                                <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                                <div class="center">
+                                    Follow more to populate your feed.
+                                </div>
+                            </ons-list-item>
+                        </ons-list>
+                        <ons-list id="mainwall">
 
-                </ons-list>
-            </section>
-            </ons-page>
+                        </ons-list>
+                    </section>
+
+</ons-page>
     </ons-template>
     <!--Home end-->
     <!--Profile page-->
     <ons-template id="profile.html">
         <ons-page id="profile">
-            <ons-toolbar>
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <ons-back-button>Back</ons-back-button>
             </ons-toolbar>
             <div class="profile-card">
@@ -402,8 +405,8 @@
     <!--Profile page end-->
     <!-- My Account page-->
     <ons-template id="myAcc.html">
-        <ons-page id="myAcc">
-            <ons-toolbar>
+        <ons-page id="myAcc" style="padding:0px 0px 0px 0px;">
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
                 <div class="right" style="height:0%;width:0%;"></div>
@@ -461,14 +464,15 @@
                 </ons-list-item>
             </ons-list>
             <br>
-                <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top: auto;bottom: 20px;right: 20px;left: auto;position: fixed;">About us with ToC</ons-button>
+                <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top:auto;bottom:79px;right: 20px;left: auto;position: fixed;">About us with ToC</ons-button>
+                <ons-button modifier="quiet" id="bugsBtn" style="font-size:10px;top: auto;bottom: 79px;right: auto;left: 20px;position: fixed;">Report Bugs or suggestions</ons-button>
             </ons-page>
     </ons-template>
     <!--My Account page end-->
     <!-- My Uploads page-->
     <ons-template id="myUpd.html">
         <ons-page id="myUpd">
-            <ons-toolbar>
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
                 <div class="right" style="height:0%;width:0%;"></div>
@@ -495,29 +499,31 @@
                     </tbody>
                 </table>
             </ons-toolbar>
+
             <ons-pull-hook id="pull-hook-uwall">
                 Pull to refresh
-            </ons-pull-hook>          
-            <section style="padding: 8px;background-color:#e2e2e2;">
-                <ons-list id="pageLoaging">
-                    <ons-list-item>
-                        <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
-                        <div class="center">
-                            Like or Upload to populate this feed
-                        </div>
-                    </ons-list-item>
-                </ons-list>
-                <ons-list id="myUpdWall">   
-                    </ons-list>
-             </section>
-</ons-page>
+            </ons-pull-hook>
+
+                    <section style="padding: 8px;background-color:#e2e2e2;">
+                        <ons-list id="pageLoaging">
+                            <ons-list-item>
+                                <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                                <div class="center">
+                                    Like or Upload to populate this feed
+                                </div>
+                            </ons-list-item>
+                        </ons-list>
+                        <ons-list id="myUpdWall">
+                        </ons-list>
+                    </section>
+        </ons-page>
     </ons-template>
     <!--My Upload page end-->
     <!-- Categorie page-->
     <ons-template id="cat.html">
 
         <ons-page id="cat">
-            <ons-toolbar>
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
                 <div class="right" style="height:0%;width:0%;"></div>
@@ -571,7 +577,7 @@
     <!-- OnCategorie page-->
     <ons-template id="oncat.html">
         <ons-page id="oncat">
-            <ons-toolbar>
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>
@@ -594,7 +600,7 @@
     <ons-template id="uploading.html">
         <ons-page id="uploading">
 
-            <ons-toolbar>
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
                 <div class="right" style="height:0%;width:0%;"></div>
@@ -632,9 +638,9 @@
     <!-- About page-->
     <ons-template id="about.html">
         <ons-page id="about">
-            <ons-toolbar>
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
-                <div class="center">About us with Terms and Conditions</div>
+                <div class="center"></div>
             </ons-toolbar>
             <ons-list>
                 <ons-list-item>
@@ -669,8 +675,26 @@
                 </ons-page>
     </ons-template>
     <!--About page end-->
-
-
+    <!--Bugs page-->
+   <ons-template id="bugs.html">
+        <ons-page id="bugs">
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+                <div class="left"><ons-back-button>Back</ons-back-button></div>
+                <div class="center"></div>
+            </ons-toolbar>
+            <section style="padding: 8px;background-color:#e2e2e2;">
+                <ons-list>
+                    <ons-list-item>
+                        <textarea class="textarea" id="bugsText" placeholder="Bugs / Suggestions" style="width: 100%; height: 100px;"></textarea>
+                     </ons-list-item>
+                     <ons-list-item>
+                     <ons-button modifier="large--quiet" id="submitBugsBtn">Submit</ons-button>
+                     </ons-list-item>
+                 </ons-list>
+                </section>
+        </ons-page>
+    </ons-template> 
+    <!--Bugs page end-->
     <!--downloading info  temp-->
     <ons-template id="downloading.html">
         <ons-dialog id="downloadingid">

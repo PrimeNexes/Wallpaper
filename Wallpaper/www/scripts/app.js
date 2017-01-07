@@ -595,6 +595,10 @@ var myNavigator = document.getElementById('mainNavigator');
             page.querySelector('#aboutBtn').onclick = function () {
                     document.querySelector('#mainNavigator').pushPage('about.html');
             };
+            //Bugs Click
+            page.querySelector('#bugsBtn').onclick = function () {
+                document.querySelector('#mainNavigator').pushPage('bugs.html');
+            };
         }
  
         else if (page.id === 'uploading') {
@@ -1289,6 +1293,33 @@ var myNavigator = document.getElementById('mainNavigator');
             }
             //Initiate Engine
             cwallEngine();
+        }
+
+        else if (page.id === 'bugs') {
+            var userId = firebase.auth().currentUser;
+            if (userId.emailVerified) {
+                console.log('Email is verified at Bugs');
+            }
+            else {
+                page.querySelector('#submitBugsBtn').setAttribute('disabled', 'false');
+                console.log('Email is not verified at Bugs');
+
+            }
+            page.querySelector('#submitBugsBtn').onclick = function () {
+
+                var bugs = page.querySelector('#bugsText').value;
+                if (bugs.length > 19) {
+                    firebase.database().ref('userDB/' + userId.uid + '/BugsReported/').set(bugs).then(function () {
+                        document.querySelector('#mainNavigator').pushPage('myAcc.html');
+                        ons.notification.alert("Thank you for submiting your bugs.");
+                    });
+                }
+                else {
+                    ons.notification.alert("Please enter atleast 20 letters");
+                }
+                
+
+            }
         }
 
     });

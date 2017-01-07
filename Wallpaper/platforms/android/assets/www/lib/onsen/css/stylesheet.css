@@ -1099,13 +1099,19 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
   height: 56px;
-  border-bottom: 0;
-  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.3);
-  box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  border-bottom: none;
+  -webkit-box-shadow: 1px 0px 5px rgba(0,0,0,0.3);
+  box-shadow: 1px 0px 5px rgba(0,0,0,0.3);
   padding: 0;
   background-color: #212121;
   -webkit-background-size: 0;
   background-size: 0;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  border-top: 0;
+
 }
 
 .toolbar-button--material {
@@ -1155,5 +1161,13 @@
 .back-button--material:active {
   opacity: 1;
   background-color: rgba(255,255,255,0.15);
+}
+.navigation-bar + .page__background + .page__content {
+  margin-top: -1px;
+  top: 0px;
+}
+
+.navigation-bar--material + .page__background + .page__content {
+  top: 0px;
 }
 
