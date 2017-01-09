@@ -398,7 +398,7 @@
                     </ons-row>
                 </ons-list-item>
                 <ons-list-item>
-                    <ons-button modifier="large" id="followBtn">Follow</ons-button>
+                    <ons-button modifier="large--quiet" id="followBtn">Follow</ons-button>
                 </ons-list-item>
                 </ons-list>
 </ons-page>
@@ -561,15 +561,16 @@
             </section>
             <section style="padding: 8px;background-color:#e2e2e2;">
                 <ons-list-header>Hot</ons-list-header>
+                <ons-list id="pageLoaging">
+                    <ons-list-item>
+                        <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                        <div class="center" style="font-size:12px;">
+                            There might be nothing to show if you have liked everything
+                        </div>
+                    </ons-list-item>
+                </ons-list>
                 <ons-list id="random_list">
-                    <ons-list id="pageLoaging">
-                        <ons-list-item>
-                            <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
-                            <div class="center" style="font-size:12px;">
-                                There might be nothing to show if you have liked everything
-                            </div>
-                        </ons-list-item>
-                    </ons-list>
+
                 </ons-list>
             </section>
         </ons-page>
