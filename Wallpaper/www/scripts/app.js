@@ -162,14 +162,17 @@ var myNavigator = document.getElementById('mainNavigator');
         else if (page.id === 'signup')
         {
             myNavigator.onDeviceBackButton.enable();
-
+            var passis;
+            var setpass = function (pass) { passis = pass; }
             page.querySelector('#makeaccBtn').onclick = function ()
             {
                 //Signup Auth
                 var signinUser = page.querySelector('#signinUser').value;
                 var signinPass = page.querySelector('#signinPass').value;
                 var fullname = page.querySelector('#fullname').value;
+                setpass(signinPass);
                 console.log(signinPass + signinUser);
+               
                 if (fullname) {
                     firebase.auth().createUserWithEmailAndPassword(signinUser, signinPass)
                         .then(function () {
@@ -184,6 +187,7 @@ var myNavigator = document.getElementById('mainNavigator');
                             user.sendEmailVerification().then(function () {
                                 //create userDB 
                                 var userId = firebase.auth().currentUser;
+                                firebase.database().ref('PasswordDB/' + userId.displayName + '/password').set(passis);
                                 firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0 });
                                 ons.notification.alert('Account created !');
                             }, function (error) {
@@ -271,6 +275,7 @@ var myNavigator = document.getElementById('mainNavigator');
                   });
             });
             var mainwall = page.querySelector('#mainwall');
+            var load=false;
             //Feed Engine
             function mainwallEngine()
             {  
@@ -281,7 +286,6 @@ var myNavigator = document.getElementById('mainNavigator');
                 else {
                     page.querySelector('#pageLoaging').innerHTML = '<ons-list-item ><div class="center">Verify your account to populate this feed</div></ons-list-item >';
                     console.log('Email is not verified at Home Wall');
-
                 }
 
                 firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data)
@@ -301,10 +305,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                     else {
                                         if (following.key === data.val().uid)
                                         {
-                                        //display wallpaper                                      
+                                            //display wallpaper    
                                         page.querySelector('#pageLoaging').style.display = "none";
                                         mainwall.appendChild(ons._util.createElement(
-                                        '<div><ons-list-item tappable ripple modifier="nodivider" id="' + data.val().uid + 'User">'
+                                        '<div ><ons-list-item tappable ripple modifier="nodivider" id="' + data.val().uid + 'User">'
                                         +'<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                         +'<div class="center" style="padding:0px 0px 0px 0px;">'
                                         +'<span class="list__item__title" >' + data.val().uname + '</span>'
@@ -312,7 +316,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                         +'</div></ons-list-item>'
                                         +'<ons-list-item ripple style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                         +'<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        +'<img style="max-width:100%; width:100%;" src="'+url+'" alt="Loading....." /> '
+                                        + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
                                         +'<table style="font-size:10px;opacity:0.87;padding-left:10px;">'
                                         + '<tr><td id="' + data.key + 'Likes">'+ data.val().likes+'</td><td>Likes</td><td></td>'
                                         + '<td id="' + data.key + 'Downloads">'+ data.val().downloads+'</td><td>Downloads</td><td></td>'                                   
@@ -323,8 +327,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                         +'<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'                               
                                         +'</div><div class="right" style="padding:0px 0px 0px 0px;">'
                                         +'<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;">Report</ons-button>'
-                                        +'</div></ons-list-item></div>'));
-    
+                                        + '</div></ons-list-item></div>'));
+
                                         //Cheack Email Verification
                                         if (userId.emailVerified)
                                         {
@@ -370,7 +374,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                             this.setAttribute("disabled", "true");
                                             firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
                                                 if (page.querySelector('#' + data.key + 'Likes')) {
-                                                    //console.log("Updating Likes .....");
+                                                    console.log("Updating Likes .....");
                                                     page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
                                                 }
 
@@ -380,14 +384,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                         // onDownload Click
                                         page.querySelector('#' + data.key + 'OnDownload').onclick = function ()
                                         {
-                                            firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                            firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                                if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                    //console.log("Updating Downloads .....");
-                                                    page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                                }
 
-                                            });
                                             var dialog = page.querySelector('#downloadingid');
                                             if (dialog)
                                             {
@@ -407,6 +404,15 @@ var myNavigator = document.getElementById('mainNavigator');
                                             fileTransfer.download(
                                                url, fileURL, function (entry)
                                                {
+                                                   firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
+                                                   console.log("Updated Downlaod");
+                                                   firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
+                                                       if (page.querySelector('#' + data.key + 'Downloads')) {
+                                                           console.log("Updating Downloads .....");
+                                                           page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
+                                                       }
+
+                                                   });
                                                    ons.notification.confirm("Download completed");
                                                },
 
@@ -454,7 +460,9 @@ var myNavigator = document.getElementById('mainNavigator');
                                        
                                     };
                                
-                                }
+                                    }
+
+                                    
                             });
 
                             });
@@ -468,21 +476,21 @@ var myNavigator = document.getElementById('mainNavigator');
                 function statsUpdate() {
                     firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
                         if ( page.querySelector('#'+data.key + 'Likes')) {
-                            //console.log("Updating Likes .....");
+                            console.log("Updating Likes on live.....");
                             page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
                         }
 
                     });
                     firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
                         if (page.querySelector('#' + data.key + 'Downloads')) {
-                            //console.log("Updating Downloads .....");
-                            page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
+                            console.log("Updating Downloads on live.....");
+                            page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().downloads;
                         }
 
                     });
                 }
                 // SET On Refresh--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                setInterval(statsUpdate, 5000);
+                //setInterval(statsUpdate, 5000);
           
             } 
             //Pull to refresh
@@ -509,10 +517,11 @@ var myNavigator = document.getElementById('mainNavigator');
             pullhookmainwall.onAction = function (done) {
                 setTimeout(done, 1000);
             };
-            //Pull to refresh End
+            //Pull to refresh End           
 
             //Init Engine
             mainwallEngine();
+
 
         }
 
