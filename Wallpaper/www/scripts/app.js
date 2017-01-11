@@ -42,14 +42,18 @@ function profileEngine() {
         if (checkiffolwing.val() === null) {
             document.getElementById('followBtn').onclick = function () {
                 firebase.database().ref('/userDB/' + userId.uid + '/following/followingInt').once('value').then(function (followingpp) {
-                    firebase.database().ref('/userDB/' + userId.uid + '/following/followingInt').set(followingpp.val() + 1);
-                    firebase.database().ref('/userDB/' + userId.uid + '/following/' + onClickDataVar.val().uid).set(true);
-                    console.log("setting follwingInt in current user");
-                    firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/' + userId.uid).set(true);
-                    console.log("setting follwed by in profile user");
-                    firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').set(profileData.val() + 1);
-                    console.log("setting follwedbyInt in profile user");
-                    this.setAttribute("disabled", "true");
+                    try {
+                        this.setAttribute("disabled", "true");
+                        firebase.database().ref('/userDB/' + userId.uid + '/following/followingInt').set(followingpp.val() + 1);
+                        firebase.database().ref('/userDB/' + userId.uid + '/following/' + onClickDataVar.val().uid).set(true);
+                        console.log("setting follwingInt in current user");
+                        firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/' + userId.uid).set(true);
+                        console.log("setting follwed by in profile user");
+                        firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').set(profileData.val() + 1);
+                        console.log("setting follwedbyInt in profile user");}
+                    catch (error) { console.log(error); }
+
+                    
                 });
 
             };
@@ -320,10 +324,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                         +'<ons-list-item ripple style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                         +'<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                        +'<table style="font-size:10px;opacity:0.87;padding-left:10px;">'
+                                        + '<table style="font-size:10px;opacity:0.87;padding-left:10px;"><tbody>'
                                         + '<tr><td id="' + data.key + 'Likes">'+ data.val().likes+'</td><td>Likes</td><td></td>'
                                         + '<td id="' + data.key + 'Downloads">'+ data.val().downloads+'</td><td>Downloads</td><td></td>'                                   
-                                        +'</tr></table></div></ons-list-item>'
+                                        + '</tr> </tbody></table></div></ons-list-item>'
                                         +'<ons-list-item style="padding:0px 0px 0px 0px;border-bottom:8px solid #e2e2e2;" modifier="nodivider">'
                                         +'<div class="center" style="padding:0px 0px 0px 0px;">'                                  
                                         +'<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;">Like</ons-button>'               
