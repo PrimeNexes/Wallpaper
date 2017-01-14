@@ -613,50 +613,50 @@ var myNavigator = document.getElementById('mainNavigator');
             //Check Email verification
             var userId = firebase.auth().currentUser;
             function fileUploadEngine() {
-            page.querySelector('#uploadList').appendChild(ons._util.createElement('<div><ons-list-item modifier="longdivider">'
-                        +'<ons-button modifier="large--quiet" id="fileToUploadBtn">'
-                            +'<input type="file" name="fileToUpload" id="fileToUpload" multiple capture="camera" accept="image/*" style="width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />'
-                            +'<label for="fileToUpload">Select Wallpaper</label></ons-button></ons-list-item>'
-                        +'<img style="width:100%;height:auto;" id="showWallImg" />'
-                        +'<ons-list-header>Select a category</ons-list-header>'
-                        +'<ons-list-item tappable modifier="nodivider">'
-                            +'<label class="left">'
-                                +'<ons-input name="catsel" type="radio" input-id="radio-1" value="animals" checked></ons-input>'
-                           + '</label>'
-                            +'<label for="radio-1" class="center">Animals</label>'
-                        +'</ons-list-item>'
-                        +'<ons-list-item tappable modifier="nodivider">'
-                            +'<label class="left">'
-                                +'<ons-input name="catsel" type="radio" input-id="radio-2" value="cartoons"></ons-input>'
-                            +'</label>'
-                            +'<label for="radio-2" class="center">'
-                                +'Cartoons'
-                           +' </label>'
-                        +'</ons-list-item>'
-                        +'<ons-list-item tappable modifier="longdivider">'
-                           +' <label class="left">'
-                                +'<ons-input name="catsel" type="radio" input-id="radio-3" value="quotes"></ons-input>'
-                            +'</label>'
-                            +'<label for="radio-3" class="center">'
-                                +'Quotes'
-                            +'</label>'
-                        +'</ons-list-item>'
-                        +'<ons-list-item tappable >'
-                            +'<ons-button modifier="large--quiet" id="uploadWallpaperBtn">Upload</ons-button>'
-                        +'</ons-list-item></div>'));
-            if (userId.emailVerified) {
-                page.querySelector('#fileToUpload').setAttribute('disabled', '');
-                page.querySelector('#fileToUpload').removeAttribute('disabled');
-                page.querySelector('#fileToUploadBtn').setAttribute('disabled','');
-                page.querySelector('#fileToUploadBtn').removeAttribute('disabled');
-                page.querySelector('#uploadWallpaperBtn').setAttribute('disabled','');
-                page.querySelector('#uploadWallpaperBtn').removeAttribute('disabled');
-            }
-            else {
-                page.querySelector('#fileToUpload').setAttribute('disabled', '');
-                page.querySelector('#fileToUploadBtn').setAttribute('disabled', 'false');
-                page.querySelector('#uploadWallpaperBtn').setAttribute('disabled', 'false');  
-            }
+                page.querySelector('#uploadList').appendChild(ons._util.createElement('<div><ons-list-item modifier="longdivider">'
+                            + '<ons-button modifier="large--quiet" id="fileToUploadBtn">'
+                                + '<input type="file" name="fileToUpload" id="fileToUpload" multiple capture="camera" accept="image/*" style="width:inherit;height:100%;left: 0px;top: 0px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />'
+                                + '<label for="fileToUpload">Select Wallpaper</label></ons-button></ons-list-item>'
+                            + '<img style="width:100%;height:auto;" id="showWallImg" />'
+                            + '<ons-list-header>Select a category</ons-list-header>'
+                            + '<ons-list-item tappable modifier="nodivider">'
+                                + '<label class="left">'
+                                    + '<ons-input name="catsel" type="radio" input-id="radio-1" value="animals" checked></ons-input>'
+                               + '</label>'
+                                + '<label for="radio-1" class="center">Animals</label>'
+                            + '</ons-list-item>'
+                            + '<ons-list-item tappable modifier="nodivider">'
+                                + '<label class="left">'
+                                    + '<ons-input name="catsel" type="radio" input-id="radio-2" value="cartoons"></ons-input>'
+                                + '</label>'
+                                + '<label for="radio-2" class="center">'
+                                    + 'Cartoons'
+                               + ' </label>'
+                            + '</ons-list-item>'
+                            + '<ons-list-item tappable modifier="longdivider">'
+                               + ' <label class="left">'
+                                    + '<ons-input name="catsel" type="radio" input-id="radio-3" value="quotes"></ons-input>'
+                                + '</label>'
+                                + '<label for="radio-3" class="center">'
+                                    + 'Quotes'
+                                + '</label>'
+                            + '</ons-list-item>'
+                            + '<ons-list-item tappable >'
+                                + '<ons-button modifier="large--quiet" id="uploadWallpaperBtn">Upload</ons-button>'
+                            + '</ons-list-item></div>'));
+                if (userId.emailVerified) {
+                    page.querySelector('#fileToUpload').setAttribute('disabled', '');
+                    page.querySelector('#fileToUpload').removeAttribute('disabled');
+                    page.querySelector('#fileToUploadBtn').setAttribute('disabled', '');
+                    page.querySelector('#fileToUploadBtn').removeAttribute('disabled');
+                    page.querySelector('#uploadWallpaperBtn').setAttribute('disabled', '');
+                    page.querySelector('#uploadWallpaperBtn').removeAttribute('disabled');
+                }
+                else {
+                    page.querySelector('#fileToUpload').setAttribute('disabled', '');
+                    page.querySelector('#fileToUploadBtn').setAttribute('disabled', 'false');
+                    page.querySelector('#uploadWallpaperBtn').setAttribute('disabled', 'false');
+                }
 
                 page.querySelector('#fileToUpload').onchange = function () {
 
@@ -725,11 +725,12 @@ var myNavigator = document.getElementById('mainNavigator');
                 };
             };
             //Uploading Wallpaper End
-           //Initiate engine
+            //Initiate engine
             fileUploadEngine();
-               
+
 
         }
+
 
         else if (page.id === 'myUpd') {         
             //Navigator

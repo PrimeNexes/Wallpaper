@@ -323,9 +323,10 @@
         <ons-page id="home">
  
                 <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
-                    <div class="center" style="height:0%;width:0%;"></div>
+                    
                     <div class="left" style="height:0%;width:0%;"></div>
                     <div class="right" style="height:0%;width:0%;"></div>
+                    <div class="center" style="height:0%;width:0%;"></div>
                     <table style="height:inherit;width:inherit;text-align:center;">
                         <tbody>
                             <tr>
@@ -374,7 +375,7 @@
     <ons-template id="profile.html">
         <ons-page id="profile">
             <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
-                <ons-back-button>Back</ons-back-button>
+                <div class="left"><ons-back-button>Back</ons-back-button></div>
             </ons-toolbar>
             <div class="profile-card">
                 <img src="images/icon-user-default.png" class="profile-image" id="profileDPView">
@@ -397,7 +398,7 @@
                     </ons-row>
                 </ons-list-item>
                 <ons-list-item>
-                    <ons-button modifier="large" id="followBtn">Follow</ons-button>
+                    <ons-button modifier="large--quiet" id="followBtn">Follow</ons-button>
                 </ons-list-item>
                 </ons-list>
 </ons-page>
@@ -560,15 +561,16 @@
             </section>
             <section style="padding: 8px;background-color:#e2e2e2;">
                 <ons-list-header>Hot</ons-list-header>
+                <ons-list id="pageLoaging">
+                    <ons-list-item>
+                        <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                        <div class="center" style="font-size:12px;">
+                            There might be nothing to show if you have liked everything
+                        </div>
+                    </ons-list-item>
+                </ons-list>
                 <ons-list id="random_list">
-                    <ons-list id="pageLoaging">
-                        <ons-list-item>
-                            <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
-                            <div class="center" style="font-size:12px;">
-                                There might be nothing to show if you have liked everything
-                            </div>
-                        </ons-list-item>
-                    </ons-list>
+
                 </ons-list>
             </section>
         </ons-page>
@@ -629,7 +631,8 @@
             </ons-toolbar>
             <section style="padding: 8px;background-color:#e2e2e2;">
                 <ons-list id="uploadList">
-                </ons-list>
+                   
+            </ons-list>
             </section>
             <br>
         </ons-page>
