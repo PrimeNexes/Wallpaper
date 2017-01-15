@@ -31,6 +31,10 @@
                         {
                             "xml": "<feature name=\"wallpaper\"><param name=\"android-package\" value=\"fc.fcstudio.wallpaper\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -73,6 +77,9 @@
         },
         "cordova-plugin-wallpaper": {
             "PACKAGE_NAME": "io.onsen.sampleapp"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.wallchae.wallpaper"
         }
     },
     "dependent_plugins": {},
@@ -263,6 +270,14 @@
             "clobbers": [
                 "wallpaper"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+            "id": "cordova-plugin-inappbrowser.inappbrowser",
+            "clobbers": [
+                "cordova.InAppBrowser.open",
+                "window.open"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -271,6 +286,7 @@
         "cordova-plugin-whitelist": "1.3.1",
         "cordova-plugin-file-transfer": "1.6.1",
         "cordova-plugin-network-information": "1.3.1",
-        "cordova-plugin-wallpaper": "0.1.1"
+        "cordova-plugin-wallpaper": "0.1.1",
+        "cordova-plugin-inappbrowser": "1.6.1"
     }
 }

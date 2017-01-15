@@ -186,6 +186,14 @@ module.exports = [
         "clobbers": [
             "wallpaper"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -196,7 +204,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.1",
     "cordova-plugin-file-transfer": "1.6.1",
     "cordova-plugin-network-information": "1.3.1",
-    "cordova-plugin-wallpaper": "0.1.1"
+    "cordova-plugin-wallpaper": "0.1.1",
+    "cordova-plugin-inappbrowser": "1.6.1"
 };
 // BOTTOM OF METADATA
 });

@@ -156,6 +156,32 @@ var myNavigator = document.getElementById('mainNavigator');
                 });
                 //Login Auth End
             };
+            page.querySelector('#gBtn').onclick = function ()
+            {
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithRedirect(provider);
+                firebase.auth().getRedirectResult().then(function (result) {
+                    if (result.credential) {
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        var token = result.credential.accessToken;
+                        // ...
+                    }
+                    // The signed-in user info.
+                    var user = result.user;
+                }).catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                    // ...
+                });
+
+            };
+
+
             page.querySelector('#signupBtn').onclick = function ()
             {
                 document.querySelector('#mainNavigator').pushPage('signup.html');
@@ -194,8 +220,16 @@ var myNavigator = document.getElementById('mainNavigator');
                             user.sendEmailVerification().then(function () {
                                 //create userDB 
                                 var userId = firebase.auth().currentUser;
-                                firebase.database().ref('PasswordDB/' + userId.displayName + '/password').set(passis);
-                                firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0 });
+                                firebase.database().ref('PasswordDB/' + userId.displayName + '/password').set(passis);                               
+                                userId.updateProfile({
+                                    photoURL: "https://firebasestorage.googleapis.com/v0/b/onsenfb-fba00.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=4f6ab1f2-6202-453f-a54f-dead42e2e9a7"
+                                }).then(function () {
+                                    console.log("PhotoURL Set");
+                                }, function (error) {
+                                    console.log("WTf no PhotoURL Set !! Panic");
+                                });
+
+                                firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, photoURL: 'https://firebasestorage.googleapis.com/v0/b/onsenfb-fba00.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=4f6ab1f2-6202-453f-a54f-dead42e2e9a7', followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0 });
                                 ons.notification.alert('Account created !');
                             }, function (error) {
                                 ons.notification.alert("Can't send Email for verification ! Re-try sending the mail underprofile page");
@@ -282,11 +316,11 @@ var myNavigator = document.getElementById('mainNavigator');
                   });
             });
             var mainwall = page.querySelector('#mainwall');
-            var load=false;
             //Feed Engine
             function mainwallEngine()
             {  
                 var userId = firebase.auth().currentUser;
+
                 if (userId.emailVerified) {
                     console.log('Email is verified at Home Wall');
                 }
@@ -351,10 +385,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                         }
 
                                         //onDPLoad
-                                        firebase.storage().ref('profilePicture/' + data.val().uid + '/dp.jpeg').getDownloadURL().then(function (urlDP) {
+                                            firebase.database().ref('/userDB/' + data.val().uid + '/photoURL').once('value').then(function (urlDP) {
                                             var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
                                             for (var i = 0; i < DPClassId.length; i++) {
-                                                DPClassId[i].setAttribute('src', urlDP);
+                                                DPClassId[i].setAttribute('src', urlDP.val());
 
                                             }
                                         }).catch(function (error) {});
@@ -567,8 +601,11 @@ var myNavigator = document.getElementById('mainNavigator');
                     }, function () {
                         firebase.storage().ref('profilePicture/' + userId.uid + '/dp.jpeg').getDownloadURL().then(function (url)
                         {
-                            userId.updateProfile({ photoURL: url }).then(function () { console.log(userId.photoURL);});
-                                
+                            userId.updateProfile({ photoURL: url }).then(function () {
+                            firebase.database().ref('userDB/' + userId.uid).child('photoURL').set(userId.photoURL);
+
+                            });
+                            
                             page.querySelector('#profile-image-DP').setAttribute("src", url);
                         });
                         document.getElementById('uploadingDialog').hide();
@@ -731,7 +768,6 @@ var myNavigator = document.getElementById('mainNavigator');
 
         }
 
-
         else if (page.id === 'myUpd') {         
             //Navigator
             nav();
@@ -787,14 +823,13 @@ var myNavigator = document.getElementById('mainNavigator');
                                     }
 
                                     //onDPLoad
-                                    firebase.storage().ref('profilePicture/' + data.val().uid + '/dp.jpeg').getDownloadURL().then(function (urlDP) {
+                                    firebase.database().ref('userDB/' + data.val().uid + '/photoURL/').once('value').then(function (urlDP) {
                                         var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
                                         for (var i = 0; i < DPClassId.length; i++) {
-                                            DPClassId[i].setAttribute('src', urlDP);
+                                            DPClassId[i].setAttribute('src', urlDP.val());
 
                                         }
-                                    }).catch(function (error) {
-                                    });
+                                    }).catch(function (error) { });
 
                                     //onProfile Click                                                                                  
                                     var profileClassId = document.querySelectorAll('#' + data.val().uid + "User");
@@ -965,8 +1000,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                 }
                                 else {
                                     //display wallpaper 
-                                    console.log(data.val().uid);
-                                    console.log(followersLoop.val().followedByInt);
                                         page.querySelector('#pageLoaging').style.display = "none";
                                         crwall.appendChild(ons._util.createElement(
                                         '<div><ons-list-item tappable ripple modifier="nodivider" id="' + data.val().uid + 'User">'
@@ -1003,14 +1036,13 @@ var myNavigator = document.getElementById('mainNavigator');
                                         }
 
                                         //onDPLoad
-                                        firebase.storage().ref('profilePicture/' + data.val().uid + '/dp.jpeg').getDownloadURL().then(function (urlDP) {
+                                    firebase.database().ref('/userDB/' + data.val().uid + '/photoURL').once('value').then(function (urlDP) {
                                             var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
                                             for (var i = 0; i < DPClassId.length; i++) {
-                                                DPClassId[i].setAttribute('src', urlDP);
+                                                DPClassId[i].setAttribute('src', urlDP.val());
 
                                             }
                                         }).catch(function (error) { });
-
 
                                         //onProfile Click                                                                                  
                                         var profileClassId = document.querySelectorAll('#' + data.val().uid + "User");
@@ -1178,11 +1210,12 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                         }
 
+
                                         //onDPLoad
-                                        firebase.storage().ref('profilePicture/' + data.val().uid + '/dp.jpeg').getDownloadURL().then(function (urlDP) {
+                                        firebase.database().ref('/userDB/' + data.val().uid + '/photoURL').once('value').then(function (urlDP) {
                                             var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
                                             for (var i = 0; i < DPClassId.length; i++) {
-                                                DPClassId[i].setAttribute('src', urlDP);
+                                                DPClassId[i].setAttribute('src', urlDP.val());
 
                                             }
                                         }).catch(function (error) { });
