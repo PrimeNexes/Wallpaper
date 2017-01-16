@@ -280,9 +280,25 @@ var myNavigator = document.getElementById('mainNavigator');
         }
 
         if (page.id === 'home') {
+            //Check Update
+            firebase.database().ref('/Updates').on('value', function (data)
+            {
+                if (data.val() === false) { console.log("No updates"); }
+                else {
+                    ons.notification.confirm("Update your app to the latest version to continue the service.Press OK to download the app via your browser.").then(function (index) {
+                        if (index === 1) {
+                            window.open(data.val(), '_system'); // OK button
+                        }
+
+                    });
+
+                }
+            });
+
+
             //Navigator
             nav();
-
+            
             myNavigator.onDeviceBackButton=(function (event) {
                 ons.notification.confirm('Do you want to close the app?') // Ask for confirmation
                   .then(function (index) {
