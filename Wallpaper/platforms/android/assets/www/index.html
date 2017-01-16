@@ -249,9 +249,6 @@
     </ons-template>
     <ons-template id="login.html">
         <ons-page id="login" >
-            <ons-toolbar  style="bottom: 0px;right: auto;left: auto;top:auto;">
-                <div class="center">Login</div>
-            </ons-toolbar>
             <section style="padding: 8px">
                 <div style="text-align: center; margin-top: 30px;">
                     <p>
@@ -262,7 +259,7 @@
                     </p>
                     <p style="margin-top: 30px;">
                         <ons-button modifier="large--quiet" id="loginBtn">Sign in</ons-button>
-                        <ons-button modifier="quiet" id="gBtn">Sign in with G+</ons-button>
+                        <!--<ons-button modifier="quiet" id="gBtn">Sign in with G+</ons-button>-->
                     </p>
                       
                     <p style="margin-top: 30px;">
@@ -460,6 +457,9 @@
                                style="width:inherit;height:100%;left: 0px;top: 0px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
                         <label for="profileDPUpload">Upload Profile Image</label>
                     </ons-button>
+                </ons-list-item>
+                <ons-list-item id="showresend">
+                    <ons-button modifier="large--quiet" id="resendemailBtn" >Re-send authentication email</ons-button>
                 </ons-list-item>
                 <ons-list-item>
                     <ons-button modifier="large--quiet" id="logoutBtn" style="background-color:#C62828; color:white;">Log-out</ons-button>

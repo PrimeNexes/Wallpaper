@@ -1100,8 +1100,6 @@
   justify-content: space-between;
   height: 56px;
   border-bottom: none;
-  -webkit-box-shadow: 1px 0px 5px rgba(0,0,0,0.3);
-  box-shadow: 1px 0px 5px rgba(0,0,0,0.3);
   padding: 0;
   background-color: #212121;
   -webkit-background-size: 0;
@@ -1111,6 +1109,9 @@
   right: 0px;
   left: 0px;
   border-top: 0;
+  box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);
 
 }
 
@@ -1134,7 +1135,7 @@
 }
 .toolbar-button--material:active {
   opacity: 1;
-  background-color: rgba(255,255,255,0.15);
+  background-color: #212121;
 }
 .back-button--material {
   font-size: 22px;
