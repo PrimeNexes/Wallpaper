@@ -249,9 +249,6 @@
     </ons-template>
     <ons-template id="login.html">
         <ons-page id="login" >
-            <ons-toolbar  style="bottom: 0px;right: auto;left: auto;top:auto;">
-                <div class="center">Login</div>
-            </ons-toolbar>
             <section style="padding: 8px">
                 <div style="text-align: center; margin-top: 30px;">
                     <p>
@@ -262,7 +259,7 @@
                     </p>
                     <p style="margin-top: 30px;">
                         <ons-button modifier="large--quiet" id="loginBtn">Sign in</ons-button>
-                        <ons-button modifier="quiet" id="gBtn">Sign in with G+</ons-button>
+                        <!--<ons-button modifier="quiet" id="gBtn">Sign in with G+</ons-button>-->
                     </p>
                       
                     <p style="margin-top: 30px;">
@@ -461,6 +458,9 @@
                         <label for="profileDPUpload">Upload Profile Image</label>
                     </ons-button>
                 </ons-list-item>
+                <ons-list-item id="showresend">
+                    <ons-button modifier="large--quiet" id="resendemailBtn" >Re-send authentication email</ons-button>
+                </ons-list-item>
                 <ons-list-item>
                     <ons-button modifier="large--quiet" id="logoutBtn" style="background-color:#C62828; color:white;">Log-out</ons-button>
                 </ons-list-item>
@@ -558,6 +558,7 @@
                     <ons-list-item modifier="chevron" tappable id="cat_animals">Animals</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_cartoons">Cartoons</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_quotes">Quotes</ons-list-item>
+                    <ons-list-item modifier="chevron" tappable id="rb">RB</ons-list-item>
                 </ons-list>
             </section>
             <section style="padding: 8px;background-color:#e2e2e2;">
