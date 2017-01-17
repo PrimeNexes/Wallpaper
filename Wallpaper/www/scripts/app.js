@@ -341,26 +341,26 @@ var myNavigator = document.getElementById('mainNavigator');
                                             //display wallpaper    
                                         page.querySelector('#pageLoaging').style.display = "none";
                                         mainwall.appendChild(ons._util.createElement(
-                                        '<div><ons-list-item tappable ripple modifier="nodivider" id="' + data.val().uid + 'User">'
+                                        '<ons-list><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                         +'<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                         +'<div class="center" style="padding:0px 0px 0px 0px;">'
                                         +'<span class="list__item__title" >' + data.val().uname + '</span>'
                                         +'<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
                                         +'</div></ons-list-item>'
-                                        +'<ons-list-item ripple style="padding:0px 0px 0px 0px;" modifier="nodivider">'
+                                        + '<ons-list-item ripple style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                         +'<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<img style="max-width:100%; width:100%;box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);-webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);-moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);"  src="' + url + '" alt="Loading....."/> '
-                                        + '<table style="font-size:10px;opacity:0.87;padding-left:10px;font-weight: 700;"><tbody>'
-                                        + '<tr><td id="' + data.key + 'Likes">'+ data.val().likes+'</td><td>Likes</td><td></td>'
-                                        + '<td id="' + data.key + 'Downloads">'+ data.val().downloads+'</td><td>Downloads</td><td></td>'                                   
-                                        + '</tr> </tbody></table></div></ons-list-item>'
-                                        + '<ons-list-item style="padding:0px 0px 0px 0px;background-color:#424242;border-bottom:8px solid #e2e2e2;" modifier="nodivider">'
+                                        + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
+                                        + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
+                                        + '<tr><th id="' + data.key + 'Likes">'+ data.val().likes+'</th><td>Likes</td><td></td>'
+                                        + '<th id="' + data.key + 'Downloads">'+ data.val().downloads+'</th><td>Downloads</td><td></td>'                                   
+                                        + '</tr></tbody></table></div></ons-list-item>'
+                                        + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                         +'<div class="center" style="padding:0px 0px 0px 0px;">'                                  
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:white;">Like</ons-button>'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:white;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#2196F3;">Like</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#009688"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
                                         +'</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:white;">Report</ons-button>'
-                                        + '</div></ons-list-item></div>'));
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#C62828">Report</ons-button>'
+                                        + '</div></ons-list-item></ons-list>'));
 
                                         //Cheack Email Verification
                                         if (userId.emailVerified)
@@ -656,7 +656,7 @@ var myNavigator = document.getElementById('mainNavigator');
             //Check Email verification
             var userId = firebase.auth().currentUser;
             function fileUploadEngine() {
-                page.querySelector('#uploadList').appendChild(ons._util.createElement('<div><ons-list-item modifier="longdivider">'
+                page.querySelector('#uploadList').appendChild(ons._util.createElement('<div><ons-list-item modifier="longdivider" tappable>'
                             + '<ons-button modifier="large--quiet" id="fileToUploadBtn">'
                                 + '<input type="file" name="fileToUpload" id="fileToUpload" multiple capture="camera" accept="image/*" style="width:inherit;height:100%;left: 0px;top: 0px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />'
                                 + '<label for="fileToUpload">Select Wallpaper</label></ons-button></ons-list-item>'
@@ -800,7 +800,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                 if (snapshot.val() === true) {
                                     page.querySelector('#pageLoaging').style.display = "none";
                                     uwall.appendChild(ons._util.createElement(
-                                        '<div><ons-list-item tappable ripple modifier="nodivider" id="' + data.val().uid + 'User">'
+                                        '<ons-list><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                         + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<span class="list__item__title" >' + data.val().uname + '</span>'
@@ -808,17 +808,17 @@ var myNavigator = document.getElementById('mainNavigator');
                                         + '</div></ons-list-item>'
                                         + '<ons-list-item ripple style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<img style="max-width:100%; width:100%;box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);-webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);-moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);" src="' + url + '" alt="Loading....." /> '
-                                        + '<table style="font-size:10px;opacity:0.87;padding-left:10px;font-weight: 700;">'
-                                        + '<tr><td Likes">' + data.val().likes + '</td><td>Likes</td><td></td>'
-                                        + '<td Downloads">' + data.val().downloads + '</td><td>Downloads</td><td></td>'
-                                        + '</tr></table></div></ons-list-item>'
-                                        + '<ons-list-item style="padding:0px 0px 0px 0px;background-color:#424242;border-bottom:8px solid #e2e2e2;" modifier="nodivider">'
-                                        + ' <div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:white;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
+                                        + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
+                                        + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
+                                        + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
+                                        + '</tr> </tbody></table></div></ons-list-item>'
+                                        + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
+                                        + '<div class="center" style="padding:0px 0px 0px 0px;">'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
                                         + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:white;">Report</ons-button>'
-                                        + '</div></ons-list-item></div>'));
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                        + '</div></ons-list-item></ons-list>'));
                                     if (userId.emailVerified) {
                                         console.log("Email verified at Upload Wall");
                                     }
@@ -1011,7 +1011,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                     //display wallpaper 
                                         page.querySelector('#pageLoaging').style.display = "none";
                                         crwall.appendChild(ons._util.createElement(
-                                        '<div><ons-list-item tappable ripple modifier="nodivider" id="' + data.val().uid + 'User">'
+                                        '<ons-list><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                         + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<span class="list__item__title" >' + data.val().uname + '</span>'
@@ -1019,18 +1019,18 @@ var myNavigator = document.getElementById('mainNavigator');
                                         + '</div></ons-list-item>'
                                         + '<ons-list-item ripple style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<img style="max-width:100%; width:100%;box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);-webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);-moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);" src="' + url + '" alt="Loading....." /> '
-                                        + '<table style="font-size:10px;opacity:0.87;padding-left:10px;font-weight: 700;">'
-                                        + '<tr><td id="' + data.key + 'Likes">' + data.val().likes + '</td><td>Likes</td><td></td>'
-                                        + '<td id="' + data.key + 'Downloads">' + data.val().downloads + '</td><td>Downloads</td><td></td>'
-                                        + '</tr></table></div></ons-list-item>'
-                                        + '<ons-list-item style="padding:0px 0px 0px 0px;background-color:#424242;border-bottom:8px solid #e2e2e2;" modifier="nodivider">'
+                                        + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
+                                        + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
+                                        + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
+                                        + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
+                                        + '</tr> </tbody></table></div></ons-list-item>'
+                                        + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:white;">Like</ons-button>'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:white;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;">Like</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
                                         + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:white;">Report</ons-button>'
-                                        + '</div></ons-list-item></div>'));
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                        + '</div></ons-list-item></ons-list>'));
 
                                         
 
@@ -1188,7 +1188,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                         page.querySelector('#pageLoaging').style.display = "none";
 
                                         cwall.appendChild(ons._util.createElement(
-                                        '<div><ons-list-item tappable ripple modifier="nodivider" id="' + data.val().uid + 'User">'
+                                          '<ons-list><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                         + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<span class="list__item__title" >' + data.val().uname + '</span>'
@@ -1196,18 +1196,18 @@ var myNavigator = document.getElementById('mainNavigator');
                                         + '</div></ons-list-item>'
                                         + '<ons-list-item ripple style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<img style="max-width:100%; width:100%;box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);-webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);-moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);" src="' + url + '" alt="Loading....." /> '
-                                        + '<table style="font-size:10px;opacity:0.87;padding-left:10px;font-weight: 700;">'
-                                        + '<tr><td id="' + data.key + 'Likes">' + data.val().likes + '</td><td>Likes</td><td></td>'
-                                        + '<td id="' + data.key + 'Downloads">' + data.val().downloads + '</td><td>Downloads</td><td></td>'
-                                        + '</tr></table></div></ons-list-item>'
-                                        + '<ons-list-item style="padding:0px 0px 0px 0px;background-color:#424242;border-bottom:8px solid #e2e2e2;" modifier="nodivider">'
+                                        + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
+                                        + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
+                                        + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
+                                        + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
+                                        + '</tr> </tbody></table></div></ons-list-item>'
+                                        + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:white;">Like</ons-button>'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:white;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;">Like</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
                                         + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:white;">Report</ons-button>'
-                                        + '</div></ons-list-item></div>'));
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                        + '</div></ons-list-item></ons-list>'));
 
                                         //Cheack Email Verification
                                         if (userId.emailVerified) {
