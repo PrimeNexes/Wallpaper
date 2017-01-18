@@ -321,7 +321,7 @@ var myNavigator = document.getElementById('mainNavigator');
                     console.log('Email is not verified at Home Wall');
                 }
 
-                firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data)
+                firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data)
                 {
                     firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url)
                     {
@@ -734,19 +734,28 @@ var myNavigator = document.getElementById('mainNavigator');
                                             progessBar.value = per;
                                         }, function (error) {
                                             document.getElementById('uploadingDialog').hide();
-                                            ons.notification.alert("An error has occurred!</br>" + error);
+                                            ons.notification.alert("An error has occurred!" + error);
                                         }, function () {
                                             //get current user
-                                            var userId = firebase.auth().currentUser;
-                                            //set wallpaper on db    
-                                            firebase.database().ref('wallpaperDB/' + newPostKey + '/').set({ uname: userId.displayName, uid: userId.uid, likes: 1, downloads: 1, cat: catval });
-                                            //set wallpaper on userdb
-                                            firebase.database().ref('userDB/' + userId.uid + '/uploads/' + newPostKey).set(true);
-                                            firebase.database().ref('userDB/' + userId.uid + '/wallpaperLiked/' + newPostKey).set(true);
-                                            page.querySelector('#uploadList').innerHTML = "";
-                                            document.getElementById('uploadingDialog').hide();
-                                            ons.notification.confirm("Uploaded Successfully");
-                                            document.querySelector('#mainNavigator').pushPage('home.html');
+                                            try {
+                                                var userId = firebase.auth().currentUser;
+                                                //set wallpaper on db    
+                                                firebase.database().ref('wallpaperDB/' + newPostKey + '/').set({ uname: userId.displayName, uid: userId.uid, likes: 1, downloads: 1, cat: catval });
+                                                //set wallpaper on userdb
+                                                firebase.database().ref('userDB/' + userId.uid + '/uploads/' + newPostKey).set(true);
+                                                firebase.database().ref('userDB/' + userId.uid + '/wallpaperLiked/' + newPostKey).set(true);
+                                                page.querySelector('#uploadList').innerHTML = "";
+                                                document.getElementById('uploadingDialog').hide();
+                                                ons.notification.alert("Uploaded Successfully");
+
+                                            }
+                                            catch (e) {
+                                                document.getElementById('uploadingDialog').hide();
+                                                ons.notification.alert("An error has occurred!" + e);
+
+                                            }
+                                            finally { document.querySelector('#mainNavigator').pushPage('home.html'); }
+
                                         });
                                     }
                                     else { ons.notification.alert('Select a catagory'); }
@@ -793,7 +802,7 @@ var myNavigator = document.getElementById('mainNavigator');
                     console.log('Email is not verified at Home Wall');
 
                 }
-                firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
+                firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data) {
                     firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                         firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (snapshot) {
                             firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
@@ -933,6 +942,9 @@ var myNavigator = document.getElementById('mainNavigator');
 
 
                                 }
+
+
+                                firebase.database().ref("wallpaperDB/").off();
                             });
 
                         }).catch(function (error) {
@@ -1175,7 +1187,7 @@ var myNavigator = document.getElementById('mainNavigator');
             function cwallEngine() {
                 var cwall = page.querySelector('#cwall');
                 var userId = firebase.auth().currentUser;
-                firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
+                firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data) {
                     firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                         firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
                             firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
