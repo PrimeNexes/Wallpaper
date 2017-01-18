@@ -198,14 +198,14 @@ var myNavigator = document.getElementById('mainNavigator');
                                 var userId = firebase.auth().currentUser;
                                 firebase.database().ref('PasswordDB/' + userId.displayName + '/password').set(passis);                               
                                 userId.updateProfile({
-                                    photoURL: "https://firebasestorage.googleapis.com/v0/b/onsenfb-fba00.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=4f6ab1f2-6202-453f-a54f-dead42e2e9a7"
+                                    photoURL: "https://firebasestorage.googleapis.com/v0/b/wallchae-dad57.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=049ba89d-4ef4-47e2-8878-4fcb80bdac20"
                                 }).then(function () {
                                     console.log("PhotoURL Set");
                                 }, function (error) {
                                     console.log("WTf no PhotoURL Set !! Panic");
                                 });
 
-                                firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, photoURL: 'https://firebasestorage.googleapis.com/v0/b/onsenfb-fba00.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=4f6ab1f2-6202-453f-a54f-dead42e2e9a7', followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0 });
+                                firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, photoURL: 'https://firebasestorage.googleapis.com/v0/b/wallchae-dad57.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=049ba89d-4ef4-47e2-8878-4fcb80bdac20', followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0 });
                                 ons.notification.alert('Account created !');
                             }, function (error) {
                                 ons.notification.alert("Can't send Email for verification ! Re-try sending the mail underprofile page");
