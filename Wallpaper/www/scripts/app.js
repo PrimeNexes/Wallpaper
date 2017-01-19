@@ -15,6 +15,7 @@ var onCatClick = function (data) {
     onCatClickVar = data;
 };
 
+
 function profileEngine() {
     var userId = firebase.auth().currentUser;
     document.getElementById('profileUsername').innerHTML = '@' + onClickDataVar.val().uname;
@@ -279,18 +280,33 @@ var myNavigator = document.getElementById('mainNavigator');
 
         if (page.id === 'home') {
             //Check Update
-            firebase.database().ref('/Updates').on('value', function (data)
+            firebase.database().ref('/Updates').on('value', function (updatedata)
             {
-                if (data.val() === false) { console.log("No updates"); }
-                else {
-                    ons.notification.confirm("Update your app to the latest version to continue the service.Press OK to download the app via your browser.").then(function (index) {
-                        if (index === 1) {
-                            window.open(data.val(), '_system'); // OK button
+         
+                var userId = firebase.auth().currentUser;
+                firebase.database().ref('/userDB/' + userId.uid + '/updated').once('value', function (data) {
+                    console.log(updatedata.val().ver);
+                    console.log(data.val());
+                    if (updatedata.val().ver === data.val()) {
+                        console.log(updatedata.val().ver);
+                    }
+                    else {
+
+                        if (updatedata.val().link === false) { console.log("No updates"); }
+                        else {
+                            ons.notification.confirm("Update your app to the latest version to continue the service.Press OK to download the app via your browser.").then(function (index) {
+                                if (index === 1) {
+                                    window.open(updatedata.val().link, '_system'); // OK button
+                                    firebase.database().ref('/userDB/' + userId.uid + 'updated').set(updatedata.val().ver);
+                                }
+
+                            });
+
                         }
+                    }
 
-                    });
+                });
 
-                }
             });
 
 
