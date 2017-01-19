@@ -21,10 +21,10 @@ function profileEngine() {
     firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/fullname').once('value').then(function (profileData) {
         document.getElementById('profileFullname').innerHTML = profileData.val();
     });
-    firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').once('value').then(function (profileData) {
+    firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').on('value',function (profileData) {
         document.getElementById('profileFollowers').innerHTML = profileData.val();
     });
-    firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/following/followingInt').once('value').then(function (profileData) {
+    firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/following/followingInt').on('value',function (profileData) {
         document.getElementById('profileFollowing').innerHTML = profileData.val();
     });
     firebase.storage().ref('profilePicture/' + onClickDataVar.val().uid + '/dp.jpeg').getDownloadURL().then(function (urlDP) {
@@ -32,7 +32,7 @@ function profileEngine() {
     }).catch(function (error) { });
 
 
-    if (userId.emailVerified) { }
+    if (userId.emailVerified) { console.log('Email is verified at Profile'); }
     else { document.getElementById('followBtn').setAttribute("disabled", "true"); console.log('Email is not verified at Profile'); }
     firebase.database().ref('/userDB/' + userId.uid + '/following/' + onClickDataVar.val().uid).once('value').then(function (checkiffolwing) {
         if (checkiffolwing.val() === true) {
@@ -42,18 +42,16 @@ function profileEngine() {
         if (checkiffolwing.val() === null) {
             document.getElementById('followBtn').onclick = function () {
                 firebase.database().ref('/userDB/' + userId.uid + '/following/followingInt').once('value').then(function (followingpp) {
-                    try {
-                        this.setAttribute("disabled", "true");
+                    firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').once('value').then(function (followedpp) {
+                        document.getElementById('followBtn').setAttribute("disabled", "true");
                         firebase.database().ref('/userDB/' + userId.uid + '/following/followingInt').set(followingpp.val() + 1);
                         firebase.database().ref('/userDB/' + userId.uid + '/following/' + onClickDataVar.val().uid).set(true);
                         console.log("setting follwingInt in current user");
                         firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/' + userId.uid).set(true);
                         console.log("setting follwed by in profile user");
-                        firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').set(profileData.val() + 1);
-                        console.log("setting follwedbyInt in profile user");}
-                    catch (error) { console.log(error); }
-
-                    
+                        firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').set(followedpp.val() + 1);
+                        console.log("setting follwedbyInt in profile user");
+                        });                  
                 });
 
             };
