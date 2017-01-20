@@ -279,36 +279,6 @@ var myNavigator = document.getElementById('mainNavigator');
         }
 
         if (page.id === 'home') {
-            //Check Update
-            firebase.database().ref('/Updates').on('value', function (updatedata)
-            {
-         
-                var userId = firebase.auth().currentUser;
-                firebase.database().ref('/userDB/' + userId.uid + '/updated').once('value', function (data) {
-                    console.log(updatedata.val().ver);
-                    console.log(data.val());
-                    if (updatedata.val().ver === data.val()) {
-                        console.log(updatedata.val().ver);
-                    }
-                    else {
-
-                        if (updatedata.val().link === false) { console.log("No updates"); }
-                        else {
-                            ons.notification.confirm("Update your app to the latest version to continue the service.Press OK to download the app via your browser.").then(function (index) {
-                                if (index === 1) {
-                                    window.open(updatedata.val().link, '_system'); // OK button
-                                    firebase.database().ref('/userDB/' + userId.uid + 'updated').set(updatedata.val().ver);
-                                }
-
-                            });
-
-                        }
-                    }
-
-                });
-
-            });
-
 
             //Navigator
             nav();
@@ -324,32 +294,40 @@ var myNavigator = document.getElementById('mainNavigator');
             var mainwall = page.querySelector('#mainwall');
             //Feed Engine
             function mainwallEngine()
-            {  
+            {
+                //Verify Email
                 var userId = firebase.auth().currentUser;
 
                 if (userId.emailVerified) {
                     console.log('Email is verified at Home Wall');
+
                 }
                 else {
                     page.querySelector('#pageLoaging').innerHTML = '<ons-list-item ><div class="center">Verify your account to populate this feed</div></ons-list-item >';
                     console.log('Email is not verified at Home Wall');
                 }
-
+               
                 firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data)
                 {
                     firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url)
                     {
                         firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop)
                         {
-                            firebase.database().ref('/userDB/' + data.val().uid + '/followedBy').on('value', function (followersLoop)
+                            firebase.database().ref('/userDB/' + data.val().uid + '/followedBy').once('value').then( function (followersLoop)
                             {
-                                firebase.database().ref('/userDB/' + userId.uid + '/following/').on("child_added", function (following) {
-                                
+                                firebase.database().ref('/userDB/' + userId.uid + '/following/').once("child_added").then( function (following) {
+
                                     if (userWallLoop.val() === true)
                                     {
                                         //Not printing liked contents
                                     }
                                     else {
+                                        if (following.val() === 0) {
+                                            page.querySelector('#pageLoaging').style.display = "none";
+                                            mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
+                                            page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
+
+                                        }
                                         if (following.key === data.val().uid)
                                         {
                                             //display wallpaper    
@@ -674,7 +652,7 @@ var myNavigator = document.getElementById('mainNavigator');
                             + '<ons-button modifier="large--quiet" id="fileToUploadBtn">'
                                 + '<input type="file" name="fileToUpload" id="fileToUpload" multiple capture="camera" accept="image/*" style="width:inherit;height:100%;left: 0px;top: 0px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />'
                                 + '<label for="fileToUpload">Select Wallpaper</label></ons-button></ons-list-item>'
-                            + '<img style="width:100%;height:auto;" id="showWallImg" />'
+                            + '<div id="afterUpload" style=" visibility: hidden;"><img style="width:100%;height:auto;" id="showWallImg" />'
                             + '<ons-list-header>Select a category</ons-list-header>'
                             + '<ons-list-item tappable modifier="nodivider">'
                                 + '<label class="left">'
@@ -700,7 +678,7 @@ var myNavigator = document.getElementById('mainNavigator');
                             + '</ons-list-item>'
                             + '<ons-list-item tappable >'
                                 + '<ons-button modifier="large--quiet" id="uploadWallpaperBtn">Upload</ons-button>'
-                            + '</ons-list-item></div>'));
+                            + '</ons-list-item></div></div>'));
                 if (userId.emailVerified) {
                     page.querySelector('#fileToUpload').setAttribute('disabled', '');
                     page.querySelector('#fileToUpload').removeAttribute('disabled');
@@ -719,6 +697,7 @@ var myNavigator = document.getElementById('mainNavigator');
 
                     var fileTBU = page.querySelector('#fileToUpload').files[0];
                     if (fileTBU) {
+                        page.querySelector('#afterUpload').style. visibility = 'visible';
                         var img = page.querySelector('#showWallImg');
                         var checkimg = new Image();
                         checkimg.src = window.URL.createObjectURL(fileTBU);
@@ -1028,7 +1007,6 @@ var myNavigator = document.getElementById('mainNavigator');
                     firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                         firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
                             firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
-                                console.log(data.key);
                                 if (userWallLoop.val() === true) {
                                     //Not printing liked contents
                                 }                              
