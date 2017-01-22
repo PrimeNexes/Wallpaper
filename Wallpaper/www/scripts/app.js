@@ -758,14 +758,14 @@ var myNavigator = document.getElementById('mainNavigator');
                 document.querySelector('#mainNavigator').pushPage('home.html');
             });
             var uwall = page.querySelector('#myUpdWall');
+
             // Feed Engine
             function uwallEngine() {
-
                 var userId = firebase.auth().currentUser;
                 if (userId.emailVerified) {
-                    console.log('Email is verified at Home Wall');
-
-                    firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data) {
+                    console.log('Email is verified at Upload Wall');
+                    firebase.database().goOnline();
+                    firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
                         firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (snapshot) {
                                 firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
@@ -902,12 +902,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                             };
 
                                         };
-
-
                                     }
-
-
-                                    firebase.database().ref("wallpaperDB/").off();
+                              
                                 });
 
                             }).catch(function (error) {
