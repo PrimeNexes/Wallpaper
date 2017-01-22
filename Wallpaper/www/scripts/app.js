@@ -663,7 +663,7 @@ var myNavigator = document.getElementById('mainNavigator');
                             var checkimg = new Image();
                             checkimg.src = window.URL.createObjectURL(fileTBU);
                             checkimg.onload = function () {
-                                if (checkimg.width === 1080 && checkimg.height === 1920) {
+                                if ((checkimg.width === 1080 && checkimg.height === 1920) || (checkimg.width === 1440 && checkimg.height === 2560)) {
                                     img.src = window.URL.createObjectURL(fileTBU);
                                     page.querySelector('#uploadWallpaperBtn').onclick = function () {
                                         var catval;
