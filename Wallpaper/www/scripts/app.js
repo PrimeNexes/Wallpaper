@@ -711,7 +711,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 }
                                                 catch (e) {
                                                     document.getElementById('uploadingDialog').hide();
-                                                    ons.notification.alert("An error has occurred!" + e);
+                                                    ons.notification.alert("An error has occurred! Try again :(" );
 
                                                 }
                                                 finally { document.querySelector('#mainNavigator').pushPage('home.html'); }
@@ -722,7 +722,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                     }
                                 }
                                 else {
-                                    ons.notification.confirm("You can't upload Low Quality Wallpapers ! Wallpaper must have Heigh 1920 and Width 1080");
+                                    ons.notification.confirm("You can't upload Low Quality Wallpapers, it must be atleaset 1080 x 1920");
                                     document.getElementById('uploadingDialog').hide();
                                 }
                             }
