@@ -319,9 +319,7 @@
     <!--Home-->
     <ons-template id="home.html">
         <ons-page id="home">
- 
-                <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
-                    
+                <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">                    
                     <div class="left" style="height:0%;width:0%;"></div>
                     <div class="right" style="height:0%;width:0%;"></div>
                     <div class="center" style="height:0%;width:0%;"></div>
@@ -353,8 +351,8 @@
                 Pull to refresh
             </ons-pull-hook>
                     <section >
-                        <ons-list id="pageLoaging">
-                            <ons-list-item>
+                        <ons-list modifier="inset" id="pageLoaging">
+                            <ons-list-item tappable id="loadingBtn">
                                 <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
                                 <div class="center">
                                     Follow more to populate your feed.
@@ -382,7 +380,7 @@
                  <!--<div class="profile-desc">Freelance designer, software engineer and cyclist</div>-->
 
             </div>
-            <ons-list>
+            <ons-list modifier="inset">
                 <ons-list-item>
                     <ons-row>
                         <ons-col class="info-col">
@@ -438,7 +436,7 @@
                 <div class="profile-id" id="my-username">@davegraham</div>
                  <!--<div class="profile-desc">Freelance designer, software engineer and cyclist</div>-->
             </div>
-            <ons-list>
+            <ons-list modifier="inset">
                 <ons-list-item>
                     <ons-row>
                         <ons-col class="info-col">
@@ -505,8 +503,8 @@
             <ons-pull-hook id="pull-hook-uwall">
                 Pull to refresh
             </ons-pull-hook>
-                        <ons-list id="pageLoaging">
-                            <ons-list-item>
+                        <ons-list modifier="inset" id="pageLoaging">
+                            <ons-list-item modifier="inset">
                                 <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
                                 <div class="center">
                                     Like or Upload to populate this feed
@@ -554,11 +552,14 @@
                     <ons-list-header>Categories</ons-list-header>
                     <ons-list-item modifier="chevron" tappable id="cat_animals">Animals</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_cartoons">Cartoons</ons-list-item>
+                    <ons-list-item modifier="chevron" tappable id="cat_people">People</ons-list-item>
+                    <ons-list-item modifier="chevron" tappable id="cat_superheros">Superheros</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_quotes">Quotes</ons-list-item>
+
                 </ons-list>
 
-                <ons-list-header style="background-color:#FAFAFA;">Hot</ons-list-header>
-                <ons-list id="pageLoaging">
+                <ons-list-header style="background-color:#FAFAFA;">The 25's</ons-list-header>
+                <ons-list modifier="inset" id="pageLoaging">
                     <ons-list-item>
                         <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
                         <div class="center" style="font-size:12px;">
@@ -580,7 +581,7 @@
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>
-                <ons-list id="pageLoaging">
+                <ons-list modifier="inset" id="pageLoaging">
                     <ons-list-item>
                         <div class="left"><ons-progress-circular indeterminate></ons-progress-circular></div>
                         <div class="center" style="font-size:12px;">
@@ -625,9 +626,9 @@
                     </tbody>
                 </table>
             </ons-toolbar>
-            <ons-list id="uploadList">
+            <div id="uploadList">
                    
-            </ons-list>
+            </div>
 
             <br>
         </ons-page>
@@ -640,7 +641,7 @@
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>
-            <ons-list>
+            <ons-list modifier="inset">
                 <ons-list-item style="background-color:#e2e2e2;">
                         Terms and Conditions
                         <br />
@@ -676,7 +677,7 @@
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>
-                <ons-list>
+                <ons-list modifier="inset">
                     <ons-list-item>
                         <textarea class="textarea" id="bugsText" placeholder="Bugs / Suggestions" style="width: 100%; height: 100px;"></textarea>
                      </ons-list-item>
@@ -709,7 +710,7 @@
     <!--Uploading dialog End-->
     <!--Report-->
         <ons-popover direction="up" id="popoverReport" cancelable>
-            <ons-list>
+            <ons-list modifier="inset">
                 <ons-list-header>Report</ons-list-header>
                 <ons-list-item tappable>
                     <label class="left">
