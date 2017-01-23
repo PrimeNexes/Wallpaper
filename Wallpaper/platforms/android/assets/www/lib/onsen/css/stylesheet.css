@@ -1309,3 +1309,8 @@ input:disabled + .switch__toggle {
 .list__item {
     padding-left: 12px;
 }
+
+.page__background {
+background-color:#FAFAFA;
+
+}

@@ -74,21 +74,21 @@ var myNavigator = document.getElementById('mainNavigator');
         var nav = function () {
 
             page.querySelector('#myLikesBtn').onclick = function () {
-                document.querySelector('#mainNavigator').pushPage('myUpd.html');
+                document.querySelector('#mainNavigator').pushPage('myUpd.html',{ animation: "none" });
             };
             page.querySelector('#homeBtn').onclick = function () {
-                document.querySelector('#mainNavigator').pushPage('home.html');
+                document.querySelector('#mainNavigator').pushPage('home.html', { animation: "none" });
             };
             page.querySelector('#catBtn').onclick = function () {
-                document.querySelector('#mainNavigator').pushPage('cat.html');
+                document.querySelector('#mainNavigator').pushPage('cat.html', { animation: "none" });
             };
             page.querySelector('#myAccBtn').onclick = function () {
 
-                document.querySelector('#mainNavigator').pushPage('myAcc.html');
+                document.querySelector('#mainNavigator').pushPage('myAcc.html', { animation: "none" });
             };
             page.querySelector('#tuploadBtn').onclick = function () {
 
-                document.querySelector('#mainNavigator').pushPage('uploading.html');
+                document.querySelector('#mainNavigator').pushPage('uploading.html', { animation: "none" });
             };
 
 
@@ -758,18 +758,17 @@ var myNavigator = document.getElementById('mainNavigator');
                 document.querySelector('#mainNavigator').pushPage('home.html');
             });
             var uwall = page.querySelector('#myUpdWall');
-
             // Feed Engine
             function uwallEngine() {
-                var userId = firebase.auth().currentUser;
+                var userId = firebase.auth().currentUser;               
                 if (userId.emailVerified) {
-                    console.log('Email is verified at Upload Wall');
-                    firebase.database().goOnline();
+                    console.log('Email is verified at Upload Wall ');
                     firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
                         firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (snapshot) {
                                 firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
-                                    if (snapshot.val() === true) {
+                                    if (snapshot.val() === true) {  
+                                        // Feed Engine
                                         page.querySelector('#pageLoaging').style.display = "none";
                                         uwall.appendChild(ons._util.createElement(
                                             '<ons-list modifier="inset"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
@@ -902,6 +901,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                             };
 
                                         };
+
+
                                     }
                               
                                 });
@@ -948,6 +949,8 @@ var myNavigator = document.getElementById('mainNavigator');
 
             //Init upload wallpaper
             uwallEngine();
+
+
 
         }
 
