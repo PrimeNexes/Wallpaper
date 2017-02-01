@@ -278,11 +278,11 @@ var myNavigator = document.getElementById('mainNavigator');
                     //On Loaging click
                     page.querySelector('#loadingBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); };
                    
-                    firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data) {
+                    firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(50).on('child_added', function (data) {
                         firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
                                 firebase.database().ref('/userDB/' + data.val().uid + '/followedBy').once('value').then(function (followersLoop) {
-                                    firebase.database().ref('/userDB/' + userId.uid + '/following/').once("child_added").then(function (following) {                        
+                                    firebase.database().ref('/userDB/' + userId.uid + '/following/').once('child_added').then(function (following) {                        
                                         if (userWallLoop.val() === true) {
                                             //Not printing liked contents
                                         }
@@ -306,17 +306,22 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                                 + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                                 + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                                + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
-                                                + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
-                                                + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
-                                                + '</tr></tbody></table></div></ons-list-item>'
+                                                + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
+                                                + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                                + '</div></ons-list-item>'
                                                 + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                                 + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#2196F3;">Like</ons-button>'
-                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#009688"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
+                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
                                                 + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#C62828">Report</ons-button>'
+                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
                                                 + '</div></ons-list-item></ons-list>'));
+
+                                                //On Like and Download
+                                                firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                                    document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                                    document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
+                                                });
 
                                                 //Cheack Email Verification
                                                 if (userId.emailVerified) {
@@ -358,13 +363,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
                                                     firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
                                                     this.setAttribute("disabled", "true");
-                                                    firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
-                                                        if (page.querySelector('#' + data.key + 'Likes')) {
-                                                            console.log("Updating Likes .....");
-                                                            page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
-                                                        }
-
-                                                    });
                                                     console.log('Liked');
                                                 };
                                                 // onDownload Click
@@ -388,13 +386,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                                        url, fileURL, function (entry) {
                                                            firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
                                                            console.log("Updated Downlaod");
-                                                           firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                                               if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                                   console.log("Updating Downloads .....");
-                                                                   page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                                               }
-
-                                                           });
                                                            ons.notification.confirm("Download completed");
                                                        },
 
@@ -437,8 +428,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 };
 
                                             };
-
-
 
                                         }
                                   
@@ -783,16 +772,24 @@ var myNavigator = document.getElementById('mainNavigator');
                                             + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                             + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                             + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                            + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
-                                            + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
-                                            + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
-                                            + '</tr> </tbody></table></div></ons-list-item>'
+                                            + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
+                                            + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                            + '</div></ons-list-item>'
                                             + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                             + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
                                             + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
                                             + '</div></ons-list-item></ons-list>'));
+
+                                        //On Like and Download
+                                        firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                            document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                            document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
+                                        });
+
+
+
                                         if (userId.emailVerified) {
                                             console.log("Email verified at Upload Wall");
                                         }
@@ -834,13 +831,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                         //OnDownload Click
                                         page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
                                             firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                            firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                                if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                    //console.log("Updating Downloads .....");
-                                                    page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                                }
-
-                                            });
                                             var dialog = page.querySelector('#downloadingid');
 
                                             if (dialog) {
@@ -967,7 +957,6 @@ var myNavigator = document.getElementById('mainNavigator');
                 onCatClick('animals');
                 document.querySelector('#mainNavigator').pushPage('oncat.html',{data: {title: 'Animals'}});
             };
-
             page.querySelector('#cat_cartoons').onclick = function () {
                 onCatClick('cartoons');
                 document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Cartoons' } });
@@ -1010,19 +999,24 @@ var myNavigator = document.getElementById('mainNavigator');
                                     + '<ons-list-item  style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                     + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                    + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
-                                    + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
-                                    + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
-                                    + '</tr> </tbody></table></div></ons-list-item>'
+                                    + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
+                                    + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                    + '</div></ons-list-item>'
                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;">Like</ons-button>'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
                                     + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
                                     + '</div></ons-list-item></ons-list>'));
 
-                                        
+
+                                    //On Like and Download
+                                    firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                        document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                        document.getElementById(data.key + 'Downloads').innerHTML =  data.val().downloads;
+                                    });
+
 
 
                                     //Cheack Email Verification
@@ -1068,26 +1062,12 @@ var myNavigator = document.getElementById('mainNavigator');
                                         firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
                                         firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
                                         this.setAttribute("disabled", "true");
-                                        firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
-                                            if (page.querySelector('#' + data.key + 'Likes')) {
-                                                //console.log("Updating Likes .....");
-                                                page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
-                                            }
-
-                                        });
                                         console.log('Liked');
                                     };
 
                                     // onDownload Click
                                     page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
                                         firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                        firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                            if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                //console.log("Updating Downloads .....");
-                                                page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                            }
-
-                                        });
                                         var dialog = page.querySelector('#downloadingid');
                                         if (dialog) {
                                             dialog.show();
@@ -1190,17 +1170,24 @@ var myNavigator = document.getElementById('mainNavigator');
                                         + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                        + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
-                                        + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
-                                        + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
-                                        + '</tr> </tbody></table></div></ons-list-item>'
+                                    + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
+                                    + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                        + '</div></ons-list-item>'
                                         + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;">Like</ons-button>'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
                                         + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
                                         + '</div></ons-list-item></ons-list>'));
+
+
+                                        //On Like and Download
+                                        firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                            document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                            document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
+                                        });
+
 
                                         //Cheack Email Verification
                                         if (userId.emailVerified) {
@@ -1247,26 +1234,12 @@ var myNavigator = document.getElementById('mainNavigator');
                                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
                                             firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
                                             this.setAttribute("disabled", "true");
-                                            firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
-                                                if (page.querySelector('#' + data.key + 'Likes')) {
-                                                    //console.log("Updating Likes .....");
-                                                    page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
-                                                }
-
-                                            });
                                             console.log('Liked');
                                         };
 
                                         // onDownload Click
                                         page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
                                             firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                            firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                                if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                    //console.log("Updating Downloads .....");
-                                                    page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                                }
-
-                                            });
                                             var dialog = page.querySelector('#downloadingid');
                                             if (dialog) {
                                                 dialog.show();
