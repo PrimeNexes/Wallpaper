@@ -15,7 +15,15 @@ var onCatClick = function (data) {
     onCatClickVar = data;
 };
 
-
+function noload() {
+    if (document.getElementById('loading')) {
+        document.getElementById('loading').innerHTML = "<ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon>";
+    }
+    if (document.getElementById('loading2')) {
+        document.getElementById('loading2').innerHTML = "<ons-icon icon='md-assignment-alert' class='list__item__icon'></ons-icon>";
+    }
+}
+//On Noload
 function profileEngine() {
     var userId = firebase.auth().currentUser;
     document.getElementById('profileUsername').innerHTML = '@' + onClickDataVar.val().uname;
@@ -36,11 +44,8 @@ function profileEngine() {
     if (userId.emailVerified) { console.log('Email is verified at Profile'); }
     else { document.getElementById('followBtn').setAttribute("disabled", "true"); console.log('Email is not verified at Profile'); }
     firebase.database().ref('/userDB/' + userId.uid + '/following/' + onClickDataVar.val().uid).once('value').then(function (checkiffolwing) {
-        if (checkiffolwing.val() === true) {
-            console.log("disabling");
-            document.getElementById('followBtn').setAttribute("disabled", "true");
-        };
         if (checkiffolwing.val() === null) {
+            document.getElementById('followBtn').removeAttribute("disabled");
             document.getElementById('followBtn').onclick = function () {
                 firebase.database().ref('/userDB/' + userId.uid + '/following/followingInt').once('value').then(function (followingpp) {
                     firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').once('value').then(function (followedpp) {
@@ -52,16 +57,12 @@ function profileEngine() {
                         console.log("setting follwed by in profile user");
                         firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/followedBy/followedByInt').set(followedpp.val() + 1);
                         console.log("setting follwedbyInt in profile user");
-                        });                  
+                    });
                 });
 
             };
 
-        }
-        else if (checkiffolwing.val() === true) {
-            console.log("disabling");
-            document.getElementById('followBtn').setAttribute("disabled", "true");
-        }
+        };
     });
 
 };
@@ -72,7 +73,7 @@ var myNavigator = document.getElementById('mainNavigator');
         firebase.database().goOnline();
         var page = event.target;
         var nav = function () {
-
+            setTimeout(noload, 5000);
             page.querySelector('#myLikesBtn').onclick = function () {
                 document.querySelector('#mainNavigator').pushPage('myUpd.html',{ animation: "none" });
             };
@@ -256,7 +257,8 @@ var myNavigator = document.getElementById('mainNavigator');
 
             //Navigator
             nav();
-            
+
+
             myNavigator.onDeviceBackButton=(function (event) {
                 ons.notification.confirm('Do you want to close the app?') // Ask for confirmation
                   .then(function (index) {
@@ -271,29 +273,28 @@ var myNavigator = document.getElementById('mainNavigator');
             {
                 //Verify Email
                 var userId = firebase.auth().currentUser;
-
                 if (userId.emailVerified) {
                     console.log('Email is verified at Home Wall');
                     //On Loaging click
                     page.querySelector('#loadingBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); };
+                   
                     firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data) {
                         firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
                                 firebase.database().ref('/userDB/' + data.val().uid + '/followedBy').once('value').then(function (followersLoop) {
-                                    firebase.database().ref('/userDB/' + userId.uid + '/following/').once("child_added").then(function (following) {
-
+                                    firebase.database().ref('/userDB/' + userId.uid + '/following/').once("child_added").then(function (following) {                        
                                         if (userWallLoop.val() === true) {
                                             //Not printing liked contents
                                         }
                                         else {
+                                         
                                             if (following.val() === 0) {
-                                                page.querySelector('#pageLoaging').style.display = "none";
-                                                mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
-                                                page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
-
+                                                    page.querySelector('#pageLoaging').style.display = "none";
+                                                    mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
+                                                    page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
                                             }
                                             if (following.key === data.val().uid) {
-                                                //display wallpaper    
+                                                //display wallpaper   
                                                 page.querySelector('#pageLoaging').style.display = "none";
                                                 mainwall.appendChild(ons._util.createElement(
                                                 '<ons-list modifier="inset"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
@@ -328,6 +329,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     console.log('Email is not verified at Home Wall');
 
                                                 }
+ 
                                                 //onDPLoad
                                                 firebase.database().ref('/userDB/' + data.val().uid + '/photoURL').once('value').then(function (urlDP) {
                                                     var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
@@ -436,8 +438,11 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                             };
 
-                                        }
 
+
+                                        }
+                                  
+                              
 
                                     });
 
@@ -481,8 +486,6 @@ var myNavigator = document.getElementById('mainNavigator');
 
             //Init Engine
             mainwallEngine();
-
-
         }
 
         else if (page.id === 'myAcc')
@@ -950,8 +953,6 @@ var myNavigator = document.getElementById('mainNavigator');
             //Init upload wallpaper
             uwallEngine();
 
-
-
         }
 
         else if (page.id === 'cat')
@@ -1366,7 +1367,6 @@ var myNavigator = document.getElementById('mainNavigator');
             }
         }
     });
-
     document.addEventListener("offline", function () {
         ons.notification.confirm('No Internet conenction found.Exit ?') // Ask for confirmation
         .then(function (index) {
