@@ -15,15 +15,7 @@ var onCatClickVar;
 var onCatClick = function (data) {
     onCatClickVar = data;
 };
-//On Noload
-function noload() {
-    if (document.getElementById('loading')) {
-        document.getElementById('loading').innerHTML = "<ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon>";
-    }
-    if (document.getElementById('loading2')) {
-        document.getElementById('loading2').innerHTML = "<ons-icon icon='md-assignment-alert' class='list__item__icon'></ons-icon>";
-    }
-}
+
 
 function profileEngine() {
     var userId = firebase.auth().currentUser;
@@ -74,7 +66,6 @@ var myNavigator = document.getElementById('mainNavigator');
         firebase.database().goOnline();
         var page = event.target;
         var nav = function () {
-            setTimeout(noload, 5000);
             page.querySelector('#myLikesBtn').onclick = function () {
                 document.querySelector('#mainNavigator').pushPage('myUpd.html',{ animation: "none" });
             };
@@ -310,7 +301,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                         else {
                                          
                                             if (following.val() === 0) {
-                                                    page.querySelector('#pageLoaging').style.display = "none";
+                                                page.querySelector('#pageLoaging').style.display = "none";
+                                                page.querySelector('#loading').style.visibility = "hidden";
                                                     mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
                                                     page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
                                             }
@@ -322,6 +314,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                                                                                                                     
                                                     wallArray.push(data.key);
                                                     page.querySelector('#pageLoaging').style.display = "none";
+                                                    page.querySelector('#loading').style.visibility = "hidden";
                                                     mainwall.appendChild(ons._util.createElement(
                                                     '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                                     + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
@@ -508,7 +501,7 @@ var myNavigator = document.getElementById('mainNavigator');
             //Init Engine
             mainwallEngine();
             //On Last Page
-            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5;  mainwallEngine(); setTimeout(done, 1000); }
+            page.onInfiniteScroll = function (done) { page.querySelector('#loading').style.visibility = "visible";  limitToFirstInt = limitToFirstInt + 5; mainwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'myAcc')
@@ -805,6 +798,7 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                         wallArray.push(data.key);
                                         page.querySelector('#pageLoaging').style.display = "none";
+                                        page.querySelector('#loading').style.visibility = "hidden";
                                         uwall.appendChild(ons._util.createElement(
                                         '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                             + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
@@ -993,7 +987,7 @@ var myNavigator = document.getElementById('mainNavigator');
             //Init upload wallpaper
             uwallEngine();
             //On Last Page
-            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; uwallEngine(); setTimeout(done, 1000); }
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; page.querySelector('#loading').style.visibility = "visible"; uwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'cat')
@@ -1049,6 +1043,7 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                     wallArray.push(data.key);
                                     page.querySelector('#pageLoaging').style.display = "none";
+                                    page.querySelector('#loading').style.visibility = "hidden";
                                     crwall.appendChild(ons._util.createElement(
                                     '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                     + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
@@ -1200,7 +1195,7 @@ var myNavigator = document.getElementById('mainNavigator');
             crEngine();                    
 
             //On Last Page
-            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; crEngine(); setTimeout(done, 1000); }
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; page.querySelector('#loading').style.visibility = "visible"; crEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'oncat')
@@ -1236,6 +1231,7 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                         wallArray.push(data.key);
                                         page.querySelector('#pageLoaging').style.display = "none";
+                                        page.querySelector('#loading').style.visibility = "hidden";
                                         cwall.appendChild(ons._util.createElement(
                                         '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                         + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
@@ -1388,7 +1384,7 @@ var myNavigator = document.getElementById('mainNavigator');
             //Initiate Engine
             cwallEngine();
             //On Last Page
-            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; cwallEngine(); setTimeout(done, 1000); }
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; page.querySelector('#loading').style.visibility = "visible"; cwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'bugs')
