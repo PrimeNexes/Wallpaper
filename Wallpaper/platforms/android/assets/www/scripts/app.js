@@ -1,4 +1,5 @@
 ﻿//Main
+const version = 0.31;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -14,7 +15,7 @@ var onCatClickVar;
 var onCatClick = function (data) {
     onCatClickVar = data;
 };
-
+//On Noload
 function noload() {
     if (document.getElementById('loading')) {
         document.getElementById('loading').innerHTML = "<ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon>";
@@ -23,7 +24,7 @@ function noload() {
         document.getElementById('loading2').innerHTML = "<ons-icon icon='md-assignment-alert' class='list__item__icon'></ons-icon>";
     }
 }
-//On Noload
+
 function profileEngine() {
     var userId = firebase.auth().currentUser;
     document.getElementById('profileUsername').innerHTML = '@' + onClickDataVar.val().uname;
@@ -267,22 +268,42 @@ var myNavigator = document.getElementById('mainNavigator');
                       }
                   });
             });
+            firebase.database().ref('/Updates/').once('value').then(function (data) { 
+                if (data.val().ver === version) { console.log("No Updates") }
+                else {
+                    ons.notification.confirm('New Updates found ! Do you want to update the app?') // Ask for confirmation
+                      .then(function (index) {
+                          if (index === 1) { // OK button
+                              const link = data.val().link;
+                              console.log(link);
+                              window.open(link, '_system');
+                          }
+                      });
+                }
+        
+        });
+
             var mainwall = page.querySelector('#mainwall');
+            var limitToFirstInt = 5;
+            var display = 'normal';
+            var wallArray = [];
             //Feed Engine
             function mainwallEngine()
             {
+
+
                 //Verify Email
                 var userId = firebase.auth().currentUser;
                 if (userId.emailVerified) {
                     console.log('Email is verified at Home Wall');
                     //On Loaging click
                     page.querySelector('#loadingBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); };
-                   
-                    firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data) {
+                    console.log(limitToFirstInt);
+                    firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(limitToFirstInt).on('child_added', function (data) {
                         firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
                                 firebase.database().ref('/userDB/' + data.val().uid + '/followedBy').once('value').then(function (followersLoop) {
-                                    firebase.database().ref('/userDB/' + userId.uid + '/following/').once("child_added").then(function (following) {                        
+                                    firebase.database().ref('/userDB/' + userId.uid + '/following/').once('child_added').then(function (following) {                        
                                         if (userWallLoop.val() === true) {
                                             //Not printing liked contents
                                         }
@@ -294,29 +315,40 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
                                             }
                                             if (following.key === data.val().uid) {
-                                                //display wallpaper   
-                                                page.querySelector('#pageLoaging').style.display = "none";
-                                                mainwall.appendChild(ons._util.createElement(
-                                                '<ons-list modifier="inset"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
-                                                + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
-                                                + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                + '<span class="list__item__title" >' + data.val().uname + '</span>'
-                                                + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                                + '</div></ons-list-item>'
-                                                + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
-                                                + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                                + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
-                                                + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
-                                                + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
-                                                + '</tr></tbody></table></div></ons-list-item>'
-                                                + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
-                                                + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#2196F3;">Like</ons-button>'
-                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#009688"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
-                                                + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                                + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#C62828">Report</ons-button>'
-                                                + '</div></ons-list-item></ons-list>'));
+                                                //display wallpaper 
+                                                    for (var i = 0; i <= wallArray.length; i++) {
+                                                     if (wallArray[i] === data.key) { display = 'none'; console.log('ON ARRAY' + data.key) }
+                                                    }
+                                                                                                                                                    
+                                                    wallArray.push(data.key);
+                                                    page.querySelector('#pageLoaging').style.display = "none";
+                                                    mainwall.appendChild(ons._util.createElement(
+                                                    '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
+                                                    + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
+                                                    + '<div class="center" style="padding:0px 0px 0px 0px;">'
+                                                    + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                                    + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
+                                                    + '</div></ons-list-item>'
+                                                    + '<ons-list-item tappable style="padding:0px 0px 0px 0px;" modifier="nodivider">'
+                                                    + '<div class="center" style="padding:0px 0px 0px 0px;">'
+                                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
+                                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
+                                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                                    + '</div></ons-list-item>'
+                                                    + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
+                                                    + '<div class="center" style="padding:0px 0px 0px 8px;">'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                                    + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                                    + '</div></ons-list-item></ons-list>'));
+                                                //Back to normal
+                                                    display = 'normal';
+                                                //On Like and Download
+                                                firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                                    document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                                    document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
+                                                });
 
                                                 //Cheack Email Verification
                                                 if (userId.emailVerified) {
@@ -358,13 +390,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
                                                     firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
                                                     this.setAttribute("disabled", "true");
-                                                    firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
-                                                        if (page.querySelector('#' + data.key + 'Likes')) {
-                                                            console.log("Updating Likes .....");
-                                                            page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
-                                                        }
-
-                                                    });
                                                     console.log('Liked');
                                                 };
                                                 // onDownload Click
@@ -388,13 +413,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                                        url, fileURL, function (entry) {
                                                            firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
                                                            console.log("Updated Downlaod");
-                                                           firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                                               if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                                   console.log("Updating Downloads .....");
-                                                                   page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                                               }
-
-                                                           });
                                                            ons.notification.confirm("Download completed");
                                                        },
 
@@ -435,14 +453,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     };
 
                                                 };
-
+                                            
                                             };
 
-
-
-                                        }
-                                  
-                              
+                                        }                                  
 
                                     });
 
@@ -452,6 +466,8 @@ var myNavigator = document.getElementById('mainNavigator');
                             });
                         }).catch(function (error) { console.log("Stroage Fetching error :" + error); });
                     });
+
+                  
                 }
                 else {
                     page.querySelector('#pageLoaging').innerHTML = "<ons-list-item ><div class='left'><ons-icon icon='md-assignment-alert' class='list__item__icon'></ons-icon></div><div class='center'>Verify your account to populate this feed</div></ons-list-item >";
@@ -472,6 +488,11 @@ var myNavigator = document.getElementById('mainNavigator');
                         break;
                     case 'action':
                         message = 'Loading...';
+
+                        limitToFirstInt = 10;
+                        display = 'normal';
+                        wallArray = [];
+
                         mainwall.innerHTML = "";
                         mainwallEngine();
                         break;
@@ -486,6 +507,8 @@ var myNavigator = document.getElementById('mainNavigator');
 
             //Init Engine
             mainwallEngine();
+            //On Last Page
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5;  mainwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'myAcc')
@@ -761,38 +784,57 @@ var myNavigator = document.getElementById('mainNavigator');
                 document.querySelector('#mainNavigator').pushPage('home.html');
             });
             var uwall = page.querySelector('#myUpdWall');
+            var limitToFirstInt = 5;
+            var display = 'normal';
+            var wallArray = [];
             // Feed Engine
             function uwallEngine() {
                 var userId = firebase.auth().currentUser;               
                 if (userId.emailVerified) {
                     console.log('Email is verified at Upload Wall ');
+                    console.log(limitToFirstInt);
                     firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
                         firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (snapshot) {
                                 firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
                                     if (snapshot.val() === true) {  
                                         // Feed Engine
+                                        for (var i = 0; i <= wallArray.length; i++) {
+                                            if (wallArray[i] === data.key) { display = 'none'; console.log('ON ARRAY' + data.key) }
+                                        }
+
+                                        wallArray.push(data.key);
                                         page.querySelector('#pageLoaging').style.display = "none";
                                         uwall.appendChild(ons._util.createElement(
-                                            '<ons-list modifier="inset"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
+                                        '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                             + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                             + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                             + '<span class="list__item__title" >' + data.val().uname + '</span>'
                                             + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
                                             + '</div></ons-list-item>'
-                                            + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
+                                            + '<ons-list-item style="padding:0px 0px 0px 0px;" tappable modifier="nodivider">'
                                             + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                             + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                            + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
-                                            + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
-                                            + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
-                                            + '</tr> </tbody></table></div></ons-list-item>'
+                                            + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
+                                            + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                            + '</div></ons-list-item>'
                                             + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
-                                            + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
-                                            + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                            + '<div class="center" style="padding:0px 0px 0px 8px;">'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                            + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
                                             + '</div></ons-list-item></ons-list>'));
+                                        //Back to normal
+                                        display = 'normal';
+
+                                        //On Like and Download
+                                        firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                            document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                            document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
+                                        });
+
+
+
                                         if (userId.emailVerified) {
                                             console.log("Email verified at Upload Wall");
                                         }
@@ -834,13 +876,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                         //OnDownload Click
                                         page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
                                             firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                            firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                                if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                    //console.log("Updating Downloads .....");
-                                                    page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                                }
-
-                                            });
                                             var dialog = page.querySelector('#downloadingid');
 
                                             if (dialog) {
@@ -937,6 +972,11 @@ var myNavigator = document.getElementById('mainNavigator');
                         break;
                     case 'action':
                         message = 'Loading...';
+
+                        limitToFirstInt = 10;
+                        display = 'normal';
+                        wallArray = [];
+
                         uwall.innerHTML = "";
                         uwallEngine();
                         break;
@@ -952,7 +992,8 @@ var myNavigator = document.getElementById('mainNavigator');
 
             //Init upload wallpaper
             uwallEngine();
-
+            //On Last Page
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; uwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'cat')
@@ -967,7 +1008,6 @@ var myNavigator = document.getElementById('mainNavigator');
                 onCatClick('animals');
                 document.querySelector('#mainNavigator').pushPage('oncat.html',{data: {title: 'Animals'}});
             };
-
             page.querySelector('#cat_cartoons').onclick = function () {
                 onCatClick('cartoons');
                 document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Cartoons' } });
@@ -985,11 +1025,15 @@ var myNavigator = document.getElementById('mainNavigator');
                 document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Quotes' } });
             };
 
-            function crEngine() {
-                var crwall = page.querySelector('#random_list');
-                var userId = firebase.auth().currentUser;
+            var limitToFirstInt = 5;
+            var display = 'normal';
+            var wallArray = [];
+            var crwall = page.querySelector('#random_list');
 
-                firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(20).on("child_added", function (data) {
+            function crEngine() {
+                var userId = firebase.auth().currentUser;
+                console.log(limitToFirstInt);
+                firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(limitToFirstInt).on("child_added", function (data) {
                     firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                         firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
                             firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
@@ -999,30 +1043,41 @@ var myNavigator = document.getElementById('mainNavigator');
                                 else {
                                 
                                     //display wallpaper 
+                                    for (var i = 0; i <= wallArray.length; i++) {
+                                        if (wallArray[i] === data.key) { display = 'none'; console.log('ON ARRAY' + data.key) }
+                                    }
+
+                                    wallArray.push(data.key);
                                     page.querySelector('#pageLoaging').style.display = "none";
                                     crwall.appendChild(ons._util.createElement(
-                                    '<ons-list modifier="inset"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
+                                    '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                     + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                     + '<span class="list__item__title" >' + data.val().uname + '</span>'
                                     + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
                                     + '</div></ons-list-item>'
-                                    + '<ons-list-item  style="padding:0px 0px 0px 0px;" modifier="nodivider">'
+                                    + '<ons-list-item  style="padding:0px 0px 0px 0px;" tappable  modifier="nodivider">'
                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                     + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                    + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
-                                    + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
-                                    + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
-                                    + '</tr> </tbody></table></div></ons-list-item>'
+                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
+                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                    + '</div></ons-list-item>'
                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
-                                    + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;">Like</ons-button>'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
-                                    + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                    + '<div class="center" style="padding:0px 0px 0px 8px;">'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                    + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
                                     + '</div></ons-list-item></ons-list>'));
 
-                                        
+                                    //Back to normal
+                                    display = 'normal';
+                                    //On Like and Download
+                                    firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                        document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                        document.getElementById(data.key + 'Downloads').innerHTML =  data.val().downloads;
+                                    });
+
 
 
                                     //Cheack Email Verification
@@ -1068,26 +1123,12 @@ var myNavigator = document.getElementById('mainNavigator');
                                         firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
                                         firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
                                         this.setAttribute("disabled", "true");
-                                        firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
-                                            if (page.querySelector('#' + data.key + 'Likes')) {
-                                                //console.log("Updating Likes .....");
-                                                page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
-                                            }
-
-                                        });
                                         console.log('Liked');
                                     };
 
                                     // onDownload Click
                                     page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
                                         firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                        firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                            if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                //console.log("Updating Downloads .....");
-                                                page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                            }
-
-                                        });
                                         var dialog = page.querySelector('#downloadingid');
                                         if (dialog) {
                                             dialog.show();
@@ -1153,10 +1194,13 @@ var myNavigator = document.getElementById('mainNavigator');
                         });
                     }).catch(function (error) { console.log("Stroage Fetching error :" + error); });
                 });
-            }
+            }        
+
+            //Init Engine
             crEngine();                    
 
-
+            //On Last Page
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; crEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'oncat')
@@ -1165,11 +1209,18 @@ var myNavigator = document.getElementById('mainNavigator');
                 document.querySelector('#mainNavigator').pushPage('cat.html');
             });
             page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
+
+            var cwall = page.querySelector('#cwall');
+            cwall.innerHTML = '';
+
+            var limitToFirstInt = 5;
+            var display = 'normal';
+            var wallArray = [];
             function cwallEngine() {
-                var cwall = page.querySelector('#cwall');
-                cwall.innerHTML = '';
+
                 var userId = firebase.auth().currentUser;
-                firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(100).on("child_added", function (data) {
+                console.log(limitToFirstInt);
+                firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(limitToFirstInt).on("child_added", function (data) {
                     firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                         firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
                             firebase.database().ref('/userDB/' + data.val().uid + '/followedBy/').on('value', function (followersLoop) {
@@ -1179,28 +1230,41 @@ var myNavigator = document.getElementById('mainNavigator');
                                 else {                         
                                     if (data.val().cat === '' + onCatClickVar + '') {
                                         //display wallpaper 
-                                        page.querySelector('#pageLoaging').style.display = "none";                                       
+                                        for (var i = 0; i <= wallArray.length; i++) {
+                                            if (wallArray[i] === data.key) { display = 'none'; console.log('ON ARRAY' + data.key) }
+                                        }
+
+                                        wallArray.push(data.key);
+                                        page.querySelector('#pageLoaging').style.display = "none";
                                         cwall.appendChild(ons._util.createElement(
-                                          '<ons-list modifier="inset"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
+                                        '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                         + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<span class="list__item__title" >' + data.val().uname + '</span>'
                                         + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
                                         + '</div></ons-list-item>'
-                                        + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
+                                        + '<ons-list-item style="padding:0px 0px 0px 0px;" tappable  modifier="nodivider">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                        + '<table style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;"><tbody>'
-                                        + '<tr><th id="' + data.key + 'Likes">' + data.val().likes + '</th><td>Likes</td><td></td>'
-                                        + '<th id="' + data.key + 'Downloads">' + data.val().downloads + '</th><td>Downloads</td><td></td>'
-                                        + '</tr> </tbody></table></div></ons-list-item>'
+                                        + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
+                                        + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                        + '</div></ons-list-item>'
                                         + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
-                                        + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;">Like</ons-button>'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
-                                        + '</div><div class="right" style="padding:0px 0px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;;">Report</ons-button>'
+                                        + '<div class="center" style="padding:0px 0px 0px 8px;">'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
                                         + '</div></ons-list-item></ons-list>'));
+                                        //Back to normal
+                                        display = 'normal';
+
+                                        //On Like and Download
+                                        firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                            document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                            document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
+                                        });
+
 
                                         //Cheack Email Verification
                                         if (userId.emailVerified) {
@@ -1247,26 +1311,12 @@ var myNavigator = document.getElementById('mainNavigator');
                                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
                                             firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
                                             this.setAttribute("disabled", "true");
-                                            firebase.database().ref("wallpaperDB/").orderByChild('likes').on("child_added", function (data) {
-                                                if (page.querySelector('#' + data.key + 'Likes')) {
-                                                    //console.log("Updating Likes .....");
-                                                    page.querySelector('#' + data.key + 'Likes').innerHTML = data.val().likes;
-                                                }
-
-                                            });
                                             console.log('Liked');
                                         };
 
                                         // onDownload Click
                                         page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
                                             firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                            firebase.database().ref("wallpaperDB/").orderByChild('downloads').on("child_added", function (data) {
-                                                if (page.querySelector('#' + data.key + 'Downloads')) {
-                                                    //console.log("Updating Downloads .....");
-                                                    page.querySelector('#' + data.key + 'Downloads').innerHTML = data.val().likes;
-                                                }
-
-                                            });
                                             var dialog = page.querySelector('#downloadingid');
                                             if (dialog) {
                                                 dialog.show();
@@ -1337,6 +1387,8 @@ var myNavigator = document.getElementById('mainNavigator');
             }
             //Initiate Engine
             cwallEngine();
+            //On Last Page
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; cwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'bugs')

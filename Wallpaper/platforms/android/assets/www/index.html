@@ -249,11 +249,17 @@
     </ons-template>
     <ons-template id="login.html">
         <ons-page id="login" >
-            <img src="images/Logo2.png" style="width:50%;position:relative;top:20px;left:100px;right:0;bottom:100px;margin:auto;" />
-            <h1 style="font-family:Roboto;font-style:normal;position:relative;top:2px;left:125px;">WallChae</h1>
-            <h2 style="font-family:Roboto;font-size:x-small;position:relative;left:150px;">for the walls you share</h2>
             <section style="padding: 8px">
                 <div style="text-align: center; margin-top: 50px;">
+                    <p>
+                        <img src="images/Logo2.png" style="width:50%;" />
+                    </p>
+                    <p>
+                        <h1 style="font-family:Roboto;font-style:normal;">WallChae</h1>
+                    </p>
+                    <p>
+                        <h2 style="font-family:Roboto;font-size:x-small;">For the walls you share.</h2>
+                    </p>
                     <p>
                         <ons-input id="loginUser" modifier="underbar" placeholder="Email" float type="email"></ons-input>
                     </p>
@@ -264,7 +270,7 @@
                         <ons-button modifier="large--quiet" id="loginBtn">Sign in</ons-button>
                         <!--<ons-button modifier="quiet" id="gBtn">Sign in with G+</ons-button>-->
                     </p>
-                      
+
                     <p style="margin-top: 30px;">
                         <ons-button modifier="quiet" id="signupBtn">Sign up</ons-button>
                         <ons-button modifier="quiet" id="fpassBtn">Forgot Password</ons-button>
@@ -276,15 +282,22 @@
     </ons-template>
     <ons-template id="signup.html">
         <ons-page id="signup">
-            <ons-toolbar  style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center">Sign-up</div>
             </ons-toolbar>
-            <img src="images/Logo2.png" style="width:50%;position:relative;top:20px;left:100px;right:0;bottom:100px;margin:auto;" />
-            <h1 style="font-family:Roboto;font-style:normal;position:relative;top:2px;left:130px;">WallChae</h1>
-            <h2 style="font-family:Roboto;font-size:x-small;position:relative;left:100px;">Spread and expand your wallpaper collection with us.</h2>
             <section style="padding: 8px">
                 <div style="text-align: center; margin-top: 30px;">
+                    <p>
+                        <img src="images/Logo2.png" style="width:50%;"/>
+                    </p>
+                    <p>
+                        <h1 style="font-family:Roboto;font-style:normal;">WallChae</h1>
+                    </p>
+                    <p>
+                        <h2 style="font-family:Roboto;font-size:x-small;">Spread and expand your wallpaper collection with us.</h2>
+                    </p>
+
                     <p>
                         <ons-input id="fullname" modifier="underbar" type="text" placeholder="Full Name" float></ons-input>
                     </p>
@@ -296,7 +309,7 @@
                     </p>
                     <p style="font-size:8px">By creating an account you accept all the terms and conditions of using this beta.</p>
                     <p style="margin-top: 30px;">
-                        
+
                         <ons-button modifier="large--quiet" id="makeaccBtn">Create Account</ons-button>
                     </p>
                 </div>
@@ -347,7 +360,7 @@
                                 </td>
                                 <td>
                                     <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto"><ons-icon icon="md-plus"></ons-toolbar-button>
-                                </td>
+                                </td>                              
                             </tr>
                         </tbody>
                     </table>
@@ -365,8 +378,8 @@
                             </ons-list-item>
                         </ons-list>
                         <div id="mainwall">
-
                         </div>
+
 </ons-page>
     </ons-template>
     <!--Home end-->
@@ -561,7 +574,7 @@
 
                 </ons-list>
 
-                <ons-list-header style="background-color:#FAFAFA;">The 25's</ons-list-header>
+                <ons-list-header style="background-color:#FAFAFA;">Random</ons-list-header>
                 <ons-list modifier="inset" id="pageLoaging">
                     <ons-list-item>
                         <div class="left" id="loading2"><ons-progress-circular indeterminate></ons-progress-circular></div>
@@ -667,7 +680,7 @@
                         appreciated.
                         </ons-list-item>
                         <ons-list-item style="background-color:#e2e2e2;">
-                                This app is developed by Pranay Desai (pranayxdesai@gmail.com) using open-source software and services of Google FireBase and Onsen UI
+                                This app is developed by Pranay Desai (pranayxdesai@gmail.com).For any complains contact via email.
                             </ons-list-item>
                         </ons-list>
                 </ons-page>
@@ -713,7 +726,7 @@
     <!--Uploading dialog End-->
     <!--Report-->
         <ons-popover direction="up" id="popoverReport" cancelable>
-            <ons-list modifier="inset">
+            <ons-list modifier="inset" style="height:100%;">
                 <ons-list-header>Report</ons-list-header>
                 <ons-list-item tappable>
                     <label class="left">
