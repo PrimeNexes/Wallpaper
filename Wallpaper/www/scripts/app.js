@@ -1,4 +1,5 @@
 ﻿//Main
+var version = 0.31;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -267,6 +268,21 @@ var myNavigator = document.getElementById('mainNavigator');
                       }
                   });
             });
+            firebase.database().ref('/Updates/').once('value').then(function (data) { 
+                if (data.val().ver === version) { console.log("No Updates") }
+                else {
+                    ons.notification.confirm('New Updates found ! Do you want to update the app?') // Ask for confirmation
+                      .then(function (index) {
+                          if (index === 1) { // OK button
+                              const link = data.val().link;
+                              console.log(link);
+                              window.open(link, '_system');
+                          }
+                      });
+                }
+        
+        });
+
             var mainwall = page.querySelector('#mainwall');
             var limitToFirstInt = 5;
             var display = 'normal';
