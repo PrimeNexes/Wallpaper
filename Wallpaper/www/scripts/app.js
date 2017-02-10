@@ -1,5 +1,5 @@
 ﻿//Main
-const version = 0.35;
+const version = 0.36;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -303,7 +303,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                             if (following.val() === 0) {
                                                 page.querySelector('#pageLoaging').style.display = "none";
                                                 page.querySelector('#loading').style.visibility = "hidden";
-                                                    mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
+                                                mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
                                                     page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
                                             }
                                             if (following.key === data.val().uid) {
@@ -316,24 +316,22 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     page.querySelector('#pageLoaging').style.display = "none";
                                                     page.querySelector('#loading').style.visibility = "hidden";
                                                     mainwall.appendChild(ons._util.createElement(
-                                                    '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
+                                                    '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider"  id="' + data.val().uid + 'User">'
                                                     + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                    + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                                    + '<span class="list__item__title"><b>@' + data.val().uname + '</b> </span>'
                                                     + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                                    + '</div></ons-list-item>'
+                                                    + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
                                                     + '<ons-list-item tappable style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
-                                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '                                             
                                                     + '</div></ons-list-item>'
                                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
                                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                                     + '</div></ons-list-item></ons-list>'));
                                                 //Back to normal
                                                     display = 'normal';
@@ -677,12 +675,13 @@ var myNavigator = document.getElementById('mainNavigator');
 
                         var fileTBU = page.querySelector('#fileToUpload').files[0];
                         if (fileTBU) {
-                            page.querySelector('#afterUpload').style. visibility = 'visible';
                             var img = page.querySelector('#showWallImg');
                             var checkimg = new Image();
                             checkimg.src = window.URL.createObjectURL(fileTBU);
                             checkimg.onload = function () {
-                                if ((checkimg.width === 1080 && checkimg.height === 1920) || (checkimg.width === 1440 && checkimg.height === 2560) || (checkimg.width === 2160 && checkimg.height === 3840)) {
+                                if ((checkimg.width === 1080 && checkimg.height === 1920) || (checkimg.width === 1440 && checkimg.height === 2560) || (checkimg.width === 2160 && checkimg.height === 3840))
+                                {
+                                    page.querySelector('#afterUpload').style.visibility = 'visible';
                                     img.src = window.URL.createObjectURL(fileTBU);
                                     page.querySelector('#uploadWallpaperBtn').onclick = function () {
                                         var catval;
@@ -803,20 +802,19 @@ var myNavigator = document.getElementById('mainNavigator');
                                         '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                             + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                             + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                            + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                            + '<span class="list__item__title" ><b>@' + data.val().uname + '</b></span>'
                                             + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                            + '</div></ons-list-item>'
+                                            + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
                                             + '<ons-list-item style="padding:0px 0px 0px 0px;" tappable modifier="nodivider">'
                                             + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                             + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                            + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
-                                            + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
                                             + '</div></ons-list-item>'
                                             + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                             + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;" disabled="true"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
                                             + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                             + '</div></ons-list-item></ons-list>'));
                                         //Back to normal
                                         display = 'normal';
@@ -1048,21 +1046,19 @@ var myNavigator = document.getElementById('mainNavigator');
                                     '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                     + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                    + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                    + '<span class="list__item__title" ><b>@' + data.val().uname + '</b></span>'
                                     + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                    + '</div></ons-list-item>'
+                                    + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
                                     + '<ons-list-item  style="padding:0px 0px 0px 0px;" tappable  modifier="nodivider">'
                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
-                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '                                 
                                     + '</div></ons-list-item>'
                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                     + '</div></ons-list-item></ons-list>'));
 
                                     //Back to normal
@@ -1236,21 +1232,19 @@ var myNavigator = document.getElementById('mainNavigator');
                                         '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                         + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                        + '<span class="list__item__title" ><b>@' + data.val().uname + '</b></span>'
                                         + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                        + '</div></ons-list-item>'
+                                        + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
                                         + '<ons-list-item style="padding:0px 0px 0px 0px;" tappable  modifier="nodivider">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                        + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
-                                        + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
                                         + '</div></ons-list-item>'
                                         + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                         + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
                                         + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                         + '</div></ons-list-item></ons-list>'));
                                         //Back to normal
                                         display = 'normal';
