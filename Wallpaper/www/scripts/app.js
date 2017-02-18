@@ -622,47 +622,85 @@ var myNavigator = document.getElementById('mainNavigator');
             var userId = firebase.auth().currentUser;
             function fileUploadEngine() {
                 if (userId.emailVerified) {
-                    page.querySelector('#uploadList').appendChild(ons._util.createElement('<div><ons-list modifier="inset"><ons-list-item modifier="longdivider" tappable>'
+                    page.querySelector('#uploadList').appendChild(ons._util.createElement('<div style="padding-bottom:56px;"><ons-list modifier="inset"><ons-list-item modifier="longdivider" tappable>'
             + '<ons-button modifier="large--quiet" id="fileToUploadBtn">'
                 + '<input type="file" name="fileToUpload" id="fileToUpload" multiple capture="camera" accept="image/*" style="width:inherit;height:100%;left: 0px;top: 0px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />'
                 + '<label for="fileToUpload">Select Wallpaper</label></ons-button></ons-list-item></ons-list>'
             + '<div id="afterUpload" style=" visibility: hidden;"><ons-list ><img style="width:100%;height:auto;" id="showWallImg" />'
             + '<ons-list-header>Select a category</ons-list-header>'
+
             + '<ons-list-item tappable modifier="nodivider">'
                 + '<label class="left">'
                     + '<ons-input name="catsel" type="radio" input-id="radio-1" value="animals" checked></ons-input>'
                + '</label>'
                 + '<label for="radio-1" class="center">Animals</label>'
             + '</ons-list-item>'
+
+           + '<ons-list-item tappable modifier="nodivider">'
+                + '<label class="left">'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-2" value="anime"></ons-input>'
+               + '</label>'
+                + '<label for="radio-2" class="center">Anime</label>'
+            + '</ons-list-item>'
+
             + '<ons-list-item tappable modifier="nodivider">'
                 + '<label class="left">'
-                    + '<ons-input name="catsel" type="radio" input-id="radio-2" value="cartoons"></ons-input>'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-3" value="automobile"></ons-input>'
+               + '</label>'
+                + '<label for="radio-3" class="center">Automobile</label>'
+            + '</ons-list-item>'
+
+
+            + '<ons-list-item tappable modifier="nodivider">'
+                + '<label class="left">'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-4" value="cartoons"></ons-input>'
                 + '</label>'
-                + '<label for="radio-2" class="center">'
+                + '<label for="radio-4" class="center">'
                     + 'Cartoons'
                + ' </label>'
             + '</ons-list-item>'
+
+           + '<ons-list-item tappable modifier="nodivider">'
+                + '<label class="left">'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-5" value="games"></ons-input>'
+                + '</label>'
+                + '<label for="radio-5" class="center">'
+                    + 'Games'
+               + ' </label>'
+            + '</ons-list-item>'
+
+            + '<ons-list-item tappable modifier="nodivider">'
+                + '<label class="left">'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-6" value="gods"></ons-input>'
+                + '</label>'
+                + '<label for="radio-6" class="center">'
+                    + 'Gods'
+               + ' </label>'
+            + '</ons-list-item>'
+
            + '<ons-list-item tappable modifier="nodivider">'
                + ' <label class="left">'
-                    + '<ons-input name="catsel" type="radio" input-id="radio-3" value="people"></ons-input>'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-7" value="people"></ons-input>'
                 + '</label>'
-                + '<label for="radio-3" class="center">'
+                + '<label for="radio-7" class="center">'
                     + 'People'
                 + '</label>'
             + '</ons-list-item>'
+
             + '<ons-list-item tappable modifier="nodivider">'
                + ' <label class="left">'
-                    + '<ons-input name="catsel" type="radio" input-id="radio-4" value="superheros"></ons-input>'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-8" value="superheros"></ons-input>'
                 + '</label>'
-                + '<label for="radio-4" class="center">'
+                + '<label for="radio-8" class="center">'
                     + 'Superheros'
                 + '</label>'
             + '</ons-list-item>'
+
             + '<ons-list-item tappable modifier="longdivider">'
                + ' <label class="left">'
-                    + '<ons-input name="catsel" type="radio" input-id="radio-5" value="quotes"></ons-input>'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-9" value="quotes"></ons-input>'
                 + '</label>'
-                + '<label for="radio-5" class="center">'
+                + '<label for="radio-9" class="center">'
                     + 'Quotes'
                 + '</label>'
             + '</ons-list-item>'
@@ -689,15 +727,27 @@ var myNavigator = document.getElementById('mainNavigator');
                                             catval = 'animals';
                                         }
                                         else if (document.getElementById('radio-2').checked === true) {
-                                            catval = 'cartoons';
+                                            catval = 'anime';
                                         }
                                         else if (document.getElementById('radio-3').checked === true) {
-                                            catval = 'people';
+                                            catval = 'automobile';
                                         }
                                         else if (document.getElementById('radio-4').checked === true) {
-                                            catval = 'superheros';
+                                            catval = 'cartoons';
                                         }
                                         else if (document.getElementById('radio-5').checked === true) {
+                                            catval = 'games';
+                                        }
+                                        else if (document.getElementById('radio-6').checked === true) {
+                                            catval = 'gods';
+                                        }
+                                        else if (document.getElementById('radio-7').checked === true) {
+                                            catval = 'people';
+                                        }
+                                        else if (document.getElementById('radio-8').checked === true) {
+                                            catval = 'superheros';
+                                        }
+                                        else if (document.getElementById('radio-9').checked === true) {
                                             catval = 'quotes';
                                         }
 
@@ -729,6 +779,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 }
                                                 catch (e) {
                                                     document.getElementById('uploadingDialog').hide();
+                                                    console.log(e);
                                                     ons.notification.alert("An error has occurred! Try again :(" );
 
                                                 }
@@ -1000,9 +1051,25 @@ var myNavigator = document.getElementById('mainNavigator');
                 onCatClick('animals');
                 document.querySelector('#mainNavigator').pushPage('oncat.html',{data: {title: 'Animals'}});
             };
+            page.querySelector('#cat_anime').onclick = function () {
+                onCatClick('anime');
+                document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Anime' } });
+            };
+            page.querySelector('#cat_automobile').onclick = function () {
+                onCatClick('automobile');
+                document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Automobile' } });
+            };
             page.querySelector('#cat_cartoons').onclick = function () {
                 onCatClick('cartoons');
                 document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Cartoons' } });
+            };
+            page.querySelector('#cat_games').onclick = function () {
+                onCatClick('games');
+                document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Games' } });
+            };
+            page.querySelector('#cat_gods').onclick = function () {
+                onCatClick('gods');
+                document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Gods' } });
             };
             page.querySelector('#cat_people').onclick = function () {
                 onCatClick('people');
@@ -1204,7 +1271,7 @@ var myNavigator = document.getElementById('mainNavigator');
             var cwall = page.querySelector('#cwall');
             cwall.innerHTML = '';
 
-            var limitToFirstInt = 5;
+            var limitToFirstInt = 25;
             var display = 'normal';
             var wallArray = [];
             function cwallEngine() {
@@ -1218,7 +1285,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                 if (userWallLoop.val() === true) {
                                     //Not printing liked contents
                                 }
-                                else {                         
+                                else {
+                                    console.log(data.val().cat);
                                     if (data.val().cat === '' + onCatClickVar + '') {
                                         //display wallpaper 
                                         for (var i = 0; i <= wallArray.length; i++) {
