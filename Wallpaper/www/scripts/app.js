@@ -1,5 +1,5 @@
 ﻿//Main
-const version = 0.37;
+const version = 0.38;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
