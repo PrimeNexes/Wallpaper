@@ -426,7 +426,38 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 //OnWall Click
                                                 page.querySelector('#' + data.key + 'OnWall').onclick = function () {
                                                     console.log(data.key);
-                                                    window.plugins.wallpaper.setImage( data.key+".jpeg");
+                                                    var dialog = page.querySelector('#downloadingid');
+                                                    if (dialog) {
+                                                        dialog.show();
+                                                        dialog.hide();
+                                                    }
+                                                    else {
+                                                        ons.createDialog('downloading.html')
+                                                        .then(function (dialog) {
+                                                            dialog.show();
+                                                            dialog.hide();
+                                                        });
+                                                    }
+                                                    var fileTransfer = new FileTransfer();
+                                                    var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
+                                                    fileTransfer.download(
+                                                       url, fileURL, function (entry) {
+                                                           window.plugins.wallpaper.setImage("wall" + data.key + ".jpeg");                                                         
+                                                       },
+
+                                                       function (error) {
+                                                           ons.notification.confirm("Download error source :" + error.source);
+                                                           ons.notification.confirm("Download error target :" + error.target);
+                                                           ons.notification.confirm("Download error code :" + error.code);
+                                                       },
+                                                       false, {
+                                                           headers:
+                                                           {
+                                                               "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+                                                           }
+                                                       }
+                                                    );
+                                                    
                                                 }
 
                                                 // onReport Click
