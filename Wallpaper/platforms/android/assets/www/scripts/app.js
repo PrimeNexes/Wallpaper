@@ -1,5 +1,5 @@
 ﻿//Main
-const version = 0.31;
+const version = 0.38;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -15,15 +15,7 @@ var onCatClickVar;
 var onCatClick = function (data) {
     onCatClickVar = data;
 };
-//On Noload
-function noload() {
-    if (document.getElementById('loading')) {
-        document.getElementById('loading').innerHTML = "<ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon>";
-    }
-    if (document.getElementById('loading2')) {
-        document.getElementById('loading2').innerHTML = "<ons-icon icon='md-assignment-alert' class='list__item__icon'></ons-icon>";
-    }
-}
+
 
 function profileEngine() {
     var userId = firebase.auth().currentUser;
@@ -74,7 +66,6 @@ var myNavigator = document.getElementById('mainNavigator');
         firebase.database().goOnline();
         var page = event.target;
         var nav = function () {
-            setTimeout(noload, 5000);
             page.querySelector('#myLikesBtn').onclick = function () {
                 document.querySelector('#mainNavigator').pushPage('myUpd.html',{ animation: "none" });
             };
@@ -310,8 +301,9 @@ var myNavigator = document.getElementById('mainNavigator');
                                         else {
                                          
                                             if (following.val() === 0) {
-                                                    page.querySelector('#pageLoaging').style.display = "none";
-                                                    mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='md-arrow-back' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
+                                                page.querySelector('#pageLoaging').style.display = "none";
+                                                page.querySelector('#loading').style.visibility = "hidden";
+                                                mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
                                                     page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
                                             }
                                             if (following.key === data.val().uid) {
@@ -322,25 +314,25 @@ var myNavigator = document.getElementById('mainNavigator');
                                                                                                                                                     
                                                     wallArray.push(data.key);
                                                     page.querySelector('#pageLoaging').style.display = "none";
+                                                    page.querySelector('#loading').style.visibility = "hidden";
                                                     mainwall.appendChild(ons._util.createElement(
-                                                    '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
+                                                    '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider"  id="' + data.val().uid + 'User">'
                                                     + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                    + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                                    + '<span class="list__item__title"><b>@' + data.val().uname + '</b> </span>'
                                                     + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                                    + '</div></ons-list-item>'
-                                                    + '<ons-list-item tappable style="padding:0px 0px 0px 0px;" modifier="nodivider">'
+                                                    + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
+                                                    + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
-                                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '                                             
                                                     + '</div></ons-list-item>'
                                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnWall" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart-o" /></ons-button><a  id="' + data.key + 'Wall"></a>'
                                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                                     + '</div></ons-list-item></ons-list>'));
                                                 //Back to normal
                                                     display = 'normal';
@@ -361,7 +353,9 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     console.log('Email is not verified at Home Wall');
 
                                                 }
- 
+
+                                               
+
                                                 //onDPLoad
                                                 firebase.database().ref('/userDB/' + data.val().uid + '/photoURL').once('value').then(function (urlDP) {
                                                     var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
@@ -429,6 +423,12 @@ var myNavigator = document.getElementById('mainNavigator');
                                                        }
                                                     );
                                                 };
+                                                //OnWall Click
+                                                page.querySelector('#' + data.key + 'OnWall').onclick = function () {
+                                                    console.log(data.key);
+                                                    window.plugins.wallpaper.setImage( data.key+".jpeg");
+                                                }
+
                                                 // onReport Click
                                                 page.querySelector('#' + data.key + 'OnReport').onclick = function () {
                                                     document.getElementById('popoverReport').show(page.querySelector('#' + data.key + 'OnReport'));
@@ -508,7 +508,7 @@ var myNavigator = document.getElementById('mainNavigator');
             //Init Engine
             mainwallEngine();
             //On Last Page
-            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5;  mainwallEngine(); setTimeout(done, 1000); }
+            page.onInfiniteScroll = function (done) { page.querySelector('#loading').style.visibility = "visible";  limitToFirstInt = limitToFirstInt + 5; mainwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'myAcc')
@@ -631,47 +631,85 @@ var myNavigator = document.getElementById('mainNavigator');
             var userId = firebase.auth().currentUser;
             function fileUploadEngine() {
                 if (userId.emailVerified) {
-                    page.querySelector('#uploadList').appendChild(ons._util.createElement('<div><ons-list modifier="inset"><ons-list-item modifier="longdivider" tappable>'
+                    page.querySelector('#uploadList').appendChild(ons._util.createElement('<div style="padding-bottom:56px;"><ons-list modifier="inset"><ons-list-item modifier="longdivider" tappable>'
             + '<ons-button modifier="large--quiet" id="fileToUploadBtn">'
                 + '<input type="file" name="fileToUpload" id="fileToUpload" multiple capture="camera" accept="image/*" style="width:inherit;height:100%;left: 0px;top: 0px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />'
                 + '<label for="fileToUpload">Select Wallpaper</label></ons-button></ons-list-item></ons-list>'
             + '<div id="afterUpload" style=" visibility: hidden;"><ons-list ><img style="width:100%;height:auto;" id="showWallImg" />'
             + '<ons-list-header>Select a category</ons-list-header>'
+
             + '<ons-list-item tappable modifier="nodivider">'
                 + '<label class="left">'
                     + '<ons-input name="catsel" type="radio" input-id="radio-1" value="animals" checked></ons-input>'
                + '</label>'
                 + '<label for="radio-1" class="center">Animals</label>'
             + '</ons-list-item>'
+
+           + '<ons-list-item tappable modifier="nodivider">'
+                + '<label class="left">'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-2" value="anime"></ons-input>'
+               + '</label>'
+                + '<label for="radio-2" class="center">Anime</label>'
+            + '</ons-list-item>'
+
             + '<ons-list-item tappable modifier="nodivider">'
                 + '<label class="left">'
-                    + '<ons-input name="catsel" type="radio" input-id="radio-2" value="cartoons"></ons-input>'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-3" value="automobile"></ons-input>'
+               + '</label>'
+                + '<label for="radio-3" class="center">Automobile</label>'
+            + '</ons-list-item>'
+
+
+            + '<ons-list-item tappable modifier="nodivider">'
+                + '<label class="left">'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-4" value="cartoons"></ons-input>'
                 + '</label>'
-                + '<label for="radio-2" class="center">'
+                + '<label for="radio-4" class="center">'
                     + 'Cartoons'
                + ' </label>'
             + '</ons-list-item>'
+
+           + '<ons-list-item tappable modifier="nodivider">'
+                + '<label class="left">'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-5" value="games"></ons-input>'
+                + '</label>'
+                + '<label for="radio-5" class="center">'
+                    + 'Games'
+               + ' </label>'
+            + '</ons-list-item>'
+
+            + '<ons-list-item tappable modifier="nodivider">'
+                + '<label class="left">'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-6" value="gods"></ons-input>'
+                + '</label>'
+                + '<label for="radio-6" class="center">'
+                    + 'Gods'
+               + ' </label>'
+            + '</ons-list-item>'
+
            + '<ons-list-item tappable modifier="nodivider">'
                + ' <label class="left">'
-                    + '<ons-input name="catsel" type="radio" input-id="radio-3" value="people"></ons-input>'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-7" value="people"></ons-input>'
                 + '</label>'
-                + '<label for="radio-3" class="center">'
+                + '<label for="radio-7" class="center">'
                     + 'People'
                 + '</label>'
             + '</ons-list-item>'
+
             + '<ons-list-item tappable modifier="nodivider">'
                + ' <label class="left">'
-                    + '<ons-input name="catsel" type="radio" input-id="radio-4" value="superheros"></ons-input>'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-8" value="superheros"></ons-input>'
                 + '</label>'
-                + '<label for="radio-4" class="center">'
+                + '<label for="radio-8" class="center">'
                     + 'Superheros'
                 + '</label>'
             + '</ons-list-item>'
+
             + '<ons-list-item tappable modifier="longdivider">'
                + ' <label class="left">'
-                    + '<ons-input name="catsel" type="radio" input-id="radio-5" value="quotes"></ons-input>'
+                    + '<ons-input name="catsel" type="radio" input-id="radio-9" value="quotes"></ons-input>'
                 + '</label>'
-                + '<label for="radio-5" class="center">'
+                + '<label for="radio-9" class="center">'
                     + 'Quotes'
                 + '</label>'
             + '</ons-list-item>'
@@ -684,12 +722,13 @@ var myNavigator = document.getElementById('mainNavigator');
 
                         var fileTBU = page.querySelector('#fileToUpload').files[0];
                         if (fileTBU) {
-                            page.querySelector('#afterUpload').style. visibility = 'visible';
                             var img = page.querySelector('#showWallImg');
                             var checkimg = new Image();
                             checkimg.src = window.URL.createObjectURL(fileTBU);
                             checkimg.onload = function () {
-                                if ((checkimg.width === 1080 && checkimg.height === 1920) || (checkimg.width === 1440 && checkimg.height === 2560) || (checkimg.width === 2160 && checkimg.height === 3840)) {
+                                if ((checkimg.width === 1080 && checkimg.height === 1920) || (checkimg.width === 1440 && checkimg.height === 2560) || (checkimg.width === 2160 && checkimg.height === 3840))
+                                {
+                                    page.querySelector('#afterUpload').style.visibility = 'visible';
                                     img.src = window.URL.createObjectURL(fileTBU);
                                     page.querySelector('#uploadWallpaperBtn').onclick = function () {
                                         var catval;
@@ -697,15 +736,27 @@ var myNavigator = document.getElementById('mainNavigator');
                                             catval = 'animals';
                                         }
                                         else if (document.getElementById('radio-2').checked === true) {
-                                            catval = 'cartoons';
+                                            catval = 'anime';
                                         }
                                         else if (document.getElementById('radio-3').checked === true) {
-                                            catval = 'people';
+                                            catval = 'automobile';
                                         }
                                         else if (document.getElementById('radio-4').checked === true) {
-                                            catval = 'superheros';
+                                            catval = 'cartoons';
                                         }
                                         else if (document.getElementById('radio-5').checked === true) {
+                                            catval = 'games';
+                                        }
+                                        else if (document.getElementById('radio-6').checked === true) {
+                                            catval = 'gods';
+                                        }
+                                        else if (document.getElementById('radio-7').checked === true) {
+                                            catval = 'people';
+                                        }
+                                        else if (document.getElementById('radio-8').checked === true) {
+                                            catval = 'superheros';
+                                        }
+                                        else if (document.getElementById('radio-9').checked === true) {
                                             catval = 'quotes';
                                         }
 
@@ -737,6 +788,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 }
                                                 catch (e) {
                                                     document.getElementById('uploadingDialog').hide();
+                                                    console.log(e);
                                                     ons.notification.alert("An error has occurred! Try again :(" );
 
                                                 }
@@ -805,24 +857,24 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                         wallArray.push(data.key);
                                         page.querySelector('#pageLoaging').style.display = "none";
+                                        page.querySelector('#loading').style.visibility = "hidden";
                                         uwall.appendChild(ons._util.createElement(
                                         '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                             + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                             + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                            + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                            + '<span class="list__item__title" ><b>@' + data.val().uname + '</b></span>'
                                             + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                            + '</div></ons-list-item>'
-                                            + '<ons-list-item style="padding:0px 0px 0px 0px;" tappable modifier="nodivider">'
+                                            + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
+                                            + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                             + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                             + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                            + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
-                                            + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
                                             + '</div></ons-list-item>'
                                             + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                             + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;" disabled="true"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
                                             + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                             + '</div></ons-list-item></ons-list>'));
                                         //Back to normal
                                         display = 'normal';
@@ -993,7 +1045,7 @@ var myNavigator = document.getElementById('mainNavigator');
             //Init upload wallpaper
             uwallEngine();
             //On Last Page
-            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; uwallEngine(); setTimeout(done, 1000); }
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; page.querySelector('#loading').style.visibility = "visible"; uwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'cat')
@@ -1008,9 +1060,25 @@ var myNavigator = document.getElementById('mainNavigator');
                 onCatClick('animals');
                 document.querySelector('#mainNavigator').pushPage('oncat.html',{data: {title: 'Animals'}});
             };
+            page.querySelector('#cat_anime').onclick = function () {
+                onCatClick('anime');
+                document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Anime' } });
+            };
+            page.querySelector('#cat_automobile').onclick = function () {
+                onCatClick('automobile');
+                document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Automobile' } });
+            };
             page.querySelector('#cat_cartoons').onclick = function () {
                 onCatClick('cartoons');
                 document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Cartoons' } });
+            };
+            page.querySelector('#cat_games').onclick = function () {
+                onCatClick('games');
+                document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Games' } });
+            };
+            page.querySelector('#cat_gods').onclick = function () {
+                onCatClick('gods');
+                document.querySelector('#mainNavigator').pushPage('oncat.html', { data: { title: 'Gods' } });
             };
             page.querySelector('#cat_people').onclick = function () {
                 onCatClick('people');
@@ -1049,25 +1117,24 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                     wallArray.push(data.key);
                                     page.querySelector('#pageLoaging').style.display = "none";
+                                    page.querySelector('#loading').style.visibility = "hidden";
                                     crwall.appendChild(ons._util.createElement(
                                     '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                     + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                    + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                    + '<span class="list__item__title" ><b>@' + data.val().uname + '</b></span>'
                                     + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                    + '</div></ons-list-item>'
-                                    + '<ons-list-item  style="padding:0px 0px 0px 0px;" tappable  modifier="nodivider">'
+                                    + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
+                                    + '<ons-list-item  style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
-                                    + '<p style="font-size:10px;opacity:0.87;padding-left:20px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
+                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '                                 
                                     + '</div></ons-list-item>'
                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                     + '</div></ons-list-item></ons-list>'));
 
                                     //Back to normal
@@ -1200,7 +1267,7 @@ var myNavigator = document.getElementById('mainNavigator');
             crEngine();                    
 
             //On Last Page
-            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; crEngine(); setTimeout(done, 1000); }
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; page.querySelector('#loading').style.visibility = "visible"; crEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'oncat')
@@ -1213,7 +1280,7 @@ var myNavigator = document.getElementById('mainNavigator');
             var cwall = page.querySelector('#cwall');
             cwall.innerHTML = '';
 
-            var limitToFirstInt = 5;
+            var limitToFirstInt = 25;
             var display = 'normal';
             var wallArray = [];
             function cwallEngine() {
@@ -1227,7 +1294,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                 if (userWallLoop.val() === true) {
                                     //Not printing liked contents
                                 }
-                                else {                         
+                                else {
+                                    console.log(data.val().cat);
                                     if (data.val().cat === '' + onCatClickVar + '') {
                                         //display wallpaper 
                                         for (var i = 0; i <= wallArray.length; i++) {
@@ -1236,25 +1304,24 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                         wallArray.push(data.key);
                                         page.querySelector('#pageLoaging').style.display = "none";
+                                        page.querySelector('#loading').style.visibility = "hidden";
                                         cwall.appendChild(ons._util.createElement(
                                         '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                         + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                        + '<span class="list__item__title" >' + data.val().uname + '</span>'
+                                        + '<span class="list__item__title" ><b>@' + data.val().uname + '</b></span>'
                                         + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
-                                        + '</div></ons-list-item>'
-                                        + '<ons-list-item style="padding:0px 0px 0px 0px;" tappable  modifier="nodivider">'
+                                        + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
+                                        + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                         + '<div class="center" style="padding:0px 0px 0px 0px;">'
                                         + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
-                                        + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Likes">' + data.val().likes + ' </p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;"> Likes</p>'
-                                        + '<p style="font-size:10px;opacity:0.87;padding-left:12px;font-weight: 300;border-radius: 0 0 2px 2px;" id="' + data.key + 'Downloads">' + data.val().downloads + '</p><p style="font-size:10px;opacity:0.87;padding-left:2px;font-weight: 300;border-radius: 0 0 2px 2px;">  Downloads</p>'
                                         + '</div></ons-list-item>'
                                         + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                         + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="font-size:10px;height:auto;width:auto;color:#263238;">Like</ons-button>'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="font-size:10px;height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '">Download</a></ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
                                         + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="font-size:10px;height:auto;width:auto;color:#263238;">Report</ons-button>'
+                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                         + '</div></ons-list-item></ons-list>'));
                                         //Back to normal
                                         display = 'normal';
@@ -1388,7 +1455,7 @@ var myNavigator = document.getElementById('mainNavigator');
             //Initiate Engine
             cwallEngine();
             //On Last Page
-            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; cwallEngine(); setTimeout(done, 1000); }
+            page.onInfiniteScroll = function (done) { limitToFirstInt = limitToFirstInt + 5; page.querySelector('#loading').style.visibility = "visible"; cwallEngine(); setTimeout(done, 1000); }
         }
 
         else if (page.id === 'bugs')

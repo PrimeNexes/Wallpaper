@@ -371,7 +371,7 @@
             </ons-pull-hook>
                         <ons-list modifier="inset" id="pageLoaging">
                             <ons-list-item tappable id="loadingBtn">
-                                <div class="left" id="loading"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                                <div class="left"><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div>
                                 <div class="center">
                                    Nothing to load ? Tap here to explore and follow more.
                                 </div>
@@ -379,7 +379,7 @@
                         </ons-list>
                         <div id="mainwall">
                         </div>
-
+            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
 </ons-page>
     </ons-template>
     <!--Home end-->
@@ -521,7 +521,7 @@
             </ons-pull-hook>
                         <ons-list modifier="inset" id="pageLoaging">
                             <ons-list-item modifier="inset">
-                                <div class="left" id="loading2"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                                <div class="left"><ons-icon icon='md-assignment-alert' class='list__item__icon'></ons-icon></div>
                                 <div class="center">
                                     Like or upload to populate this feed.
                                 </div>
@@ -529,7 +529,7 @@
                         </ons-list>
                         <div id="myUpdWall">
                         </div>
-
+            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
     <!--My Upload page end-->
@@ -567,7 +567,11 @@
                 <ons-list modifier="inset" id="cat_list">
                     <ons-list-header>Categories</ons-list-header>
                     <ons-list-item modifier="chevron" tappable id="cat_animals">Animals</ons-list-item>
+                    <ons-list-item modifier="chevron" tappable id="cat_anime">Anime</ons-list-item>
+                    <ons-list-item modifier="chevron" tappable id="cat_automobile">Automobile</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_cartoons">Cartoons</ons-list-item>
+                    <ons-list-item modifier="chevron" tappable id="cat_games">Games</ons-list-item>
+                    <ons-list-item modifier="chevron" tappable id="cat_gods">Gods</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_people">People</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_superheros">Superheros</ons-list-item>
                     <ons-list-item modifier="chevron" tappable id="cat_quotes">Quotes</ons-list-item>
@@ -577,7 +581,7 @@
                 <ons-list-header style="background-color:#FAFAFA;">Random</ons-list-header>
                 <ons-list modifier="inset" id="pageLoaging">
                     <ons-list-item>
-                        <div class="left" id="loading2"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                        <div class="left"><ons-icon icon='md-assignment-alert' class='list__item__icon'></ons-icon></div>
                         <div class="center" style="font-size:12px;">
                             There might be nothing to show if you have liked everything
                         </div>
@@ -586,7 +590,7 @@
                 <div id="random_list">
 
                 </div>
-
+            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
     <!--Categorie page end-->
@@ -599,7 +603,7 @@
             </ons-toolbar>
                 <ons-list modifier="inset" id="pageLoaging">
                     <ons-list-item>
-                        <div class="left" id="loading2"><ons-progress-circular indeterminate></ons-progress-circular></div>
+                        <div class="left"><ons-icon icon='md-assignment-alert' class='list__item__icon'></ons-icon></div>
                         <div class="center" style="font-size:12px;">
                             There might be nothing to show if you have liked everything
                         </div>
@@ -607,7 +611,7 @@
                 </ons-list>
                 <div id="cwall">
                 </div>
-
+            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
     <!--OnCategorie page end-->
