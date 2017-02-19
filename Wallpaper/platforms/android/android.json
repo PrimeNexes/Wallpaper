@@ -4,8 +4,46 @@
         "uninstalled": []
     },
     "config_munge": {
-        "files": {}
+        "files": {
+            "res/xml/config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"wallpaper\"><param name=\"android-package\" value=\"fc.fcstudio.wallpaper\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.SET_WALLPAPER\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
     },
-    "installed_plugins": {},
-    "dependent_plugins": {}
+    "installed_plugins": {
+        "cordova-plugin-wallpaper": {
+            "PACKAGE_NAME": "com.wallchae.wallpaper"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "id": "cordova-plugin-wallpaper.wallpaper",
+            "file": "plugins/cordova-plugin-wallpaper/www/wallpaper.js",
+            "pluginId": "cordova-plugin-wallpaper",
+            "clobbers": [
+                "wallpaper"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "cordova-plugin-wallpaper": "0.1.0"
+    }
 }

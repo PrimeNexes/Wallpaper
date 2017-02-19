@@ -39,19 +39,18 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-wallpaper": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/fbsanches/cordova-plugin-wallpaper.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-inappbrowser": {
         "source": {
             "type": "registry",
             "id": "cordova-plugin-inappbrowser@1.6.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-wallpaper": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-wallpaper"
         },
         "is_top_level": true,
         "variables": {}

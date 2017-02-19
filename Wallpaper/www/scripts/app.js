@@ -442,7 +442,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
                                                     fileTransfer.download(
                                                        url, fileURL, function (entry) {
-                                                           window.plugins.wallpaper.setImage("wall" + data.key + ".jpeg");                                                         
+                                                           window.plugins.wallpaper.setImage("wall" + data.key + ".jpeg");
+                                                           ons.notification.confirm("Wallpaper Set");
                                                        },
 
                                                        function (error) {
