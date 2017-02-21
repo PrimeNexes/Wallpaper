@@ -330,10 +330,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     + '</div></ons-list-item>'
                                                     + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider;">'
                                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
-                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
+                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;box-shadow: 0px 0px 0px;font-size:20px"><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
+                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;box-shadow: 0px 0px 0px;font-size:20px"><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
                                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-flag"/></ons-fab>'
+                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;box-shadow: 0px 0px 0px;font-size:20px"><ons-icon icon="fa-flag"/></ons-fab>'
                                                     + '</div></ons-list-item></ons-list>'));
                                                     //Back to normal
                                                     display = 'normal';
@@ -919,10 +919,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                             + '</div></ons-list-item>'
                                             + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                             + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#4285F4;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
-                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDownload" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-download" /></ons-fab>'
+                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#4285F4;background-color: transparent;  box-shadow: 0px 0px 0px;font-size:20px"><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
+                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDownload" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px;font-size:20px"><ons-icon icon="fa-download" /></ons-fab>'
                                             + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-flag"/></ons-fab>'
+                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px;font-size:20px"><ons-icon icon="fa-flag"/></ons-fab>'
                                             + '</div></ons-list-item></ons-list>'));
                                         //Back to normal
                                         display = 'normal';
@@ -1245,10 +1245,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                     + '</div></ons-list-item>'
                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
-                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
+                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; font-size:20px"><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
+                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; font-size:20px"><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-flag"/></ons-fab>'
+                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; font-size:20px"><ons-icon icon="fa-flag"/></ons-fab>'
                                     + '</div></ons-list-item></ons-list>'));
 
                                     //Back to normal
@@ -1485,10 +1485,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                         + '</div></ons-list-item>'
                                         + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                         + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
-                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
+                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px;font-size:20px"><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
+                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; font-size:20px"><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
                                         + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-flag"/></ons-fab>'
+                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; font-size:20px"><ons-icon icon="fa-flag"/></ons-fab>'
                                         + '</div></ons-list-item></ons-list>'));
                                         //Back to normal
                                         display = 'normal';
