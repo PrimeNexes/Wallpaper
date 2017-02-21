@@ -338,7 +338,7 @@
     <!--Home-->
     <ons-template id="home.html">
         <ons-page id="home">
-                <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">                    
+                <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
                     <div class="left" style="height:0%;width:0%;"></div>
                     <div class="right" style="height:0%;width:0%;"></div>
                     <div class="center" style="height:0%;width:0%;"></div>
@@ -360,26 +360,26 @@
                                 </td>
                                 <td>
                                     <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto"><ons-icon icon="md-plus"></ons-toolbar-button>
-                                </td>                              
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </ons-toolbar>
 
-            <ons-pull-hook id="pull-hook-mainwall" style="background-color:#212121;color:#ffffff;">
-                        Pull to refresh
-            </ons-pull-hook>
-                        <ons-list modifier="inset" id="pageLoaging">
-                            <ons-list-item tappable id="loadingBtn">
-                                <div class="left"><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div>
-                                <div class="center">
-                                   Nothing to load ? Tap here to explore and follow more.
-                                </div>
-                            </ons-list-item>
-                        </ons-list>
-                        <div id="mainwall">
+                <ons-pull-hook id="pull-hook-mainwall" style="background-color:#212121;color:#ffffff;">
+                    Pull to refresh
+                </ons-pull-hook>
+                <ons-list modifier="inset" id="pageLoaging">
+                    <ons-list-item tappable id="loadingBtn">
+                        <div class="left"><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div>
+                        <div class="center">
+                            Nothing to load ? Tap here to explore and follow more.
                         </div>
-            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
+                    </ons-list-item>
+                </ons-list>
+                <div id="mainwall">
+                </div>
+                <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
 </ons-page>
     </ons-template>
     <!--Home end-->
@@ -453,7 +453,7 @@
                  <!--<div class="profile-desc">Freelance designer, software engineer and cyclist</div>-->
             </div>
             <ons-list modifier="inset">
-                <ons-list-item>
+                <ons-list-item >
                     <ons-row>
                         <ons-col class="info-col">
                             <div class="info-num" id="my-following"></div>
@@ -476,15 +476,12 @@
                     <ons-button modifier="large--quiet" id="resendemailBtn" >Re-send authentication email</ons-button>
                 </ons-list-item>
                 <ons-list-item>
-                    <ons-button modifier="large" id="myDownloadBtn">My Downloads</ons-button>
-                </ons-list-item>
-                <ons-list-item>
                     <ons-button modifier="large" id="logoutBtn" style="background-color:#C62828; color:white;">Log-out</ons-button>
                 </ons-list-item>
             </ons-list>
             <br>
-                <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top:auto;bottom:79px;right: 20px;left: auto;position: fixed;">About us with ToC</ons-button>
-                <ons-button modifier="quiet" id="bugsBtn" style="font-size:10px;top: auto;bottom: 79px;right: auto;left: 20px;position: fixed;">Report Bugs or suggestions</ons-button>
+                <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top:auto;bottom:79px;right: 20px;left: auto;position:fixed;padding-top:5px;">About us with ToC</ons-button>
+                <ons-button modifier="quiet" id="bugsBtn" style="font-size:10px;top: auto;bottom: 79px;right: auto;left: 20px;position:fixed;padding-top:5px;">Report Bugs or suggestions</ons-button>
             </ons-page>
     </ons-template>
     <!--My Account page end-->

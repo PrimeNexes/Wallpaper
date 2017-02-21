@@ -1,5 +1,5 @@
 ﻿//Main
-const version = 0.38;
+const version = 0.40;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -198,7 +198,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                     console.log("WTf no PhotoURL Set !! Panic");
                                 });
 
-                                firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, photoURL: 'https://firebasestorage.googleapis.com/v0/b/wallchae-dad57.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=049ba89d-4ef4-47e2-8878-4fcb80bdac20', followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0 });
+                                firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, photoURL: 'https://firebasestorage.googleapis.com/v0/b/wallchae-dad57.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=049ba89d-4ef4-47e2-8878-4fcb80bdac20', followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0, wallpaperDisliked :0});
                                 ons.notification.alert('Account created !');
                             }, function (error) {
                                 ons.notification.alert("Can't send Email for verification ! Re-try sending the mail underprofile page");
@@ -275,14 +275,14 @@ var myNavigator = document.getElementById('mainNavigator');
         });
 
             var mainwall = page.querySelector('#mainwall');
-            var limitToFirstInt = 5;
+            var limitToFirstInt = 30;
             var display = 'normal';
             var wallArray = [];
             //Feed Engine
             function mainwallEngine()
             {
-
-
+                //Not displayed wall count
+                
                 //Verify Email
                 var userId = firebase.auth().currentUser;
                 if (userId.emailVerified) {
@@ -293,167 +293,220 @@ var myNavigator = document.getElementById('mainNavigator');
                     firebase.database().ref("wallpaperDB/").orderByChild('likes').limitToFirst(limitToFirstInt).on('child_added', function (data) {
                         firebase.storage().ref('wid/' + data.key + '.jpeg').getDownloadURL().then(function (url) {
                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
-                                firebase.database().ref('/userDB/' + data.val().uid + '/followedBy').once('value').then(function (followersLoop) {
-                                    firebase.database().ref('/userDB/' + userId.uid + '/following/').once('child_added').then(function (following) {                        
-                                        if (userWallLoop.val() === true) {
-                                            //Not printing liked contents
-                                        }
-                                        else {
-                                         
-                                            if (following.val() === 0) {
-                                                page.querySelector('#pageLoaging').style.display = "none";
-                                                page.querySelector('#loading').style.visibility = "hidden";
-                                                mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
-                                                    page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
+                                firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).once('value').then(function (userDislikeLoop) {
+                                    firebase.database().ref('/userDB/' + data.val().uid + '/followedBy').once('value').then(function (followersLoop) {
+                                        firebase.database().ref('/userDB/' + userId.uid + '/following/').once('child_added').then(function (following) {
+                                            if (userWallLoop.val() === true || userDislikeLoop.val()===true) {
+                                                //Not printing liked contents
+   
                                             }
-                                            if (following.key === data.val().uid) {
-                                                //display wallpaper 
+                                            else {
+
+                                                if (following.val() === 0) {
+                                                    page.querySelector('#pageLoaging').style.display = "none";
+                                                    page.querySelector('#loading').style.visibility = "hidden";
+                                                    mainwall.innerHTML = "<ons-list modifier='inset' tappable id='exploreBtn'><ons-list-item><div class='left'><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div><div class='center'>Explore & follow accounts to see wallpapers here.</div></ons-list></ons-list-item>"
+                                                    page.querySelector('#exploreBtn').onclick = function () { document.querySelector('#mainNavigator').pushPage('cat.html'); }
+                                                }
+                                                if (following.key === data.val().uid) {
+                                                    //display wallpaper 
                                                     for (var i = 0; i <= wallArray.length; i++) {
-                                                     if (wallArray[i] === data.key) { display = 'none'; console.log('ON ARRAY' + data.key) }
+                                                        if (wallArray[i] === data.key) { display = 'none'; console.log('ON ARRAY' + data.key) }
                                                     }
-                                                                                                                                                    
+
                                                     wallArray.push(data.key);
                                                     page.querySelector('#pageLoaging').style.display = "none";
                                                     page.querySelector('#loading').style.visibility = "hidden";
                                                     mainwall.appendChild(ons._util.createElement(
-                                                    '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider"  id="' + data.val().uid + 'User">'
+                                                    '<ons-list modifier="inset" style="display:' + display + '"><ons-list-item tappable ripple modifier="longdivider" id="' + data.val().uid + 'User">'
                                                     + '<div class="left"><img class="list__item__thumbnail" id="' + data.val().uid + 'DP" src="images/icon-user-default.png" width="40" height="40"></div>'
                                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                    + '<span class="list__item__title"><b>@' + data.val().uname + '</b> </span>'
+                                                    + '<span class="list__item__title"><b>@' + data.val().uname + '</b></span>'
                                                     + '<span class="list__item__subtitle">Followers : ' + followersLoop.val().followedByInt + '</span>'
                                                     + '</div><div class="right" style="padding:0px 12px 0px 0px;"><ons-icon icon="fa-chevron-right"/></div></ons-list-item>'
                                                     + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider">'
                                                     + '<div class="center" style="padding:0px 0px 0px 0px;">'
-                                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '                                             
+                                                    + '<img style="max-width:100%; width:100%;"  src="' + url + '" alt="Loading....."/> '
                                                     + '</div></ons-list-item>'
-                                                    + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
+                                                    + '<ons-list-item style="padding:0px 0px 0px 0px;" modifier="nodivider;">'
                                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'                                                                           
+                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
+                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
                                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
+                                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-flag"/></ons-fab>'
                                                     + '</div></ons-list-item></ons-list>'));
-                                                //Back to normal
+                                                    //Back to normal
                                                     display = 'normal';
-                                                //On Like and Download
-                                                firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
-                                                    document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
-                                                    document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
-                                                });
+                                                    //On Like and Dislike
+                                                    firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
+                                                        document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
+                                                        document.getElementById(data.key + 'DisLikes').innerHTML = data.val().dislikes;
+                                                    });
 
-                                                //Cheack Email Verification
-                                                if (userId.emailVerified) {
-                                                    console.log('Email is verified at Home Wall');
-                                                }
-                                                else {
-                                                    page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "true");
-                                                    page.querySelector('#' + data.key + 'OnDownload').setAttribute("disabled", "true");
-                                                    page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "true");
-                                                    console.log('Email is not verified at Home Wall');
-
-                                                }
-
-                                               
-
-                                                //onDPLoad
-                                                firebase.database().ref('/userDB/' + data.val().uid + '/photoURL').once('value').then(function (urlDP) {
-                                                    var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
-                                                    for (var i = 0; i < DPClassId.length; i++) {
-                                                        DPClassId[i].setAttribute('src', urlDP.val());
-
-                                                    }
-                                                }).catch(function (error) { });
-                                                //onProfile Click                                                                                  
-                                                var profileClassId = document.querySelectorAll('#' + data.val().uid + "User");
-
-                                                for (var i = 0; i < profileClassId.length; i++) {
-
-                                                    profileClassId[i].onclick = function () {
-                                                        onClickData(data);
-                                                        document.querySelector('#mainNavigator').pushPage('profile.html');
-                                                    }
-                                                };
-                                                document.addEventListener("show", function (event) {
-                                                    if (event.target.id === 'profile') {
-                                                        profileEngine();
-                                                    }
-                                                });
-                                                // onLike Click
-                                                page.querySelector('#' + data.key + 'OnLike').onclick = function () {
-                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
-                                                    firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
-                                                    this.setAttribute("disabled", "true");
-                                                    console.log('Liked');
-                                                };
-                                                // onDownload Click
-                                                page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
-
-                                                    var dialog = page.querySelector('#downloadingid');
-                                                    if (dialog) {
-                                                        dialog.show();
-                                                        dialog.hide();
+                                                    //Cheack Email Verification
+                                                    if (userId.emailVerified) {
+                                                        console.log('Email is verified at Home Wall');
                                                     }
                                                     else {
-                                                        ons.createDialog('downloading.html')
-                                                        .then(function (dialog) {
-                                                            dialog.show();
-                                                            dialog.hide();
-                                                        });
+                                                        page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "true");
+                                                        page.querySelector('#' + data.key + 'OnDownload').setAttribute("disabled", "true");
+                                                        page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "true");
+                                                        console.log('Email is not verified at Home Wall');
+
                                                     }
-                                                    var fileTransfer = new FileTransfer();
-                                                    var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
-                                                    fileTransfer.download(
-                                                       url, fileURL, function (entry) {
-                                                           firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                                           console.log("Updated Downlaod");
-                                                           ons.notification.confirm("Download completed");
-                                                       },
+                                                    //onDPLoad
+                                                    firebase.database().ref('/userDB/' + data.val().uid + '/photoURL').once('value').then(function (urlDP) {
+                                                        var DPClassId = document.querySelectorAll('#' + data.val().uid + 'DP');
+                                                        for (var i = 0; i < DPClassId.length; i++) {
+                                                            DPClassId[i].setAttribute('src', urlDP.val());
 
-                                                       function (error) {
-                                                           ons.notification.confirm("Download error source :" + error.source);
-                                                           ons.notification.confirm("Download error target :" + error.target);
-                                                           ons.notification.confirm("Download error code :" + error.code);
-                                                       },
-                                                       false, {
-                                                           headers:
-                                                           {
-                                                               "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-                                                           }
-                                                       }
-                                                    );
+                                                        }
+                                                    }).catch(function (error) { });
+                                                    //onProfile Click                                                                                  
+                                                    var profileClassId = document.querySelectorAll('#' + data.val().uid + "User");
+
+                                                    for (var i = 0; i < profileClassId.length; i++) {
+
+                                                        profileClassId[i].onclick = function () {
+                                                            onClickData(data);
+                                                            document.querySelector('#mainNavigator').pushPage('profile.html');
+                                                        }
+                                                    };
+                                                    document.addEventListener("show", function (event) {
+                                                        if (event.target.id === 'profile') {
+                                                            profileEngine();
+                                                        }
+                                                    });
+                                                    // onLike Click
+                                                    page.querySelector('#' + data.key + 'OnLike').onclick = function () {
+                                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (likedobj) {
+                                                            if (likedobj.val() === true) {
+                                                                firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(false);
+                                                                firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (likevals) {
+                                                                    console.log(likevals.val().likes);
+                                                                    var likeToUpdate = likevals.val().likes - 1;
+                                                                    console.log(likeToUpdate);
+                                                                    firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(likeToUpdate);
+                                                                   
+                                                                    page.querySelector('#' + data.key + 'OnLike').style.color = "#6D6D6D";
+                                                                    page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "");
+                                                                    page.querySelector('#' + data.key + 'OnDislike').removeAttribute("disabled");
+                                                                    console.log('Un-liked');
+                                                                });
+                                                            }
+                                                            else {
+
+                                                                //Update Likes
+                                                                firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (likevals) {
+                                                                    console.log(likevals.val().likes);
+                                                                    var likeToUpdate = likevals.val().likes + 1;
+                                                                    console.log(likeToUpdate);
+                                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
+                                                                    firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(likeToUpdate);
+                                                                    
+                                                                    page.querySelector('#' + data.key + 'OnLike').style.color = "#4285F4";
+                                                                    page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "true");
+                                                                    console.log('Liked');
+                                                                });
+                                                                var dialog = page.querySelector('#downloadingid');
+                                                                if (dialog) {
+                                                                    dialog.show();
+                                                                    dialog.hide();
+                                                                }
+                                                                else {
+                                                                    ons.createDialog('downloading.html')
+                                                                    .then(function (dialog) {
+                                                                        dialog.show();
+                                                                        dialog.hide();
+                                                                    });
+                                                                }
+                                                                var fileTransfer = new FileTransfer();
+                                                                var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
+                                                                fileTransfer.download(
+                                                                   url, fileURL, function (entry) {
+                                                                       console.log("Updated Download");
+                                                                   },
+
+                                                                   function (error) {
+                                                                       ons.notification.confirm("Download error source :" + error.source);
+                                                                       ons.notification.confirm("Download error target :" + error.target);
+                                                                       ons.notification.confirm("Download error code :" + error.code);
+                                                                   },
+                                                                   false, {
+                                                                       headers:
+                                                                       {
+                                                                           "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+                                                                       }
+                                                                   }
+                                                                );
+                                                            }
+                                                        });
+                                                    };
+                                                    // onDislike Click
+                                                    page.querySelector('#' + data.key + 'OnDislike').onclick = function () {
+                                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).once('value').then(function (dislikedobj) {
+                                                            if (dislikedobj.val() === true) {
+                                                                firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (dislikevals) {
+                                                                    console.log(dislikevals.val().dislikes);
+                                                                    var dislikeToUpdate = dislikevals.val().dislikes - 1;
+                                                                    console.log(dislikeToUpdate);
+                                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).set(false);
+                                                                    firebase.database().ref('wallpaperDB/' + data.key).child('dislikes').set(dislikeToUpdate);
+                                                                   
+                                                                    page.querySelector('#' + data.key + 'OnDislike').style.color = "#6D6D6D";
+                                                                    page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "");
+                                                                    page.querySelector('#' + data.key + 'OnLike').removeAttribute("disabled");
+                                                                    console.log('Un-Disliked');
+                                                                });
+                                                            }
+                                                            else {
+                                                                firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (dislikevals) {
+                                                                    console.log(dislikevals.val().dislikes);
+                                                                    var dislikeToUpdate = dislikevals.val().dislikes + 1;
+                                                                    console.log(dislikeToUpdate);
+                                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).set(true);
+                                                                   
+                                                                    firebase.database().ref('wallpaperDB/' + data.key).child('dislikes').set(dislikeToUpdate);
+                                                                    page.querySelector('#' + data.key + 'OnDislike').style.color = "#4285F4";
+                                                                    page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "true");
+                                                                    console.log('Disliked');
+                                                                });
+                                                            }
+                                                        });
+                                                    };
+
+                                                    // onReport Click
+                                                    page.querySelector('#' + data.key + 'OnReport').onclick = function () {
+                                                        document.getElementById('popoverReport').show(page.querySelector('#' + data.key + 'OnReport'));
+                                                        document.querySelector('#reportBtn').onclick = function () {
+
+                                                            if (document.getElementById('radio-1-r').checked === true) {
+                                                                firebase.database().ref('Report/' + data.key).set('Copyright Violation');
+                                                            }
+                                                            else if (document.getElementById('radio-2-r').checked === true) {
+                                                                firebase.database().ref('Report/' + data.key).set('Spam');
+                                                            }
+                                                            else if (document.getElementById('radio-3-r').checked === true) {
+                                                                firebase.database().ref('Report/' + data.key).set('Offensive Material');
+                                                            }
+                                                            page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "");
+                                                            ons.notification.alert("Reported Successfully");
+                                                            console.log("reported " + data.key);
+                                                            document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
+                                                        };
+                                                        document.querySelector('#reportCancelBtn').onclick = function () {
+                                                            document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
+                                                        };
+
+                                                    };
+
                                                 };
 
-                                                // onReport Click
-                                                page.querySelector('#' + data.key + 'OnReport').onclick = function () {
-                                                    document.getElementById('popoverReport').show(page.querySelector('#' + data.key + 'OnReport'));
-                                                    document.querySelector('#reportBtn').onclick = function () {
+                                            }
 
-                                                        if (document.getElementById('radio-1-r').checked === true) {
-                                                            firebase.database().ref('Report/' + data.key).set('Copyright Violation');
-                                                        }
-                                                        else if (document.getElementById('radio-2-r').checked === true) {
-                                                            firebase.database().ref('Report/' + data.key).set('Spam');
-                                                        }
-                                                        else if (document.getElementById('radio-3-r').checked === true) {
-                                                            firebase.database().ref('Report/' + data.key).set('Offensive Material');
-                                                        }
-                                                        page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "");
-                                                        ons.notification.alert("Reported Successfully");
-                                                        console.log("reported " + data.key);
-                                                        document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
-                                                    };
-                                                    document.querySelector('#reportCancelBtn').onclick = function () {
-                                                        document.getElementById('popoverReport').hide(page.querySelector('#' + data.key + 'OnReport'));
-                                                    };
-
-                                                };
-                                            
-                                            };
-
-                                        }                                  
+                                        });
 
                                     });
-
                                 });
                             }).catch(function (error) {
                                 console.log("Fetch Validating Error:" + error);
@@ -592,9 +645,6 @@ var myNavigator = document.getElementById('mainNavigator');
                 });
             };
 
-            page.querySelector('#myDownloadBtn').onclick = function () {
-                window.open('/storage/emulated/0/MyWallpapers/', '_system');
-            };
             //Logout
             page.querySelector('#logoutBtn').onclick = function () {
             
@@ -775,7 +825,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 try {
                                                     var userId = firebase.auth().currentUser;
                                                     //set wallpaper on db    
-                                                    firebase.database().ref('wallpaperDB/' + newPostKey + '/').set({ uname: userId.displayName, uid: userId.uid, likes: 1, downloads: 1, cat: catval });
+                                                    firebase.database().ref('wallpaperDB/' + newPostKey + '/').set({ uname: userId.displayName, uid: userId.uid, likes: 1, dislikes: 0, cat: catval });
                                                     //set wallpaper on userdb
                                                     firebase.database().ref('userDB/' + userId.uid + '/uploads/' + newPostKey).set(true);
                                                     firebase.database().ref('userDB/' + userId.uid + '/wallpaperLiked/' + newPostKey).set(true);
@@ -869,18 +919,17 @@ var myNavigator = document.getElementById('mainNavigator');
                                             + '</div></ons-list-item>'
                                             + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                             + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;" disabled="true"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
+                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#4285F4;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
+                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDownload" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-download" /></ons-fab>'
                                             + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                            + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
+                                            + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-flag"/></ons-fab>'
                                             + '</div></ons-list-item></ons-list>'));
                                         //Back to normal
                                         display = 'normal';
 
-                                        //On Like and Download
+                                        //On Like
                                         firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
                                             document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
-                                            document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
                                         });
 
 
@@ -903,6 +952,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                             }
                                         }).catch(function (error) { });
 
+
                                         //onProfile Click                                                                                  
                                         var profileClassId = document.querySelectorAll('#' + data.val().uid + "User");
                                         for (var i = 0; i < profileClassId.length; i++) {
@@ -923,9 +973,75 @@ var myNavigator = document.getElementById('mainNavigator');
                                                 profileEngine();
                                             }
                                         });
+
+                                        // onLike Click
+                                        page.querySelector('#' + data.key + 'OnLike').onclick = function () {
+                                            firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (likedobj) {
+                                                if (likedobj.val() === true) {
+                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(false);
+                                                    firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (likevals) {
+                                                        console.log(likevals.val().likes);
+                                                        var likeToUpdate = likevals.val().likes - 1;
+                                                        console.log(likeToUpdate);
+                                                        firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(likeToUpdate);
+                                                        
+                                                        page.querySelector('#' + data.key + 'OnLike').style.color = "#6D6D6D";
+                                                        page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "");
+                                                        page.querySelector('#' + data.key + 'OnDislike').removeAttribute("disabled");
+                                                        console.log('Un-liked');
+                                                    });
+                                                }
+                                                else {
+
+                                                    //Update Likes
+                                                    firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (likevals) {
+                                                        console.log(likevals.val().likes);
+                                                        var likeToUpdate = likevals.val().likes + 1;
+                                                        console.log(likeToUpdate);
+                                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
+                                                        firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(likeToUpdate);
+                                                        
+                                                        page.querySelector('#' + data.key + 'OnLike').style.color = "#4285F4";
+                                                        page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "true");
+                                                        console.log('Liked');
+                                                    });
+                                                    var dialog = page.querySelector('#downloadingid');
+                                                    if (dialog) {
+                                                        dialog.show();
+                                                        dialog.hide();
+                                                    }
+                                                    else {
+                                                        ons.createDialog('downloading.html')
+                                                        .then(function (dialog) {
+                                                            dialog.show();
+                                                            dialog.hide();
+                                                        });
+                                                    }
+                                                    var fileTransfer = new FileTransfer();
+                                                    var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
+                                                    fileTransfer.download(
+                                                       url, fileURL, function (entry) {
+                                                           console.log("Updated Download");
+                                                       },
+
+                                                       function (error) {
+                                                           ons.notification.confirm("Download error source :" + error.source);
+                                                           ons.notification.confirm("Download error target :" + error.target);
+                                                           ons.notification.confirm("Download error code :" + error.code);
+                                                       },
+                                                       false, {
+                                                           headers:
+                                                           {
+                                                               "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+                                                           }
+                                                       }
+                                                    );
+                                                }
+                                            });
+                                        };
+
                                         //OnDownload Click
-                                        page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
-                                            firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
+                                        page.querySelector('#' + data.key + 'OnDownload').onclick = function () {                                           
                                             var dialog = page.querySelector('#downloadingid');
 
                                             if (dialog) {
@@ -1129,18 +1245,18 @@ var myNavigator = document.getElementById('mainNavigator');
                                     + '</div></ons-list-item>'
                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
+                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
+                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
+                                    + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-flag"/></ons-fab>'
                                     + '</div></ons-list-item></ons-list>'));
 
                                     //Back to normal
                                     display = 'normal';
-                                    //On Like and Download
+                                    //On Like and Dislike
                                     firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
                                         document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
-                                        document.getElementById(data.key + 'Downloads').innerHTML =  data.val().downloads;
+                                        document.getElementById(data.key + 'DisLikes').innerHTML = data.val().dislikes;
                                     });
 
 
@@ -1181,51 +1297,104 @@ var myNavigator = document.getElementById('mainNavigator');
                                             profileEngine();
                                         }
                                     });
-
                                     // onLike Click
                                     page.querySelector('#' + data.key + 'OnLike').onclick = function () {
-                                        console.log('Liked');
-                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
-                                        firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
-                                        this.setAttribute("disabled", "true");
-                                        console.log('Liked');
+                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (likedobj) {
+                                            if (likedobj.val() === true) {
+                                                firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(false);
+                                                firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (likevals) {
+                                                    console.log(likevals.val().likes);
+                                                    var likeToUpdate = likevals.val().likes - 1;
+                                                    console.log(likeToUpdate);
+                                                    firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(likeToUpdate);
+                                                    
+                                                    page.querySelector('#' + data.key + 'OnLike').style.color = "#6D6D6D";
+                                                    page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "");
+                                                    page.querySelector('#' + data.key + 'OnDislike').removeAttribute("disabled");
+                                                    console.log('Un-liked');
+                                                });
+                                            }
+                                            else {
+
+                                                //Update Likes
+                                                firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (likevals) {
+                                                    console.log(likevals.val().likes);
+                                                    var likeToUpdate = likevals.val().likes + 1;
+                                                    console.log(likeToUpdate);
+                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
+                                                    firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(likeToUpdate);
+                                                    
+                                                    page.querySelector('#' + data.key + 'OnLike').style.color = "#4285F4";
+                                                    page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "true");
+                                                    console.log('Liked');
+                                                });
+                                                var dialog = page.querySelector('#downloadingid');
+                                                if (dialog) {
+                                                    dialog.show();
+                                                    dialog.hide();
+                                                }
+                                                else {
+                                                    ons.createDialog('downloading.html')
+                                                    .then(function (dialog) {
+                                                        dialog.show();
+                                                        dialog.hide();
+                                                    });
+                                                }
+                                                var fileTransfer = new FileTransfer();
+                                                var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
+                                                fileTransfer.download(
+                                                   url, fileURL, function (entry) {
+                                                       console.log("Updated Download");
+                                                   },
+
+                                                   function (error) {
+                                                       ons.notification.confirm("Download error source :" + error.source);
+                                                       ons.notification.confirm("Download error target :" + error.target);
+                                                       ons.notification.confirm("Download error code :" + error.code);
+                                                   },
+                                                   false, {
+                                                       headers:
+                                                       {
+                                                           "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+                                                       }
+                                                   }
+                                                );
+                                            }
+                                        });
+                                    };
+                                    // onDislike Click
+                                    page.querySelector('#' + data.key + 'OnDislike').onclick = function () {
+                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).once('value').then(function (dislikedobj) {
+                                            if (dislikedobj.val() === true) {
+                                                firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (dislikevals) {
+                                                    console.log(dislikevals.val().dislikes);
+                                                    var dislikeToUpdate = dislikevals.val().dislikes - 1;
+                                                    console.log(dislikeToUpdate);
+                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).set(false);
+                                                    firebase.database().ref('wallpaperDB/' + data.key).child('dislikes').set(dislikeToUpdate);
+                                                   
+                                                    page.querySelector('#' + data.key + 'OnDislike').style.color = "#6D6D6D";
+                                                    page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "");
+                                                    page.querySelector('#' + data.key + 'OnLike').removeAttribute("disabled");
+                                                    console.log('Un-Disliked');
+                                                });
+                                            }
+                                            else {
+                                                firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (dislikevals) {
+                                                    console.log(dislikevals.val().dislikes);
+                                                    var dislikeToUpdate = dislikevals.val().dislikes + 1;
+                                                    console.log(dislikeToUpdate);
+                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).set(true);
+                                                   
+                                                    firebase.database().ref('wallpaperDB/' + data.key).child('dislikes').set(dislikeToUpdate);
+                                                    page.querySelector('#' + data.key + 'OnDislike').style.color = "#4285F4";
+                                                    page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "true");
+                                                    console.log('Disliked');
+                                                });
+                                            }
+                                        });
                                     };
 
-                                    // onDownload Click
-                                    page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
-                                        firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                        var dialog = page.querySelector('#downloadingid');
-                                        if (dialog) {
-                                            dialog.show();
-                                            dialog.hide();
-                                        }
-                                        else {
-                                            ons.createDialog('downloading.html')
-                                            .then(function (dialog) {
-                                                dialog.show();
-                                                dialog.hide();
-                                            });
-                                        }
-                                        var fileTransfer = new FileTransfer();
-                                        var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
-                                        fileTransfer.download(
-                                           url, fileURL, function (entry) {
-                                               ons.notification.confirm("Download completed");
-                                           },
-
-                                           function (error) {
-                                               ons.notification.confirm("Download error source :" + error.source);
-                                               ons.notification.confirm("Download error target :" + error.target);
-                                               ons.notification.confirm("Download error code :" + error.code);
-                                           },
-                                           false, {
-                                               headers:
-                                               {
-                                                   "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-                                               }
-                                           }
-                                        );
-                                    };
                                     // onReport Click
                                     page.querySelector('#' + data.key + 'OnReport').onclick = function () {
                                         document.getElementById('popoverReport').show(page.querySelector('#' + data.key + 'OnReport'));
@@ -1316,18 +1485,18 @@ var myNavigator = document.getElementById('mainNavigator');
                                         + '</div></ons-list-item>'
                                         + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                         + '<div class="center" style="padding:0px 0px 0px 8px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
+                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnLike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-up" /></ons-fab><p  id="' + data.key + 'Likes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().likes + '</p>'
+                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnDislike" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="md-thumb-down" /></ons-fab><p id="' + data.key + 'DisLikes" style="height:auto;width:auto;color:#6D6D6D;">' + data.val().dislikes + '</p>'
                                         + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
-                                        + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
+                                        + '<ons-fab ripple modifier="quiet" id="' + data.key + 'OnReport" style="color:#6D6D6D;background-color: transparent;  box-shadow: 0px 0px 0px; "><ons-icon icon="fa-flag"/></ons-fab>'
                                         + '</div></ons-list-item></ons-list>'));
                                         //Back to normal
                                         display = 'normal';
 
-                                        //On Like and Download
+                                        //On Like and DisLike
                                         firebase.database().ref('wallpaperDB/' + data.key).on('value', function (data) {
                                             document.getElementById(data.key + 'Likes').innerHTML = data.val().likes;
-                                            document.getElementById(data.key + 'Downloads').innerHTML = data.val().downloads;
+                                            document.getElementById(data.key + 'DisLikes').innerHTML = data.val().downloads;
                                         });
 
 
@@ -1337,7 +1506,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                         }
                                         else {
                                             page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "true");
-                                            page.querySelector('#' + data.key + 'OnDownload').setAttribute("disabled", "true");
+                                            page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "true");
                                             page.querySelector('#' + data.key + 'OnReport').setAttribute("disabled", "true");
                                             console.log('Email is not verified at Cat Wall');
 
@@ -1372,48 +1541,103 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                         // onLike Click
                                         page.querySelector('#' + data.key + 'OnLike').onclick = function () {
-                                            console.log('Liked');
-                                            firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
-                                            firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(data.val().likes + 1);
-                                            this.setAttribute("disabled", "true");
-                                            console.log('Liked');
+                                            firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (likedobj) {
+                                                if (likedobj.val() === true) {
+                                                    firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(false);
+                                                    firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (likevals) {
+                                                        console.log(likevals.val().likes);
+                                                        var likeToUpdate = likevals.val().likes - 1;
+                                                        console.log(likeToUpdate);
+                                                        firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(likeToUpdate);
+                                                        
+                                                        page.querySelector('#' + data.key + 'OnLike').style.color = "#6D6D6D";
+                                                        page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "");
+                                                        page.querySelector('#' + data.key + 'OnDislike').removeAttribute("disabled");
+                                                        console.log('Un-liked');
+                                                    });
+                                                }
+                                                else {
+
+                                                    //Update Likes
+                                                    firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (likevals) {
+                                                        console.log(likevals.val().likes);
+                                                        var likeToUpdate = likevals.val().likes + 1;
+                                                        console.log(likeToUpdate);
+                                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).set(true);
+                                                        firebase.database().ref('wallpaperDB/' + data.key).child('likes').set(likeToUpdate);
+                                                        
+                                                        page.querySelector('#' + data.key + 'OnLike').style.color = "#4285F4";
+                                                        page.querySelector('#' + data.key + 'OnDislike').setAttribute("disabled", "true");
+                                                        console.log('Liked');
+                                                    });
+                                                    var dialog = page.querySelector('#downloadingid');
+                                                    if (dialog) {
+                                                        dialog.show();
+                                                        dialog.hide();
+                                                    }
+                                                    else {
+                                                        ons.createDialog('downloading.html')
+                                                        .then(function (dialog) {
+                                                            dialog.show();
+                                                            dialog.hide();
+                                                        });
+                                                    }
+                                                    var fileTransfer = new FileTransfer();
+                                                    var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
+                                                    fileTransfer.download(
+                                                       url, fileURL, function (entry) {
+                                                           console.log("Updated Download");
+                                                       },
+
+                                                       function (error) {
+                                                           ons.notification.confirm("Download error source :" + error.source);
+                                                           ons.notification.confirm("Download error target :" + error.target);
+                                                           ons.notification.confirm("Download error code :" + error.code);
+                                                       },
+                                                       false, {
+                                                           headers:
+                                                           {
+                                                               "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+                                                           }
+                                                       }
+                                                    );
+                                                }
+                                            });
                                         };
 
-                                        // onDownload Click
-                                        page.querySelector('#' + data.key + 'OnDownload').onclick = function () {
-                                            firebase.database().ref('wallpaperDB/' + data.key).child('downloads').set(data.val().downloads + 1);
-                                            var dialog = page.querySelector('#downloadingid');
-                                            if (dialog) {
-                                                dialog.show();
-                                                dialog.hide();
-                                            }
-                                            else {
-                                                ons.createDialog('downloading.html')
-                                                .then(function (dialog) {
-                                                    dialog.show();
-                                                    dialog.hide();
-                                                });
-                                            }
-                                            var fileTransfer = new FileTransfer();
-                                            var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
-                                            fileTransfer.download(
-                                               url, fileURL, function (entry) {
-                                                   ons.notification.confirm("Download completed");
-                                               },
-
-                                               function (error) {
-                                                   ons.notification.confirm("Download error source :" + error.source);
-                                                   ons.notification.confirm("Download error target :" + error.target);
-                                                   ons.notification.confirm("Download error code :" + error.code);
-                                               },
-                                               false, {
-                                                   headers:
-                                                   {
-                                                       "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-                                                   }
-                                               }
-                                            );
+                                        // onDislike Click
+                                        page.querySelector('#' + data.key + 'OnDislike').onclick = function () {
+                                            firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).once('value').then(function (dislikedobj) {
+                                                if (dislikedobj.val() === true) {
+                                                    firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (dislikevals) {
+                                                        console.log(dislikevals.val().dislikes);
+                                                        var dislikeToUpdate = dislikevals.val().dislikes - 1;
+                                                        console.log(dislikeToUpdate);
+                                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).set(false);
+                                                        firebase.database().ref('wallpaperDB/' + data.key).child('dislikes').set(dislikeToUpdate);
+                                                       
+                                                        page.querySelector('#' + data.key + 'OnDislike').style.color = "#6D6D6D";
+                                                        page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "");
+                                                        page.querySelector('#' + data.key + 'OnLike').removeAttribute("disabled");
+                                                        console.log('Un-Disliked');
+                                                    });
+                                                }
+                                                else {
+                                                    firebase.database().ref('wallpaperDB/' + data.key).once('value').then(function (dislikevals) {
+                                                        console.log(dislikevals.val().dislikes);
+                                                        var dislikeToUpdate = dislikevals.val().dislikes + 1;
+                                                        console.log(dislikeToUpdate);
+                                                        firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).set(true);
+                                                       
+                                                        firebase.database().ref('wallpaperDB/' + data.key).child('dislikes').set(dislikeToUpdate);
+                                                        page.querySelector('#' + data.key + 'OnDislike').style.color = "#4285F4";
+                                                        page.querySelector('#' + data.key + 'OnLike').setAttribute("disabled", "true");
+                                                        console.log('Disliked');
+                                                    });
+                                                }
+                                            });
                                         };
+
                                         // onReport Click
                                         page.querySelector('#' + data.key + 'OnReport').onclick = function () {
                                             document.getElementById('popoverReport').show(page.querySelector('#' + data.key + 'OnReport'));
