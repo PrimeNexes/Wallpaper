@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.wallchae.wallpaper" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps">
+    <feature name="wallpaper">
+        <param name="android-package" value="fc.fcstudio.wallpaper" />
+    </feature>
     <name>Wallchae</name>
     <description>Share and find new wallpapers everyday with Wallchae</description>
     <author email="pranayxdesai@gmail.com" href="">Pranay Desai </author>
@@ -40,7 +43,4 @@
     <preference name="monaca:AndroidIsPackageNameSeparate" value="false" />
     <preference name="monaca:targetFamilyiPhone" value="1" />
     <preference name="monaca:targetFamilyiPad" value="1" />
-    <feature name="wallpaper">
-        <param name="android-package" value="fc.fcstudio.wallpaper" />
-    </feature>
 </widget>

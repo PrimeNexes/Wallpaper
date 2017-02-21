@@ -329,8 +329,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
                                                     + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnWall" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart-o" /></ons-button><a  id="' + data.key + 'Wall"></a>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'                           
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnWall" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart-o" /></ons-button>'
                                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
                                                     + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                                     + '</div></ons-list-item></ons-list>'));
@@ -423,9 +423,10 @@ var myNavigator = document.getElementById('mainNavigator');
                                                        }
                                                     );
                                                 };
-                                                //OnWall Click
+
+                                                // onWall Click
                                                 page.querySelector('#' + data.key + 'OnWall').onclick = function () {
-                                                    console.log(data.key);
+
                                                     var dialog = page.querySelector('#downloadingid');
                                                     if (dialog) {
                                                         dialog.show();
@@ -442,9 +443,11 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
                                                     fileTransfer.download(
                                                        url, fileURL, function (entry) {
-
-                                                           window.plugins.wallpaper.setImage(fileURL);
-                                                           ons.notification.confirm(fileURL);
+                                                           try{
+                                                               window.plugins.wallpaper.setImage("/storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg");
+                                                               ons.notification.confirm("Download completed");
+                                                           }
+                                                           catch (e) { ons.notification.alert(e);}
                                                        },
 
                                                        function (error) {
@@ -459,8 +462,8 @@ var myNavigator = document.getElementById('mainNavigator');
                                                            }
                                                        }
                                                     );
-                                                    
-                                                }
+                                                };
+
 
                                                 // onReport Click
                                                 page.querySelector('#' + data.key + 'OnReport').onclick = function () {
