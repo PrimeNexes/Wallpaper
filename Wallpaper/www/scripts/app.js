@@ -593,7 +593,7 @@ var myNavigator = document.getElementById('mainNavigator');
             };
 
             page.querySelector('#myDownloadBtn').onclick = function () {
-                window.open('///storage/emulated/0/MyWallpapers/', '_system');
+                window.open('/storage/emulated/0/MyWallpapers/', '_system');
             };
             //Logout
             page.querySelector('#logoutBtn').onclick = function () {
