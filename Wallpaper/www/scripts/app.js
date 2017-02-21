@@ -329,8 +329,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     + '<ons-list-item style="padding:0px 0px 0px 0px; modifier="nodivider;">'
                                                     + '<div class="center" style="padding:0px 0px 0px 8px;">'
                                                     + '<ons-button modifier="quiet" id="' + data.key + 'OnLike" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart" /></ons-button><a  id="' + data.key + 'Likes">' + data.val().likes + '</a>'
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'                           
-                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnWall" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-heart-o" /></ons-button>'
+                                                    + '<ons-button modifier="quiet" id="' + data.key + 'OnDownload" style="height:auto;width:auto;color:#263238;"><a style="text-decoration: none;color:inherit;" href="' + url + '" download="' + data.key + '"><ons-icon icon="fa-download" /></a></ons-button><a id="' + data.key + 'Downloads">' + data.val().downloads + '</a>'                                                                           
                                                     + '</div><div class="right" style="padding:0px 8px 0px 0px;">'
                                                     + '<ons-button modifier="quiet" id="' + data.key + 'OnReport" style="height:auto;width:auto;color:#263238;"><ons-icon icon="fa-flag"/></ons-button>'
                                                     + '</div></ons-list-item></ons-list>'));
@@ -423,47 +422,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                                        }
                                                     );
                                                 };
-
-                                                // onWall Click
-                                                page.querySelector('#' + data.key + 'OnWall').onclick = function () {
-
-                                                    var dialog = page.querySelector('#downloadingid');
-                                                    if (dialog) {
-                                                        dialog.show();
-                                                        dialog.hide();
-                                                    }
-                                                    else {
-                                                        ons.createDialog('downloading.html')
-                                                        .then(function (dialog) {
-                                                            dialog.show();
-                                                            dialog.hide();
-                                                        });
-                                                    }
-                                                    var fileTransfer = new FileTransfer();
-                                                    var fileURL = "///storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg";
-                                                    fileTransfer.download(
-                                                       url, fileURL, function (entry) {
-                                                           try{
-                                                               window.plugins.wallpaper.setImage("/storage/emulated/0/MyWallpapers/wall" + data.key + ".jpeg");
-                                                               ons.notification.confirm("Download completed");
-                                                           }
-                                                           catch (e) { ons.notification.alert(e);}
-                                                       },
-
-                                                       function (error) {
-                                                           ons.notification.confirm("Download error source :" + error.source);
-                                                           ons.notification.confirm("Download error target :" + error.target);
-                                                           ons.notification.confirm("Download error code :" + error.code);
-                                                       },
-                                                       false, {
-                                                           headers:
-                                                           {
-                                                               "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-                                                           }
-                                                       }
-                                                    );
-                                                };
-
 
                                                 // onReport Click
                                                 page.querySelector('#' + data.key + 'OnReport').onclick = function () {
@@ -632,6 +590,10 @@ var myNavigator = document.getElementById('mainNavigator');
                 }, function (error) {
                     ons.notification.alert("Can't send Email for verification ! Try Again");
                 });
+            };
+
+            page.querySelector('#myDownloadBtn').onclick = function () {
+                window.open('///storage/emulated/0/MyWallpapers/', '_system');
             };
             //Logout
             page.querySelector('#logoutBtn').onclick = function () {
