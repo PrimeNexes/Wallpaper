@@ -1163,6 +1163,7 @@
   opacity: 1;
   background-color: rgba(255,255,255,0.15);
 }
+
 .navigation-bar + .page__background + .page__content {
   margin-top: -1px;
   top: 0px;
