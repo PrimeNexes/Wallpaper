@@ -1,5 +1,5 @@
 ﻿//Main
-const version = 0.42;
+const version = 0.43;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -295,7 +295,7 @@ var myNavigator = document.getElementById('mainNavigator');
                             firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (userWallLoop) {
                                 firebase.database().ref('/userDB/' + userId.uid + '/wallpaperDisliked/' + data.key).once('value').then(function (userDislikeLoop) {
                                     firebase.database().ref('/userDB/' + data.val().uid + '/followedBy').once('value').then(function (followersLoop) {
-                                        firebase.database().ref('/userDB/' + userId.uid + '/following/').once('child_added').then(function (following) {
+                                        firebase.database().ref('/userDB/' + userId.uid + '/following/').on('child_added',function (following) {
                                             if (userWallLoop.val() === true || userDislikeLoop.val()===true) {
                                                 //Not printing liked contents
                                                 
@@ -313,7 +313,9 @@ var myNavigator = document.getElementById('mainNavigator');
                                                         if (wallArray[i] === data.key) { display = 'none'; console.log('ON ARRAY' + data.key) }
                                                     }
 
+                                                    console.log(mainwall);                        
                                                     wallArray.push(data.key);
+                                                    clearTimeout(nowallrefresh);
                                                     page.querySelector('#pageLoaging').style.display = "none";
                                                     page.querySelector('#loading').style.visibility = "hidden";
                                                     mainwall.appendChild(ons._util.createElement(
@@ -342,7 +344,6 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                                     //On Like and Dislike
                                                     firebase.database().ref('wallpaperDB/' + data.key).on('value', function (obj) {
-                                                        console.log("Updated Like with" + obj.val().likes + " and Dislikes with " + obj.val().dislikes);
                                                         page.querySelector("#" + data.key + 'Likes').innerHTML = obj.val().likes;
                                                         page.querySelector("#" + data.key + 'Downloads').innerHTML = obj.val().downloads;
                                                         page.querySelector("#" + data.key + 'DisLikes').innerHTML = obj.val().dislikes;
@@ -550,6 +551,18 @@ var myNavigator = document.getElementById('mainNavigator');
                     console.log('Email is not verified at Home Wall');
                 }
 
+                //If no Walls
+                var nowallrefresh=setTimeout(function () {
+                    console.log("Walls Count Refresh");
+                    if (wallArray.length === 0) {
+                        console.log("No walls updating");
+                        limitToFirstInt = limitToFirstInt + 5;
+                        page.querySelector('#loading').style.visibility = "hidden";
+                        mainwallEngine();
+                    };
+                }, 5000);
+
+
             } 
             //Pull to refresh
             var pullhookmainwall = page.querySelector('#pull-hook-mainwall');
@@ -588,13 +601,7 @@ var myNavigator = document.getElementById('mainNavigator');
             page.onInfiniteScroll = function (done) { page.querySelector('#loading').style.visibility = "visible"; limitToFirstInt = limitToFirstInt + 5; mainwallEngine(); setTimeout(done, 500); }
 
 
-            //If no Walls
-                console.log("Walls Count Refresh");
-                if (wallArray.length === 0) {
-                    console.log("No walls updating");
-                    limitToFirstInt = limitToFirstInt + 5;
-                    mainwallEngine();
-                }
+
         }
 
         else if (page.id === 'myAcc')
@@ -1543,6 +1550,7 @@ var myNavigator = document.getElementById('mainNavigator');
                                             }
 
                                             wallArray.push(data.key);
+                                            clearTimeout(nowallrefresh);
                                             page.querySelector('#pageLoaging').style.display = "none";
                                             page.querySelector('#loading').style.visibility = "hidden";
                                             cwall.appendChild(ons._util.createElement(
@@ -1772,6 +1780,18 @@ var myNavigator = document.getElementById('mainNavigator');
                         });
                     }).catch(function (error) { console.log("Stroage Fetching error :" + error); });
                 });
+
+                //If no Walls
+                var nowallrefresh = setTimeout(function () {
+                    console.log("Walls Count Refresh");
+                    if (wallArray.length === 0) {
+                        console.log("No walls updating");
+                        limitToFirstInt = limitToFirstInt + 15;
+                        page.querySelector('#loading').style.visibility = "hidden";
+                        cwallEngine();
+                    };
+                }, 5000);
+
             }
             //Initiate Engine
             cwallEngine();

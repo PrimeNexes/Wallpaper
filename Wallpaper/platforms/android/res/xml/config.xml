@@ -3,6 +3,10 @@
     <feature name="wallpaper">
         <param name="android-package" value="fc.fcstudio.wallpaper" />
     </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <name>Wallchae</name>
     <description>Share and find new wallpapers everyday with Wallchae</description>
     <author email="pranayxdesai@gmail.com" href="">Pranay Desai </author>

@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-wallpaper": {
             "PACKAGE_NAME": "com.wallchae.wallpaper"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.wallchae.wallpaper"
         }
     },
     "dependent_plugins": {}
