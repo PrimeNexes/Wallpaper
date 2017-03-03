@@ -1163,7 +1163,7 @@
   opacity: 1;
   background-color: rgba(255,255,255,0.15);
 }
-
+/*
 .navigation-bar + .page__background + .page__content {
   margin-top: -1px;
   top: 0px;
@@ -1174,7 +1174,7 @@
   top: 0px;
   bottom: 56px;
 }
-
+*/
 
 
 .switch {
@@ -1303,7 +1303,7 @@ input:disabled + .switch__toggle {
 
 .list {
   padding: 0px;
-  margin: 4px 4px 8px 4px;
+  margin: 8px 8px 12px 8px;
   box-shadow:0 1px 3px 0 rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
  
 }

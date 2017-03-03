@@ -338,7 +338,7 @@
     <!--Home-->
     <ons-template id="home.html">
         <ons-page id="home">
-                <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+                <ons-toolbar>
                     <div class="left" style="height:0%;width:0%;"></div>
                     <div class="right" style="height:0%;width:0%;"></div>
                     <div class="center" style="height:0%;width:0%;"></div>
@@ -378,15 +378,16 @@
                 </ons-list>
                 <div id="mainwall">
                 </div>
-                <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
+                <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
 </ons-page>
     </ons-template>
     <!--Home end-->
     <!--Profile page-->
     <ons-template id="profile.html">
         <ons-page id="profile">
-            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar>
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
+                <div class="center">Profile</div>
             </ons-toolbar>
             <div class="profile-card">
                 <img src="images/icon-user-default.png" class="profile-image" id="profileDPView">
@@ -418,7 +419,7 @@
     <!-- My Account page-->
     <ons-template id="myAcc.html">
         <ons-page id="myAcc" style="padding:0px 0px 0px 0px;">
-            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar>
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
                 <div class="right" style="height:0%;width:0%;"></div>
@@ -479,15 +480,15 @@
                 </ons-list-item>
             </ons-list>
             <br>
-                <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top:auto;bottom:79px;right: 20px;left: auto;position:fixed;padding-top:5px;">About us with ToC</ons-button>
-                <ons-button modifier="quiet" id="bugsBtn" style="font-size:10px;top: auto;bottom: 79px;right: auto;left: 20px;position:fixed;padding-top:5px;">Report Bugs or suggestions</ons-button>
+                <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top:auto;bottom:19px;right: 10px;left: auto;position:fixed;padding-top:5px;">About us with ToC</ons-button>
+                <ons-button modifier="quiet" id="bugsBtn" style="font-size:10px;top: auto;bottom: 19px;right: auto;left: 10px;position:fixed;padding-top:5px;">Report Bugs or suggestions</ons-button>
             </ons-page>
     </ons-template>
     <!--My Account page end-->
     <!-- My Uploads page-->
     <ons-template id="myUpd.html">
         <ons-page id="myUpd">
-            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar>
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
                 <div class="right" style="height:0%;width:0%;"></div>
@@ -528,7 +529,7 @@
                         </ons-list>
                         <div id="myUpdWall">
                         </div>
-            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
+            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
     <!--My Upload page end-->
@@ -536,7 +537,7 @@
     <ons-template id="cat.html">
 
         <ons-page id="cat">
-            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar>
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
                 <div class="right" style="height:0%;width:0%;"></div>
@@ -589,14 +590,14 @@
                 <div id="random_list">
 
                 </div>
-            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
+            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
     <!--Categorie page end-->
     <!-- OnCategorie page-->
     <ons-template id="oncat.html">
         <ons-page id="oncat">
-            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar>
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>
@@ -610,7 +611,7 @@
                 </ons-list>
                 <div id="cwall">
                 </div>
-            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:80%;left:0;right:0;bottom:80px;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
+            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
     <!--OnCategorie page end-->
@@ -618,7 +619,7 @@
     <ons-template id="uploading.html">
         <ons-page id="uploading">
 
-            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar>
                 <div class="center" style="height:0%;width:0%;"></div>
                 <div class="left" style="height:0%;width:0%;"></div>
                 <div class="right" style="height:0%;width:0%;"></div>
@@ -656,7 +657,7 @@
     <!-- About page-->
     <ons-template id="about.html">
         <ons-page id="about">
-            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar>
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>
@@ -692,7 +693,7 @@
     <!--Bugs page-->
    <ons-template id="bugs.html">
         <ons-page id="bugs">
-            <ons-toolbar style="bottom: 0px;right: auto;left: auto;top:auto;">
+            <ons-toolbar>
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>

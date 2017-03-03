@@ -1,5 +1,5 @@
 ﻿//Main
-const version = 0.43;
+const version = 0.44;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -19,6 +19,7 @@ var onCatClick = function (data) {
 
 function profileEngine() {
     var userId = firebase.auth().currentUser;
+
     document.getElementById('profileUsername').innerHTML = '@' + onClickDataVar.val().uname;
     firebase.database().ref('/userDB/' + onClickDataVar.val().uid + '/fullname').once('value').then(function (profileData) {
         document.getElementById('profileFullname').innerHTML = profileData.val();
