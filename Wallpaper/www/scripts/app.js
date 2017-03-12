@@ -1,5 +1,5 @@
 ﻿//Main
-const version = 0.44;
+const version = 0.45;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -114,7 +114,6 @@ var myNavigator = document.getElementById('mainNavigator');
         else if (page.id === 'login')
         {
             //=Nav
-
             myNavigator.onDeviceBackButton = (function (event) {
                 ons.notification.confirm('Do you want to close the app?') // Ask for confirmation
                   .then(function (index) {
