@@ -1,5 +1,5 @@
 ﻿//Main
-const version = 0.45;
+const version = 0.46;
 //On Profile Click for Main wall and Upload Wall
 var onClickDataVar;
 var onClickData = function (data) {
@@ -189,6 +189,9 @@ var myNavigator = document.getElementById('mainNavigator');
                             user.sendEmailVerification().then(function () {
                                 //create userDB 
                                 var userId = firebase.auth().currentUser;
+                                firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, photoURL: 'https://firebasestorage.googleapis.com/v0/b/wallchae-dad57.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=049ba89d-4ef4-47e2-8878-4fcb80bdac20', followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0, wallpaperDisliked: 0 });
+                                ons.notification.alert('Account created !');
+
                                 firebase.database().ref('PasswordDB/' + userId.displayName + '/password').set(passis);                               
                                 userId.updateProfile({
                                     photoURL: "https://firebasestorage.googleapis.com/v0/b/wallchae-dad57.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=049ba89d-4ef4-47e2-8878-4fcb80bdac20"
@@ -198,8 +201,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                     console.log("WTf no PhotoURL Set !! Panic");
                                 });
 
-                                firebase.database().ref('userDB/' + userId.uid).set({ fullname: fullname, photoURL: 'https://firebasestorage.googleapis.com/v0/b/wallchae-dad57.appspot.com/o/profilePicture%2Ficon-user-default.png?alt=media&token=049ba89d-4ef4-47e2-8878-4fcb80bdac20', followedBy: { followedByInt: 0 }, following: { followingInt: 0 }, uploads: 0, wallpaperLiked: 0, wallpaperDisliked :0});
-                                ons.notification.alert('Account created !');
                             }, function (error) {
                                 ons.notification.alert("Can't send Email for verification ! Re-try sending the mail underprofile page");
                             });
@@ -1332,12 +1333,16 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                         //onProfile Click                                                                                  
                                         var profileClassId = document.querySelectorAll('#' + data.val().uid + "User");
-
                                         for (var i = 0; i < profileClassId.length; i++) {
-
                                             profileClassId[i].onclick = function () {
                                                 onClickData(data);
-                                                document.querySelector('#mainNavigator').pushPage('profile.html');
+                                                if (userId.uid === data.val().uid) {
+                                                    console.log("done");
+                                                    document.querySelector('#mainNavigator').pushPage('myAcc.html');
+                                                }
+                                                else {
+                                                    document.querySelector('#mainNavigator').pushPage('profile.html');
+                                                }
                                             }
                                         };
                                         document.addEventListener("show", function (event) {
@@ -1611,12 +1616,16 @@ var myNavigator = document.getElementById('mainNavigator');
 
                                             //onProfile Click                                                                                  
                                             var profileClassId = document.querySelectorAll('#' + data.val().uid + "User");
-
                                             for (var i = 0; i < profileClassId.length; i++) {
-
                                                 profileClassId[i].onclick = function () {
                                                     onClickData(data);
-                                                    document.querySelector('#mainNavigator').pushPage('profile.html');
+                                                    if (userId.uid === data.val().uid) {
+                                                        console.log("done");
+                                                        document.querySelector('#mainNavigator').pushPage('myAcc.html');
+                                                    }
+                                                    else {
+                                                        document.querySelector('#mainNavigator').pushPage('profile.html');
+                                                    }
                                                 }
                                             };
                                             document.addEventListener("show", function (event) {
@@ -1624,7 +1633,6 @@ var myNavigator = document.getElementById('mainNavigator');
                                                     profileEngine();
                                                 }
                                             });
-
                                             // onLike Click
                                             page.querySelector('#' + data.key + 'OnLike').onclick = function () {
                                                 firebase.database().ref('/userDB/' + userId.uid + '/wallpaperLiked/' + data.key).once('value').then(function (likedobj) {
