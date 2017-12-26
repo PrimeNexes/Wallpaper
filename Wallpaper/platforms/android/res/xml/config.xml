@@ -18,7 +18,8 @@
     <icon src="www/images/Logo2.png" />
     <vs:features />
     <preference name="ErrorUrl" value="" />
-    <preference name="windows-target-version" value="8.1" />
+    <vs:toolsetVersion>6.3.1</vs:toolsetVersion>
+    <preference name="windows-target-version" value="10.0" />
     <preference name="windows-phone-target-version" value="8.1" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="Orientation" value="default" />

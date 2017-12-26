@@ -89,7 +89,7 @@ var myNavigator = document.getElementById('mainNavigator');
         };
  
         if (page.id === 'sp')
-        {
+        {   
             const promise = firebase.auth().onAuthStateChanged(function (user)
             {
                 if (user)
@@ -109,6 +109,7 @@ var myNavigator = document.getElementById('mainNavigator');
                 }
 
             });
+            console.log(promise);
         }
 
         else if (page.id === 'login')

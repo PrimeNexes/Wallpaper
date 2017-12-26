@@ -7,12 +7,9 @@
     <meta name="mobile-web-app-capable" content="yes" />
 
     <!-- Firebase Init -->
-    <script src="scripts/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
     <script src="scripts/config.js"></script>
 
-    <!-- JS dependencies (order matters!) -->
-    <script src="scripts/platformOverrides.js"></script>
-    <script src="lib/onsen/js/onsenui.js"></script>
 
     <!-- CSS dependencies -->
     <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
@@ -248,7 +245,7 @@
         </ons-page>
     </ons-template>
     <ons-template id="login.html">
-        <ons-page id="login" >
+        <ons-page id="login">
             <section style="padding: 8px">
                 <div style="text-align: center; margin-top: 50px;">
                     <p>
@@ -289,7 +286,7 @@
             <section style="padding: 8px">
                 <div style="text-align: center; margin-top: 30px;">
                     <p>
-                        <img src="images/Logo2.png" style="width:50%;"/>
+                        <img src="images/Logo2.png" style="width:50%;" />
                     </p>
                     <p>
                         <h1 style="font-family:Roboto;font-style:normal;">WallChae</h1>
@@ -338,48 +335,48 @@
     <!--Home-->
     <ons-template id="home.html">
         <ons-page id="home">
-                <ons-toolbar>
-                    <div class="left" style="height:0%;width:0%;"></div>
-                    <div class="right" style="height:0%;width:0%;"></div>
-                    <div class="center" style="height:0%;width:0%;"></div>
-                    <table style="height:inherit;width:inherit;text-align:center;">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
-                                </td>
-                                <td>
-                                    <ons-toolbar-button id="catBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
-                                </td>
-                                <td>
-                                    <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;"><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
-                                </td>
-                                <td>
-                                    <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
-                                </td>
-                                <td>
-                                    <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"><ons-icon icon="md-plus"></ons-toolbar-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </ons-toolbar>
+            <ons-toolbar>
+                <div class="left" style="height:0%;width:0%;"></div>
+                <div class="right" style="height:0%;width:0%;"></div>
+                <div class="center" style="height:0%;width:0%;"></div>
+                <table style="height:inherit;width:inherit;text-align:center;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
+                            </td>
+                            <td>
+                                <ons-toolbar-button id="catBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
+                            </td>
+                            <td>
+                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;"><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
+                            </td>
+                            <td>
+                                <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
+                            </td>
+                            <td>
+                                <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"><ons-icon icon="md-plus"></ons-toolbar-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ons-toolbar>
 
-                <ons-pull-hook id="pull-hook-mainwall" style="background-color:#212121;color:#ffffff;">
-                    Pull to refresh
-                </ons-pull-hook>
-                <ons-list modifier="inset" id="pageLoaging">
-                    <ons-list-item tappable id="loadingBtn">
-                        <div class="left"><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div>
-                        <div class="center">
-                            Nothing to load ? Tap here to explore and follow more.
-                        </div>
-                    </ons-list-item>
-                </ons-list>
-                <div id="mainwall">
-                </div>
-                <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
-</ons-page>
+            <ons-pull-hook id="pull-hook-mainwall" style="background-color:#212121;color:#ffffff;">
+                Pull to refresh
+            </ons-pull-hook>
+            <ons-list modifier="inset" id="pageLoaging">
+                <ons-list-item tappable id="loadingBtn">
+                    <div class="left"><ons-icon icon='fa-chevron-left' class='list__item__icon'></ons-icon></div>
+                    <div class="center">
+                        Nothing to load ? Tap here to explore and follow more.
+                    </div>
+                </ons-list-item>
+            </ons-list>
+            <div id="mainwall">
+            </div>
+            <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
+        </ons-page>
     </ons-template>
     <!--Home end-->
     <!--Profile page-->
@@ -393,7 +390,7 @@
                 <img src="images/icon-user-default.png" class="profile-image" id="profileDPView">
                 <div class="profile-name" id="profileFullname"></div>
                 <div class="profile-id" id="profileUsername"></div>
-                 <!--<div class="profile-desc">Freelance designer, software engineer and cyclist</div>-->
+                <!--<div class="profile-desc">Freelance designer, software engineer and cyclist</div>-->
 
             </div>
             <ons-list modifier="inset">
@@ -412,9 +409,9 @@
                 <ons-list-item>
                     <ons-button modifier="large--quiet" id="followBtn" disabled="true">Follow</ons-button>
                 </ons-list-item>
-                </ons-list>
-</ons-page>
-</ons-template>
+            </ons-list>
+        </ons-page>
+    </ons-template>
     <!--Profile page end-->
     <!-- My Account page-->
     <ons-template id="myAcc.html">
@@ -426,21 +423,21 @@
                 <table style="height:inherit;width:inherit;text-align:center;">
                     <tbody>
                         <tr>
-                            <td >
+                            <td>
                                 <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;"><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="catBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="catBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
 
-                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-plus"></ons-toolbar-button>
+                                <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-plus"></ons-toolbar-button>
                             </td>
                         </tr>
                     </tbody>
@@ -450,10 +447,10 @@
                 <img src="images/icon-user-default.png" class="profile-image" id="profile-image-DP">
                 <div class="profile-name" id="my-fullname"></div>
                 <div class="profile-id" id="my-username">@davegraham</div>
-                 <!--<div class="profile-desc">Freelance designer, software engineer and cyclist</div>-->
+                <!--<div class="profile-desc">Freelance designer, software engineer and cyclist</div>-->
             </div>
             <ons-list modifier="inset">
-                <ons-list-item >
+                <ons-list-item>
                     <ons-row>
                         <ons-col class="info-col">
                             <div class="info-num" id="my-following"></div>
@@ -465,7 +462,7 @@
                         </ons-col>
                     </ons-row>
                 </ons-list-item>
-                <ons-list-item tappable  id="updateDP">
+                <ons-list-item tappable id="updateDP">
                     <ons-button modifier="large--quiet">
                         <input type="file" name="profileDPUpload" id="profileDPUpload" accept="image/*" capture="camera"
                                style="width:inherit;height:100%;left: 0px;top: 0px;opacity: 0;overflow: hidden;position: absolute;z-index: -1;" />
@@ -473,16 +470,16 @@
                     </ons-button>
                 </ons-list-item>
                 <ons-list-item id="showresend">
-                    <ons-button modifier="large--quiet" id="resendemailBtn" >Re-send authentication email</ons-button>
+                    <ons-button modifier="large--quiet" id="resendemailBtn">Re-send authentication email</ons-button>
                 </ons-list-item>
                 <ons-list-item>
                     <ons-button modifier="large" id="logoutBtn" style="background-color:#C62828; color:white;">Log-out</ons-button>
                 </ons-list-item>
             </ons-list>
             <br>
-                <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top:auto;bottom:19px;right: 10px;left: auto;position:fixed;padding-top:5px;">About us with ToC</ons-button>
-                <ons-button modifier="quiet" id="bugsBtn" style="font-size:10px;top: auto;bottom: 19px;right: auto;left: 10px;position:fixed;padding-top:5px;">Report Bugs or suggestions</ons-button>
-            </ons-page>
+            <ons-button modifier="quiet" id="aboutBtn" style="font-size:10px;top:auto;bottom:19px;right: 10px;left: auto;position:fixed;padding-top:5px;">About us with ToC</ons-button>
+            <ons-button modifier="quiet" id="bugsBtn" style="font-size:10px;top: auto;bottom: 19px;right: auto;left: 10px;position:fixed;padding-top:5px;">Report Bugs or suggestions</ons-button>
+        </ons-page>
     </ons-template>
     <!--My Account page end-->
     <!-- My Uploads page-->
@@ -496,20 +493,20 @@
                     <tbody>
                         <tr>
                             <td>
-                                <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="catBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="catBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
 
-                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
                             </td>
                             <td ">
                                 <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;"><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-plus"></ons-toolbar-button>
+                                <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-plus"></ons-toolbar-button>
                             </td>
                         </tr>
                     </tbody>
@@ -519,16 +516,16 @@
             <ons-pull-hook id="pull-hook-uwall" style="background-color:#212121;color:#ffffff;">
                 Pull to refresh
             </ons-pull-hook>
-                        <ons-list modifier="inset" id="pageLoaging">
-                            <ons-list-item modifier="inset">
-                                <div class="left"><ons-icon icon='md-alert-circle' class='list__item__icon'></ons-icon></div>
-                                <div class="center">
-                                    Like or upload to populate this feed.
-                                </div>
-                            </ons-list-item>
-                        </ons-list>
-                        <div id="myUpdWall">
-                        </div>
+            <ons-list modifier="inset" id="pageLoaging">
+                <ons-list-item modifier="inset">
+                    <div class="left"><ons-icon icon='md-alert-circle' class='list__item__icon'></ons-icon></div>
+                    <div class="center">
+                        Like or upload to populate this feed.
+                    </div>
+                </ons-list-item>
+            </ons-list>
+            <div id="myUpdWall">
+            </div>
             <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
@@ -545,51 +542,51 @@
                     <tbody>
                         <tr>
                             <td>
-                                <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
                                 <ons-toolbar-button id="catBtn" style="height:auto;width:auto;"><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
 
-                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-plus"></ons-toolbar-button>
+                                <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-plus"></ons-toolbar-button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </ons-toolbar>
-                <ons-list modifier="inset" id="cat_list">
-                    <ons-list-header>Categories</ons-list-header>
-                    <ons-list-item modifier="chevron" tappable id="cat_animals">Animals</ons-list-item>
-                    <ons-list-item modifier="chevron" tappable id="cat_anime">Anime</ons-list-item>
-                    <ons-list-item modifier="chevron" tappable id="cat_automobile">Automobile</ons-list-item>
-                    <ons-list-item modifier="chevron" tappable id="cat_cartoons">Cartoons</ons-list-item>
-                    <ons-list-item modifier="chevron" tappable id="cat_games">Games</ons-list-item>
-                    <ons-list-item modifier="chevron" tappable id="cat_gods">Gods</ons-list-item>
-                    <ons-list-item modifier="chevron" tappable id="cat_people">People</ons-list-item>
-                    <ons-list-item modifier="chevron" tappable id="cat_superheros">Superheros</ons-list-item>
-                    <ons-list-item modifier="chevron" tappable id="cat_quotes">Quotes</ons-list-item>
+            <ons-list modifier="inset" id="cat_list">
+                <ons-list-header>Categories</ons-list-header>
+                <ons-list-item modifier="chevron" tappable id="cat_animals">Animals</ons-list-item>
+                <ons-list-item modifier="chevron" tappable id="cat_anime">Anime</ons-list-item>
+                <ons-list-item modifier="chevron" tappable id="cat_automobile">Automobile</ons-list-item>
+                <ons-list-item modifier="chevron" tappable id="cat_cartoons">Cartoons</ons-list-item>
+                <ons-list-item modifier="chevron" tappable id="cat_games">Games</ons-list-item>
+                <ons-list-item modifier="chevron" tappable id="cat_gods">Gods</ons-list-item>
+                <ons-list-item modifier="chevron" tappable id="cat_people">People</ons-list-item>
+                <ons-list-item modifier="chevron" tappable id="cat_superheros">Superheros</ons-list-item>
+                <ons-list-item modifier="chevron" tappable id="cat_quotes">Quotes</ons-list-item>
 
-                </ons-list>
+            </ons-list>
 
-                <ons-list-header style="background-color:#FAFAFA;">Random</ons-list-header>
-                <ons-list modifier="inset" id="pageLoaging">
-                    <ons-list-item>
-                        <div class="left"><ons-icon icon='md-alert-circle' class='list__item__icon'></ons-icon></div>
-                        <div class="center" style="font-size:12px;">
-                            There might be nothing to show if you have liked everything
-                        </div>
-                    </ons-list-item>
-                </ons-list>
-                <div id="random_list">
+            <ons-list-header style="background-color:#FAFAFA;">Random</ons-list-header>
+            <ons-list modifier="inset" id="pageLoaging">
+                <ons-list-item>
+                    <div class="left"><ons-icon icon='md-alert-circle' class='list__item__icon'></ons-icon></div>
+                    <div class="center" style="font-size:12px;">
+                        There might be nothing to show if you have liked everything
+                    </div>
+                </ons-list-item>
+            </ons-list>
+            <div id="random_list">
 
-                </div>
+            </div>
             <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
@@ -601,16 +598,16 @@
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>
-                <ons-list modifier="inset" id="pageLoaging">
-                    <ons-list-item>
-                        <div class="left"><ons-icon icon='md-alert-circle' class='list__item__icon'></ons-icon></div>
-                        <div class="center" style="font-size:12px;">
-                            There might be nothing to show if you have liked everything
-                        </div>
-                    </ons-list-item>
-                </ons-list>
-                <div id="cwall">
-                </div>
+            <ons-list modifier="inset" id="pageLoaging">
+                <ons-list-item>
+                    <div class="left"><ons-icon icon='md-alert-circle' class='list__item__icon'></ons-icon></div>
+                    <div class="center" style="font-size:12px;">
+                        There might be nothing to show if you have liked everything
+                    </div>
+                </ons-list-item>
+            </ons-list>
+            <div id="cwall">
+            </div>
             <ons-progress-circular indeterminate id="loading" style="position:fixed;top:auto;left:0;right:0;bottom:80%;margin:auto;color:#3dbbf4;background-color:white; border-radius: 100%;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></ons-progress-circular>
         </ons-page>
     </ons-template>
@@ -627,17 +624,17 @@
                     <tbody>
                         <tr>
                             <td>
-                                <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);"";><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="myAccBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" ";><ons-icon icon="md-pin-account"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="catBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="catBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-search"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
 
-                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="homeBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="md-home"></ons-icon></ons-toolbar-button>
                             </td>
                             <td>
-                                <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);""><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
+                                <ons-toolbar-button id="myLikesBtn" style="height:auto;width:auto;background-color: transparent;color: rgba(255, 255, 255, 0.4);" "><ons-icon icon="fa-heart"></ons-icon></ons-toolbar-button>
                             </td>
                             <td ">
                                 <ons-toolbar-button id="tuploadBtn" style="height:auto;width:auto;"><ons-icon icon="md-plus"></ons-toolbar-button>
@@ -647,7 +644,7 @@
                 </table>
             </ons-toolbar>
             <div id="uploadList">
-                   
+
             </div>
 
             <br>
@@ -663,50 +660,50 @@
             </ons-toolbar>
             <ons-list modifier="inset">
                 <ons-list-item style="background-color:#e2e2e2;">
-                        Terms and Conditions
-                        <br />
-                        Please note that this is a beta version of this app which is
-                        still undergoing final testing before its official release. The
-                        app, its software and all content found on it are provided on an
-                        “as is” and “as available” basis. This app does not give any warranties,
-                        whether express or implied, as to the suitability or usability of the
-                        website, its software or any of its content.
-                        This app will not be liable for any loss, whether such loss is direct,
-                        indirect, special or consequential, suffered by any party as a result
-                        of their use of the this app, its software or content. Any
-                        downloading or uploading of material to the wapp is done at the
-                        user’s own risk and the user will be solely responsible for any
-                        damage to any computer system or loss of data or any reliability that results from such
-                        activities.
-                        Should you encounter any bugs, glitches, lack of functionality or
-                        other problems on the website, please let us know immediately so we
-                        can rectify these accordingly. Your help in this regard is greatly
-                        appreciated.
-                        </ons-list-item>
-                        <ons-list-item style="background-color:#e2e2e2;">
-                                This app is developed by Pranay Desai (pranayxdesai@gmail.com).For any complains contact via email.
-                            </ons-list-item>
-                        </ons-list>
-                </ons-page>
+                    Terms and Conditions
+                    <br />
+                    Please note that this is a beta version of this app which is
+                    still undergoing final testing before its official release. The
+                    app, its software and all content found on it are provided on an
+                    “as is” and “as available” basis. This app does not give any warranties,
+                    whether express or implied, as to the suitability or usability of the
+                    website, its software or any of its content.
+                    This app will not be liable for any loss, whether such loss is direct,
+                    indirect, special or consequential, suffered by any party as a result
+                    of their use of the this app, its software or content. Any
+                    downloading or uploading of material to the wapp is done at the
+                    user’s own risk and the user will be solely responsible for any
+                    damage to any computer system or loss of data or any reliability that results from such
+                    activities.
+                    Should you encounter any bugs, glitches, lack of functionality or
+                    other problems on the website, please let us know immediately so we
+                    can rectify these accordingly. Your help in this regard is greatly
+                    appreciated.
+                </ons-list-item>
+                <ons-list-item style="background-color:#e2e2e2;">
+                    This app is developed by Pranay Desai (pranayxdesai@gmail.com).For any complains contact via email.
+                </ons-list-item>
+            </ons-list>
+        </ons-page>
     </ons-template>
     <!--About page end-->
     <!--Bugs page-->
-   <ons-template id="bugs.html">
+    <ons-template id="bugs.html">
         <ons-page id="bugs">
             <ons-toolbar>
                 <div class="left"><ons-back-button>Back</ons-back-button></div>
                 <div class="center"></div>
             </ons-toolbar>
-                <ons-list modifier="inset">
-                    <ons-list-item>
-                        <textarea class="textarea" id="bugsText" placeholder="Bugs / Suggestions" style="width: 100%; height: 100px;"></textarea>
-                     </ons-list-item>
-                     <ons-list-item>
-                     <ons-button modifier="large--quiet" id="submitBugsBtn">Submit</ons-button>
-                     </ons-list-item>
-                 </ons-list>
+            <ons-list modifier="inset">
+                <ons-list-item>
+                    <textarea class="textarea" id="bugsText" placeholder="Bugs / Suggestions" style="width: 100%; height: 100px;"></textarea>
+                </ons-list-item>
+                <ons-list-item>
+                    <ons-button modifier="large--quiet" id="submitBugsBtn">Submit</ons-button>
+                </ons-list-item>
+            </ons-list>
         </ons-page>
-    </ons-template> 
+    </ons-template>
     <!--Bugs page end-->
     <!--downloading info  temp-->
     <ons-template id="downloading.html">
@@ -729,50 +726,52 @@
     </ons-dialog>
     <!--Uploading dialog End-->
     <!--Report-->
-        <ons-popover direction="up" id="popoverReport" cancelable>
-            <ons-list modifier="inset" style="height:100%;">
-                <ons-list-header>Report</ons-list-header>
-                <ons-list-item tappable>
-                    <label class="left">
-                        <ons-input name="report" type="radio" input-id="radio-1-r" checked></ons-input>
-                    </label>
-                    <label for="radio-1" class="center">
-                        Copyright violation
-                    </label>
-                </ons-list-item>
-                <ons-list-item tappable>
-                    <label class="left">
-                        <ons-input name="report" type="radio" input-id="radio-2-r"></ons-input>
-                    </label>
-                    <label for="radio-2" class="center">
-                        Spam
-                    </label>
-                </ons-list-item>
-                <ons-list-item tappable>
-                    <label class="left">
-                        <ons-input name="report" type="radio" input-id="radio-3-r"></ons-input>
-                    </label>
-                    <label for="radio-3" class="center">
-                        Offensive materials
-                    </label>
-                </ons-list-item>
-                <ons-list-item>
-                    <label class="left">
-                        <ons-button modifier="quiet" style="background-color:#C62828; color:white;" id="reportBtn">Submit</ons-button>
-                    </label>
-                    <label class="right">
-                        <ons-button modifier="quiet" id="reportCancelBtn">Cancel</ons-button>
-                    </label>
-                </ons-list-item>
-            </ons-list>
-        </ons-popover>
-        <!--Report end-->
-        <!-- Cordova reference -->
-        <script src="cordova.js"></script>
-        <script src="scripts/index.js"></script>
+    <ons-popover direction="up" id="popoverReport" cancelable>
+        <ons-list modifier="inset" style="height:100%;">
+            <ons-list-header>Report</ons-list-header>
+            <ons-list-item tappable>
+                <label class="left">
+                    <ons-input name="report" type="radio" input-id="radio-1-r" checked></ons-input>
+                </label>
+                <label for="radio-1" class="center">
+                    Copyright violation
+                </label>
+            </ons-list-item>
+            <ons-list-item tappable>
+                <label class="left">
+                    <ons-input name="report" type="radio" input-id="radio-2-r"></ons-input>
+                </label>
+                <label for="radio-2" class="center">
+                    Spam
+                </label>
+            </ons-list-item>
+            <ons-list-item tappable>
+                <label class="left">
+                    <ons-input name="report" type="radio" input-id="radio-3-r"></ons-input>
+                </label>
+                <label for="radio-3" class="center">
+                    Offensive materials
+                </label>
+            </ons-list-item>
+            <ons-list-item>
+                <label class="left">
+                    <ons-button modifier="quiet" style="background-color:#C62828; color:white;" id="reportBtn">Submit</ons-button>
+                </label>
+                <label class="right">
+                    <ons-button modifier="quiet" id="reportCancelBtn">Cancel</ons-button>
+                </label>
+            </ons-list-item>
+        </ons-list>
+    </ons-popover>
+    <!--Report end-->
+    <!-- Cordova reference -->
+    <script src="scripts/index.js"></script>
+    <!-- app.js -->
+    <script src="scripts/app.js"></script>
 
-        <!-- app.js -->
-        <script src="scripts/app.js"></script>
+    <!-- JS dependencies (order matters!) -->
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <widget xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" xmlns="http://www.w3.org/ns/widgets" id="com.wallchae.wallpaper" version="1.0.0">
   <name>Wallchae</name>
   <description>Share and find new wallpapers everyday with Wallchae</description>
@@ -10,7 +10,7 @@
   <allow-intent href="itms-apps:*" />
   <icon src="www/images/Logo2.png" />
   <vs:features />
-  <preference name="windows-target-version" value="8.1" />
+  <preference name="windows-target-version" value="10.0" />
   <preference name="windows-phone-target-version" value="8.1" />
   <preference name="DisallowOverscroll" value="true" />
   <preference name="Orientation" value="default" />
@@ -50,4 +50,8 @@
   <plugin name="cordova-plugin-inappbrowser" version="1.6.1" />
   <plugin name="cordova-plugin-wallpaper" version="0.1.0" />
   <plugin name="cordova-plugin-whitelist" version="1.3.1" />
+  <vs:toolsetVersion>6.3.1</vs:toolsetVersion>
+  <engine name="android" spec="5.2.1" />
+  <engine name="ios" spec="4.2.0" />
+  <engine name="windows" spec="4.4.2" />
 </widget>
